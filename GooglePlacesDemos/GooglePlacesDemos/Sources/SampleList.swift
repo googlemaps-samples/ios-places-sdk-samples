@@ -29,7 +29,8 @@ struct SampleList: View {
               case .swiftUI(let view):
                 AnyView(erasing: view.parameterConfiguration(configuration))
               case .uiKit(let viewControllerType):
-                Text("\(viewControllerType)")
+                // TODO: Add ability to push UIViewController's.
+                Text("View controller displayed here.")
               }
             }
           }

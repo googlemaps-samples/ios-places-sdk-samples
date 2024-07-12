@@ -41,7 +41,8 @@ jobs:
             touch GooglePlacesDemos/GooglePlacesDemos/GooglePlacesDemos.xcconfig
 
             echo "Building and Testing"
-            xcodebuild test -scheme GooglePlacesDemos \
+            xcodebuild test -project GooglePlacesDemos/GooglePlacesDemos.xcodeproj \
+            -scheme GooglePlacesDemos \
             -destination 'platform=iOS Simulator,OS=17.5,name=iPhone 15' | xcpretty
 
     test: # used as required status check

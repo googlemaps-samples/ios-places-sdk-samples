@@ -13,6 +13,7 @@
 
 import SwiftUI
 
+/// The main list of samples for the demo app.
 struct SampleList: View {
   let sampleSections = Samples.allSampleSections()
 
@@ -47,7 +48,6 @@ struct SampleList: View {
 
 struct ParameterConfigurationKey: EnvironmentKey {
   static let defaultValue = ParameterConfiguration()
-
 }
 
 extension EnvironmentValues {

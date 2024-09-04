@@ -1,38 +1,40 @@
-# New README Template
+# Places Swift SDK for iOS sample app
 
 ## Description
 
-GooglePlacesDemos contains a demo application showcasing various features of
-the GooglePlacesSwift SDK for iOS.
+The GooglePlacesDemos folder contains a demo application showcasing various features of
+the [Places Swift SDK for iOS](https://developers.google.com/maps/documentation/places/ios-sdk/google-places-swift).
 
 ## Requirements
 
-Before starting, please note that these demos are directed towards a technical
-audience. You'll also need Xcode 15.0 or later, with the iOS SDK 15.0 or later.
+- Xcode 15.3 or later with the iOS SDK 15.0 or later.
+- A Simulator for a device running iOS 15 or later, or an iOS device connected to your computer as a run destination for Xcode.
+- An API key from a Google Cloud project with the [Places API (New) enabled](https://developers.google.com/maps/documentation/places/ios-sdk/cloud-setup#enabling-apis). See [Get an API key](https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key) after enabling the API.
 
-If you're new to the API, please read the Introduction section of the Google
-Places API for iOS documentation - https://developers.google.com/places/ios-api/
-
-## Installation
-
-Once you've read the Introduction page, follow the first couple of steps on the
-"Getting Started" page. Specifically;
-
-  * Obtain an API key for the demo application, and specify the bundle ID of
-    this demo application as an an 'allowed iOS app'. By default, the bundle ID
-    is "com.example.GooglePlacesDemos".
-
-  * Create a configuration file for your API key. By default the file should be
-    named "GooglePlacesDemos.xcconfig" and be located at the same directory
-    level as the demo application's "Info.plist" file. The contents of this file
-    should contain at least a line like `API_KEY = <insert your API key here>`.
-    This should be enough for the demo app to retrieve your key to use for
+## Setup
+1. [Set up a Google Cloud project](https://developers.google.com/maps/documentation/places/ios-sdk/cloud-setup) and enable the **Places API (New)**
+2. [Get an API key](https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key) from the project
+3. Clone this repository
+   ```
+   git clone git@github.com:googlemaps-samples/ios-places-sdk-samples.git
+   ```
+5. Change into the `GooglePlacesDemos` folder
+   ```
+   cd ios-places-sdk-samples/GooglePlacesDemos
+   ```
+6. Open GooglePlacesDemos.xcodeproj to open the project in Xcode.
+   ```
+   open  GooglePlacesDemos.xcodeproj/
+   ```
+7. Create a local configuration file for your API key in the same directory (`GooglePlacesDemos/GooglePlacesDemos`) as the demo application's "Info.plist" file. Name the file "GooglePlacesDemos.xcconfig". This will not be checked into source control since .xcconfig is on the .gitignore list.
+8. Add one line to `GooglePlacesDemos.xcconfig` to set the value of your API key. Substitute the "YOUR_API_KEY" in the snippet below with your API key from Step 2.
+   ```
+   API_KEY = "YOUR_API_KEY"
+   ```
+   This should be enough for the demo app to retrieve your key to use for
     requests. (See https://help.apple.com/xcode/#/dev745c5c974 for more
     information about xcconfig files.)
-
-## Documentation
-
-https://developers.google.com/places/ios-api/
+9. Run the app. The Swift package for GooglePlacesSwift should automatically 
 
 ## Usage
 
@@ -51,38 +53,27 @@ autocomplete filter options that allows easy configuration that can apply to
 multiple samples. These options are set in ParameterConfiguration.swift which
 can be used as a reference for using `PlaceType` and `AutocompleteFilter`.
 
+## Documentation
+
+- [Overview page](https://developers.google.com/maps/documentation/places/ios-sdk/google-places-swift) for the Places Swift SDK for iOS
+- [Reference documentation](https://developers.google.com/maps/documentation/places/ios-sdk/reference/swift/Classes)
+- [Migration guide](https://developers.google.com/maps/documentation/places/ios-sdk/migrate-places-sdk) for migrating from the Places SDK for iOS
+
 ## Contributing
 
-Please see CONTRIBUTING.md
+Please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Terms of Service
 
-This library uses Google Maps Platform services, and any use of Google Maps
-Platform is subject to the [Terms of Service](https://cloud.google.com/maps-platform/terms).
+This repository uses Google Maps Platform services. Use of Google Maps Platform services through this library is subject to the Google Maps Platform [Terms of Service](https://cloud.google.com/maps-platform/terms).
 
-For clarity, this library, and each underlying component, is not a Google Maps
-Platform Core Service.
+This repository is not a Google Maps Platform Core Service. Therefore, the Google Maps Platform Terms of Service (e.g. Technical Support Services, Service Level Agreements, and Deprecation Policy) do not apply to the code in this repository.
 
 ## Support
 
-This library is offered via an open source license. It is not governed by the
-Google Maps Platform Support
-[Technical Support Services Guidelines](https://cloud.google.com/maps-platform/terms/tssg),
-the [SLA](https://cloud.google.com/maps-platform/terms/sla), or the
-[Deprecation Policy](https://cloud.google.com/maps-platform/terms) (however,
-any Google Maps Platform services used by the library remain subject to the
-Google Maps Platform Terms of Service).
+This repository is offered via an open source [license](LICENSE). It is not governed by the Google Maps Platform Support [Technical Support Services Guidelines](https://cloud.google.com/maps-platform/terms/tssg), the [SLA](https://cloud.google.com/maps-platform/terms/sla), or the [Deprecation Policy](https://cloud.google.com/maps-platform/terms) (however, any Google Maps Platform services used by the library remain subject to the Google Maps Platform Terms of Service).
 
-This library adheres to [semantic versioning](https://semver.org/) to indicate
-when backwards-incompatible changes are introduced. Accordingly, while the
-library is in version 0.x, backwards-incompatible changes may be introduced at
-any time. 
-
-If you find a bug, or have a feature request, please [file an issue]() on
-GitHub. If you would like to get answers to technical questions from other
-Google Maps Platform developers, ask through one of our
-[developer community channels](https://developers.google.com/maps/developer-community).
-If you'd like to contribute, please check the [Contributing guide]().
+If you find a bug, or have a feature request, please [file an issue](https://github.com/googlemaps-samples/ios-places-sdk-samples/issues) on GitHub. If you would like to get answers to technical questions from other Google Maps Platform developers, ask through one of our [developer community channels](https://developers.google.com/maps/developer-community). If you'd like to contribute, please check the [Contributing guide](CONTRIBUTING.md).
 
 You can also discuss this library on our [Discord server](https://discord.gg/hYsWbmk).
    

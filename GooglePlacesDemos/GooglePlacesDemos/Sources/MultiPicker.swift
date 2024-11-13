@@ -86,24 +86,25 @@ struct MultiPicker<Label: View, Option: Identifiable & Hashable>: View {
 }
 
 #Preview {
-  struct MultiPickerPreviewContainer: View {
-    @State private var selectedValues = Set<Int>()
+    struct MultiPickerPreviewContainer: View {
+        @State private var selectedValues = Set<IdentifiableInt>()
 
-    var body: some View {
-      NavigationView {
-        MultiPicker<Text, Int>(
-          label: Text("Test Picker"),
-          options: [1, 2, 3],
-          optionFormatter: { "Option \($0)" },
-          selectedOptions: $selectedValues
-        )
-      }
+        var body: some View {
+            NavigationView {
+                MultiPicker<Text, IdentifiableInt>(
+                    label: Text("Test Picker"),
+                    options: [1, 2, 3].map(IdentifiableInt.init),
+                    optionFormatter: { "Option \($0.value)" },
+                    selectedOptions: $selectedValues
+                )
+            }
+        }
     }
-  }
 
-  return MultiPickerPreviewContainer()
+    return MultiPickerPreviewContainer()
 }
 
-extension Int: Identifiable {
-  public var id: Self { self }
+struct IdentifiableInt: Identifiable, Hashable {
+    let id = UUID()
+    let value: Int
 }

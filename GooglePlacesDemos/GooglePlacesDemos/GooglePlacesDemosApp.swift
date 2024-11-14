@@ -41,7 +41,8 @@ struct GooglePlacesDemosApp: App {
   }
   var body: some Scene {
     WindowGroup {
-      SampleList()
+     // SampleList()
+      PlacesWithAddress()
     }
   }
 }

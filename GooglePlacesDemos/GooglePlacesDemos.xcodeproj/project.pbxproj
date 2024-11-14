@@ -17,13 +17,14 @@
 		567EFD732BD080250055E7A6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 567EFD722BD080250055E7A6 /* Preview Assets.xcassets */; };
 		567EFD7D2BD080250055E7A6 /* SampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567EFD7C2BD080250055E7A6 /* SampleTests.swift */; };
 		567EFD872BD080250055E7A6 /* GooglePlacesDemosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567EFD862BD080250055E7A6 /* GooglePlacesDemosUITests.swift */; };
-		567EFDAA2BD0812B0055E7A6 /* GooglePlacesDemos.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 567EFDA92BD0812A0055E7A6 /* GooglePlacesDemos.xcconfig */; };
 		567EFDAD2BD083A40055E7A6 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567EFDAC2BD083A40055E7A6 /* SampleData.swift */; };
 		567EFDB02BD083B40055E7A6 /* ClientRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567EFDAE2BD083B40055E7A6 /* ClientRequests.swift */; };
 		567EFDB42BD08F6D0055E7A6 /* MultiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567EFDB32BD08F6D0055E7A6 /* MultiPicker.swift */; };
 		56E420C82C33562D005BBBE7 /* ParameterConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E420C72C33562D005BBBE7 /* ParameterConfigurationTests.swift */; };
 		DA6D4D3C2CE402F500B6F416 /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = DA6D4D3B2CE402F500B6F416 /* GooglePlaces */; };
 		DA6D4D3E2CE402F500B6F416 /* GooglePlacesSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DA6D4D3D2CE402F500B6F416 /* GooglePlacesSwift */; };
+		DA6D4D9E2CE555C300B6F416 /* PlacesAutocompleteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D4D9D2CE555C300B6F416 /* PlacesAutocompleteManager.swift */; };
+		DA6D4DCE2CE55D5D00B6F416 /* PlacesWithAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D4DCD2CE55D5D00B6F416 /* PlacesWithAddress.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,8 @@
 		567EFDAE2BD083B40055E7A6 /* ClientRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientRequests.swift; sourceTree = "<group>"; };
 		567EFDB32BD08F6D0055E7A6 /* MultiPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPicker.swift; sourceTree = "<group>"; };
 		56E420C72C33562D005BBBE7 /* ParameterConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterConfigurationTests.swift; sourceTree = "<group>"; };
+		DA6D4D9D2CE555C300B6F416 /* PlacesAutocompleteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesAutocompleteManager.swift; sourceTree = "<group>"; };
+		DA6D4DCD2CE55D5D00B6F416 /* PlacesWithAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesWithAddress.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,9 +126,11 @@
 		567EFD6A2BD080230055E7A6 /* GooglePlacesDemos */ = {
 			isa = PBXGroup;
 			children = (
+				567EFD6B2BD080230055E7A6 /* GooglePlacesDemosApp.swift */,
+				DA6D4D9B2CE5554000B6F416 /* Samples */,
+				DA6D4D9A2CE554EF00B6F416 /* Archive */,
 				567EFDAB2BD081850055E7A6 /* Info.plist */,
 				567EFDA92BD0812A0055E7A6 /* GooglePlacesDemos.xcconfig */,
-				567EFDB62BD0CB730055E7A6 /* Sources */,
 				567EFDB52BD0CB6B0055E7A6 /* Resources */,
 				567EFD712BD080250055E7A6 /* Preview Content */,
 			);
@@ -191,7 +196,6 @@
 		567EFDB62BD0CB730055E7A6 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				567EFD6B2BD080230055E7A6 /* GooglePlacesDemosApp.swift */,
 				567EFDB32BD08F6D0055E7A6 /* MultiPicker.swift */,
 				567EFD6D2BD080230055E7A6 /* SampleList.swift */,
 				567EFDAC2BD083A40055E7A6 /* SampleData.swift */,
@@ -201,6 +205,31 @@
 				561B01AC2C542F5F003BA3F0 /* ParameterInputTextField.swift */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		DA6D4D9A2CE554EF00B6F416 /* Archive */ = {
+			isa = PBXGroup;
+			children = (
+				567EFDB62BD0CB730055E7A6 /* Sources */,
+			);
+			path = Archive;
+			sourceTree = "<group>";
+		};
+		DA6D4D9B2CE5554000B6F416 /* Samples */ = {
+			isa = PBXGroup;
+			children = (
+				DA6D4D9C2CE5558900B6F416 /* Helper */,
+				DA6D4DCD2CE55D5D00B6F416 /* PlacesWithAddress.swift */,
+			);
+			path = Samples;
+			sourceTree = "<group>";
+		};
+		DA6D4D9C2CE5558900B6F416 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				DA6D4D9D2CE555C300B6F416 /* PlacesAutocompleteManager.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,7 +300,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					567EFD672BD080230055E7A6 = {
 						CreatedOnToolsVersion = 15.3;
@@ -315,7 +344,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				567EFD732BD080250055E7A6 /* Preview Assets.xcassets in Resources */,
-				567EFDAA2BD0812B0055E7A6 /* GooglePlacesDemos.xcconfig in Resources */,
 				567EFD702BD080250055E7A6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,11 +370,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				561B01AD2C542F5F003BA3F0 /* ParameterInputTextField.swift in Sources */,
+				DA6D4D9E2CE555C300B6F416 /* PlacesAutocompleteManager.swift in Sources */,
 				567EFD6E2BD080230055E7A6 /* SampleList.swift in Sources */,
 				567EFDAD2BD083A40055E7A6 /* SampleData.swift in Sources */,
 				567EFDB02BD083B40055E7A6 /* ClientRequests.swift in Sources */,
 				561B01AB2C542EB0003BA3F0 /* SearchNearbyViewController.swift in Sources */,
 				567EFD6C2BD080230055E7A6 /* GooglePlacesDemosApp.swift in Sources */,
+				DA6D4DCE2CE55D5D00B6F416 /* PlacesWithAddress.swift in Sources */,
 				5652AAAA2BD1D88700E55241 /* ConfigurationView.swift in Sources */,
 				5652AAA82BD1D87C00E55241 /* ParameterConfiguration.swift in Sources */,
 				567EFDB42BD08F6D0055E7A6 /* MultiPicker.swift in Sources */,
@@ -485,7 +515,6 @@
 		567EFD902BD080250055E7A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -504,7 +533,6 @@
 		567EFD932BD080250055E7A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;

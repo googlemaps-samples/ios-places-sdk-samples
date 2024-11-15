@@ -42,6 +42,7 @@ class PlacesAutocompleteManager: ObservableObject {
             predictions = []
             return
         }
+                
         
         // Create an autocomplete request with the user's query
         // Note: sessionToken is set to nil here, but in production apps,

@@ -37,8 +37,7 @@ class PlacesAutocompleteManager: ObservableObject {
     /// This method is called as the user types to provide real-time suggestions.
     /// - Parameter query: The search text entered by the user
     func fetchPredictions(for query: String) {
-
-        guard !query.isEmpty || query != "" else {
+        guard !query.isEmpty else {
             predictions = []
             return
         }

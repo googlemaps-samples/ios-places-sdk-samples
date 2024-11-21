@@ -23,33 +23,34 @@ struct AutocompleteBasic: View {
     var body: some View {
         Form {
             Section {
-                TextField("Enter a place name or address", text: $address)
-                    .focused($isAddressFocused)
-                    .outlinedBox()
-                    .onChange(of: address) {
-                        manager.fetchPredictions(for: $0)
-                        if address == "" {
-                            field_place_id = ""
+                HStack {
+                    TextField("Search for a place or address", text: $address)
+                        .focused($isAddressFocused)
+                        .onChange(of: address) {
+                            manager.fetchPredictions(for: $0)
+                            if address == "" {
+                                field_place_id = ""
+                            }
                         }
-                    }
+                    
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+                }
                 
                 if (isAddressFocused) && (address != "") {
                     self.predictions
                 }
-                
+            
             } footer: {
-                Text("Places autocomplete provides location-based addresses as users type into an address input field.")
+                Text("Places autocomplete displays relevant addresses while you type.")
             }
             Section {
                 TextField("", text: $field_place_id)
-                .outlinedBox()
                 .disabled(true)
             } footer: {
-                Text("The Place ID represents a unique identifer for a selected place. This can be used with additional api's such as place details, text search and nearby search.")
+                Text("The Place ID represents a unique identifer for a selected place. This can be used with additional services such as place details, text search and nearby search.")
             }
         }
-        .scrollContentBackground(.hidden)
-        .background(.white)
     }
     
     private var predictions: some View {

@@ -22,8 +22,8 @@ struct GooglePlacesDemosApp: App {
     
     var body: some Scene {
         WindowGroup {
-           // AutocompleteBasic()
-            AutocompleteWithWidget()
+            AutocompleteBasic()
+           // AutocompleteWithWidget()
         }
     }
     

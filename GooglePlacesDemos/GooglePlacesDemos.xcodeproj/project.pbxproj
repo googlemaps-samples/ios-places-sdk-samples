@@ -29,6 +29,7 @@
 		DAE257332CE6FFE900FD2694 /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE257322CE6FFE900FD2694 /* AttributedText.swift */; };
 		DAE257352CE7298200FD2694 /* GooglePlacesWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE257342CE7298200FD2694 /* GooglePlacesWidget.swift */; };
 		DAE257652CE8470800FD2694 /* AutocompleteWithWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE257642CE8470700FD2694 /* AutocompleteWithWidget.swift */; };
+		DAE257942CEAF5B500FD2694 /* PlaceDetailsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE257932CEAF5B500FD2694 /* PlaceDetailsManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		DAE257322CE6FFE900FD2694 /* AttributedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedText.swift; sourceTree = "<group>"; };
 		DAE257342CE7298200FD2694 /* GooglePlacesWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesWidget.swift; sourceTree = "<group>"; };
 		DAE257642CE8470700FD2694 /* AutocompleteWithWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteWithWidget.swift; sourceTree = "<group>"; };
+		DAE257932CEAF5B500FD2694 /* PlaceDetailsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,8 +137,8 @@
 			isa = PBXGroup;
 			children = (
 				567EFD6B2BD080230055E7A6 /* GooglePlacesDemosApp.swift */,
+				DAE257C12CEBEB2500FD2694 /* Managers */,
 				DAE257632CE843AC00FD2694 /* GooglePlacesWidget */,
-				DAE257622CE8436D00FD2694 /* PlacesAutocompleteManager */,
 				DA6D4D9B2CE5554000B6F416 /* Samples */,
 				DA6D4D9A2CE554EF00B6F416 /* Archive */,
 				567EFDAB2BD081850055E7A6 /* Info.plist */,
@@ -244,20 +246,21 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
-		DAE257622CE8436D00FD2694 /* PlacesAutocompleteManager */ = {
-			isa = PBXGroup;
-			children = (
-				DA6D4D9D2CE555C300B6F416 /* PlacesAutocompleteManager.swift */,
-			);
-			path = PlacesAutocompleteManager;
-			sourceTree = "<group>";
-		};
 		DAE257632CE843AC00FD2694 /* GooglePlacesWidget */ = {
 			isa = PBXGroup;
 			children = (
 				DAE257342CE7298200FD2694 /* GooglePlacesWidget.swift */,
 			);
 			path = GooglePlacesWidget;
+			sourceTree = "<group>";
+		};
+		DAE257C12CEBEB2500FD2694 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				DAE257932CEAF5B500FD2694 /* PlaceDetailsManager.swift */,
+				DA6D4D9D2CE555C300B6F416 /* PlacesAutocompleteManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -407,6 +410,7 @@
 				561B01AB2C542EB0003BA3F0 /* SearchNearbyViewController.swift in Sources */,
 				567EFD6C2BD080230055E7A6 /* GooglePlacesDemosApp.swift in Sources */,
 				DAE257352CE7298200FD2694 /* GooglePlacesWidget.swift in Sources */,
+				DAE257942CEAF5B500FD2694 /* PlaceDetailsManager.swift in Sources */,
 				DA6D4DCE2CE55D5D00B6F416 /* AutocompleteBasic.swift in Sources */,
 				5652AAAA2BD1D88700E55241 /* ConfigurationView.swift in Sources */,
 				DAE257332CE6FFE900FD2694 /* AttributedText.swift in Sources */,

@@ -22,21 +22,21 @@ struct AutocompleteWithWidget: View {
     var body: some View {
         Form {
             Section {
-                // Display selected place info or prompt to search
-                TextField("Address", text: $address)
-                    .disabled(true) // Make it act as display-only
-                
-                Button(action: {
-                    showingPlacePicker = true
-                }) {
-                    HStack {
+                HStack {
+                    TextField("Search for a place or address", text: $address)
+                        .disabled(true)
+                    
+                    Button(action: {
+                        showingPlacePicker = true
+                    }) {
                         Image(systemName: "magnifyingglass")
-                        Text("Search for a place")
+                            .foregroundColor(.gray)
                     }
                 }
             }
             
             // Display selected place details if available
+            //TODO: Change this to update a local GMSPlace object
             if let place = selectedPlace {
                 Section("Selected Place Details") {
                     Text("Name: \(place.name ?? "N/A")")

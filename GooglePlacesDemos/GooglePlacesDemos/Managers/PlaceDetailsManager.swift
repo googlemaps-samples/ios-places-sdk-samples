@@ -18,22 +18,24 @@ import GooglePlacesSwift
 class PlaceDetailsManager: ObservableObject {
     @Published var place: Place?
     @Published var error: Error?
+    @Published var isOpen: Bool?
     
     private static let placesClient = PlacesClient.shared
     
     private let defaultProperties: [PlaceProperty] = [
-        .addressComponents,
-        .businessStatus,
-        .displayName,
-        .formattedAddress,
-        .coordinate,
-        .photos,
-        .placeID,
-        .priceLevel,
-        .rating,
-        .numberOfUserRatings,
-        .editorialSummary,
-        .reviews
+        .businessStatus,        // For open/closed status
+        .displayName,          // For place name
+        .placeID,             // For identification
+        .priceLevel,          // For price level ($, $$, etc)
+        .rating,              // For star rating
+        .numberOfUserRatings, // For review count
+        .types,               // For place category
+        .currentOpeningHours, // For current "Open now" and closing time
+        .supportsDineIn,      // Replaces previous .dineIn
+        .supportsTakeout,     // Replaces previous .takeout
+        .supportsDelivery,    // Replaces previous .delivery
+        .coordinate,          // Reserved for future use (e.g., mapping)
+        .editorialSummary     // Reserved for future use (e.g., place description)
     ]
     
     func fetchPlaceDetails(placeID: String, properties: [PlaceProperty]? = nil) async {
@@ -41,7 +43,7 @@ class PlaceDetailsManager: ObservableObject {
             placeID: placeID,
             placeProperties: properties ?? defaultProperties
         )
-        
+
         let result = await Self.placesClient.fetchPlace(with: fetchPlaceRequest)
         switch result {
         case .success(let fetchedPlace):
@@ -49,6 +51,18 @@ class PlaceDetailsManager: ObservableObject {
         case .failure(let placesError):
             self.error = placesError
             self.place = nil
+        }
+    }
+    
+    // function for checking if place is open
+    func checkIfOpen(placeID: String) async {
+        let request = IsPlaceOpenRequest(placeID: placeID)
+        switch await Self.placesClient.isPlaceOpen(with: request) {
+            case .success(let response):
+                self.isOpen = response.status
+            case .failure(let error):
+                self.error = error
+                self.isOpen = nil
         }
     }
     

@@ -13,12 +13,15 @@
 
 import Foundation
 import GooglePlacesSwift
+import UIKit  //required for photos
 
 @MainActor
 class PlaceDetailsManager: ObservableObject {
     @Published var place: Place?
     @Published var error: Error?
     @Published var isOpen: Bool?
+    @Published var placePhoto: UIImage?
+    @Published var photos: [Photo]?
     
     private static let placesClient = PlacesClient.shared
     
@@ -81,15 +84,48 @@ class PlaceDetailsManager: ObservableObject {
         await fetchPlaceDetails(placeID: placeID, properties: basicProperties)
     }
     
-    // Fetch only photos metadata
+    //MARK: Photos functionality
+    
     func fetchPhotoDetails(placeID: String) async {
         let photoProperties: [PlaceProperty] = [
-            .displayName,
             .photos
         ]
-        await fetchPlaceDetails(placeID: placeID, properties: photoProperties)
+        
+        let fetchPlaceRequest = FetchPlaceRequest(
+            placeID: placeID,
+            placeProperties: photoProperties
+        )
+
+        switch await Self.placesClient.fetchPlace(with: fetchPlaceRequest) {
+        case .success(let fetchedPlace):
+            self.photos = fetchedPlace.photos
+        case .failure(let placesError):
+            self.error = placesError
+            self.photos = nil
+        }
     }
     
+    // Photos must first be fetched as metadata through a place details request
+    func fetchPlacePhoto(photo: Photo, maxSize: CGSize = CGSize(width: 1000, height: 1000)) async {
+        let fetchPhotoRequest = FetchPhotoRequest(photo: photo, maxSize: maxSize)
+        
+        switch await Self.placesClient.fetchPhoto(with: fetchPhotoRequest) {
+        case .success(let uiImage):
+            self.placePhoto = uiImage
+        case .failure(let placesError):
+            self.error = placesError
+            self.placePhoto = nil
+        }
+    }
+        
+    func fetchFirstPhoto(for placeID: String) async {
+        await fetchPhotoDetails(placeID: placeID)
+        
+        if let firstPhoto = photos?.first {
+            await fetchPlacePhoto(photo: firstPhoto)
+        }
+    }
+
     // Clear current place details
     func clearDetails() {
         place = nil

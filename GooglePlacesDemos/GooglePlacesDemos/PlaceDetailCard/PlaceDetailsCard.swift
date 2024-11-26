@@ -86,6 +86,13 @@ struct PlaceDetailsCard: View {
                                 .foregroundColor(.secondary)
                         }
                     }
+                    else {
+                        Text("•")
+                        if let todayHours = todayHours {
+                            Text(todayHours)
+                                .foregroundColor(.secondary)
+                        }
+                    }
                 }
             }
         }

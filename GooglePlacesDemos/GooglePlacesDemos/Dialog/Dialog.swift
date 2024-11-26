@@ -12,31 +12,46 @@
 // permissions and limitations under the License.
 
 import SwiftUI
-import CoreLocation
 import GooglePlacesSwift
 
 struct Dialog: View {
     
     @StateObject private var placeDetailsManager = PlaceDetailsManager()
-
-    private let placeID: String = .sushiZone
+    
+    private let placeID: String = .eiffelTower
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             if let place = placeDetailsManager.place {
+                // Photo section
+                if let photo = placeDetailsManager.placePhoto {
+                    Image(uiImage: photo)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxHeight: 200)
+                }
+                
+                // Place details card
                 PlaceDetailsCard(place: place, isOpen: placeDetailsManager.isOpen)
             } else {
                 ProgressView()
             }
         }
         .task {
+            // first, obtain fetch place details
             await placeDetailsManager.fetchPlaceDetails(placeID: placeID)
+            
+            //check for open status then retrieve photos
             await placeDetailsManager.checkIfOpen(placeID: placeID)
+            await placeDetailsManager.fetchFirstPhoto(for: placeID)
         }
-        .onAppear {
-            // Log any existing error
+        .alert("Error", isPresented: .constant(placeDetailsManager.error != nil)) {
+            Button("OK") {
+                placeDetailsManager.error = nil
+            }
+        } message: {
             if let error = placeDetailsManager.error {
-                print("Place Details Error: \(error)")
+                Text(error.localizedDescription)
             }
         }
     }

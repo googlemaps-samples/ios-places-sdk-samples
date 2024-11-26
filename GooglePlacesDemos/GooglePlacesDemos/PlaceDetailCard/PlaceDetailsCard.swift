@@ -17,6 +17,7 @@ import GooglePlacesSwift
 
 struct PlaceDetailsCard: View {
    let place: Place
+   let isOpen: Bool?
    
    var body: some View {
        VStack(alignment: .leading, spacing: 4) {
@@ -36,7 +37,7 @@ struct PlaceDetailsCard: View {
            
            HStack(spacing: 8) {
                if let types = place.types.first {
-                   Text(types.displayString())
+                    Text(types.displayString())
                }
                
                Text(String(repeating: "$", count: place.priceLevel.dollarSignCount()))
@@ -52,16 +53,10 @@ struct PlaceDetailsCard: View {
                }
            }
            .foregroundColor(.secondary)
-           
-           HStack(spacing: 4) {
-               Text("Open now")
-                   .foregroundColor(.green)
-               Text("•")
-               Text("Closes 2 PM")
-                   .foregroundColor(.secondary)
-           }
+
+           OpeningHoursView(place.currentOpeningHours, isOpen: isOpen)
                       
-           HStack(spacing: 16) {
+           HStack(spacing: 16) { //TODO: we need to build another viewBuildder to iterate through all the .support options and build a single string.
                Text("Dine-in")
                Text("•")
                Text("Takeout")
@@ -76,18 +71,53 @@ struct PlaceDetailsCard: View {
    }
     
     @ViewBuilder
-    private func OpeningHoursView(_ openingHours: OpeningHours, isOpen: Bool?) -> some View {
-        if let todayHours = openingHours.weekdayText.first {
+    private func OpeningHoursView(_ openingHours: OpeningHours?, isOpen: Bool?) -> some View {
+        if let openingHours = openingHours {
+            let todayHours = getCurrentDayHours(from: openingHours)
+            
             HStack(spacing: 4) {
                 if let isOpen = isOpen {
                     Text(isOpen ? "Open Now" : "Closed")
                         .foregroundColor(isOpen ? .green : .red)
-                    Text("•")
+                    if isOpen, let todayHours = todayHours {
+                        Text("•")
+                        if let closingTime = extractLastClosingTime(from: todayHours) {
+                            Text("Closes at \(closingTime)")
+                                .foregroundColor(.secondary)
+                        }
+                    }
                 }
-                Text(todayHours)
-                    .foregroundColor(.secondary)
             }
         }
+    }
+
+    private func getCurrentDayHours(from openingHours: OpeningHours) -> String? {
+        // Get current weekday as a string (Monday, Tuesday, etc.)
+        let calendar = Calendar.current
+        let today = calendar.component(.weekday, from: Date())
+        
+        // Convert weekday number to name
+        let weekdaySymbols = calendar.weekdaySymbols
+        let todayName = weekdaySymbols[today - 1] // -1 because weekday is 1-based
+        
+        // Find matching hours string
+        return openingHours.weekdayText.first { dayText in
+            dayText.lowercased().starts(with: todayName.lowercased())
+        }
+    }
+
+    private func extractLastClosingTime(from dayText: String) -> String? {
+        // Split on comma to handle multiple periods
+        let periods = dayText.split(separator: ",")
+        if let lastPeriod = periods.last {
+            // Look for the time after the last dash or en dash
+            if let range = lastPeriod.range(of: "–") ?? lastPeriod.range(of: "-") {
+                let closingTime = String(lastPeriod[range.upperBound...])
+                    .trimmingCharacters(in: .whitespaces)
+                return closingTime
+            }
+        }
+        return nil
     }
     
 }

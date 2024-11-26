@@ -12,20 +12,19 @@
 // permissions and limitations under the License.
 
 import SwiftUI
-
-import SwiftUI
 import CoreLocation
 import GooglePlacesSwift
 
 struct Dialog: View {
     
     @StateObject private var placeDetailsManager = PlaceDetailsManager()
-    private let placeID = "ChIJLU7jZClu5kcR4PcOOO6p3I0" //TODO: Instead of hardcoding, let's have a enum of strings similar to GoogleMaps-SwiftUI
+
+    private let placeID: String = .sushiZone
     
     var body: some View {
         VStack {
             if let place = placeDetailsManager.place {
-                PlaceDetailsCard(place: place) //TODO: This call needs to be updated to support placeDetailsManager.isOpen
+                PlaceDetailsCard(place: place, isOpen: placeDetailsManager.isOpen)
             } else {
                 ProgressView()
             }

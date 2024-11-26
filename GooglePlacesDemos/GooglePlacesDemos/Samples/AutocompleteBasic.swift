@@ -46,7 +46,7 @@ struct AutocompleteBasic: View {
             }
             Section {
                 TextField("", text: $field_place_id)
-                .disabled(true)
+                //.disabled(true)
             } footer: {
                 Text("The Place ID represents a unique identifer for a selected place. This can be used with additional services such as place details, text search and nearby search.")
             }

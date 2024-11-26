@@ -22,9 +22,9 @@ struct GooglePlacesDemosApp: App {
     
     var body: some Scene {
         WindowGroup {
-            //AutocompleteBasic()
+           //  AutocompleteBasic()
            // AutocompleteWithWidget()
-            Dialog()
+           Dialog()
         }
     }
     

@@ -34,6 +34,7 @@ class PlaceDetailsManager: ObservableObject {
         .supportsDineIn,      // Replaces previous .dineIn
         .supportsTakeout,     // Replaces previous .takeout
         .supportsDelivery,    // Replaces previous .delivery
+        .supportsCurbsidePickup,
         .coordinate,          // Reserved for future use (e.g., mapping)
         .editorialSummary     // Reserved for future use (e.g., place description)
     ]

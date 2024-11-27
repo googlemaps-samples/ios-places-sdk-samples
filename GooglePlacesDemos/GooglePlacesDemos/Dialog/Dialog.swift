@@ -17,31 +17,52 @@ import GooglePlacesSwift
 struct Dialog: View {
     
     @StateObject private var placeDetailsManager = PlaceDetailsManager()
-    
-    private let placeID: String = .eiffelTower
+    @StateObject private var viewModel = PlaceExamplesViewModel()
+    private let placeID: String = .spaceNeedle
     
     var body: some View {
-        VStack(spacing: 0) {
-            if let place = placeDetailsManager.place {
-                // Photo section
-                if let photo = placeDetailsManager.placePhoto {
-                    Image(uiImage: photo)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: 200)
-                }
+        NavigationStack {
+            VStack(spacing: 0) {
                 
-                // Place details card
-                PlaceDetailsCard(place: place, isOpen: placeDetailsManager.isOpen)
-            } else {
-                ProgressView()
+                // Top half - Place Photo and Details
+                VStack(spacing: 0) {
+                    if let place = placeDetailsManager.place {
+                        if let photo = placeDetailsManager.placePhoto {
+                            Image(uiImage: photo)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height: UIScreen.main.bounds.height * 0.3)
+                                .clipped()
+                                .frame(maxWidth: .infinity)
+                        }
+                        
+                        PlaceDetailsCard(place: place, isOpen: placeDetailsManager.isOpen)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    } else {
+                        ProgressView()
+                    }
+                }
+                .frame(height: UIScreen.main.bounds.height * 0.5)
+                
+                // Bottom half - Examples List
+                List(viewModel.examples) { example in
+                    NavigationLink(destination: example.destination) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(example.title)
+                                .font(.headline)
+                            Text(example.description)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                        .padding(.vertical, 4)
+                    }
+                }
             }
+            .navigationTitle("Google Places SwiftUI Samples")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .task {
-            // first, obtain fetch place details
             await placeDetailsManager.fetchPlaceDetails(placeID: placeID)
-            
-            //check for open status then retrieve photos
             await placeDetailsManager.checkIfOpen(placeID: placeID)
             await placeDetailsManager.fetchFirstPhoto(for: placeID)
         }

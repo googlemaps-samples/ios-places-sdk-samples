@@ -56,12 +56,10 @@ struct PlaceDetailsCard: View {
 
            OpeningHoursView(place.currentOpeningHours, isOpen: isOpen)
                       
-           HStack(spacing: 16) { //TODO: we need to build another viewBuildder to iterate through all the .support options and build a single string.
-               Text("Dine-in")
-               Text("•")
-               Text("Takeout")
-               Text("•")
-               Text("No Delivery")
+           HStack(spacing: 16) {
+               if let summary = place.editorialSummary {
+                   Text(summary)
+               }
            }
            .foregroundColor(.secondary)
            .font(.subheadline)

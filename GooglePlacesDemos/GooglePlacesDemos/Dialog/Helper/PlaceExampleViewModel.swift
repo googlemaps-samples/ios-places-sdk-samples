@@ -13,7 +13,7 @@
 
 import SwiftUI
 
-class PlaceExamplesViewModel: ObservableObject {
+class PlaceExampleViewModel: ObservableObject {
     
     @Published var examples: [PlaceExample] = [
         PlaceExample(
@@ -22,14 +22,14 @@ class PlaceExamplesViewModel: ObservableObject {
             destination: AnyView(AutocompleteBasic())
         ),
         PlaceExample(
-            title: "Autocomplete with Controller",
-            description: "Shows Places SDK implementation of GMSAutocompleteViewController",
-            destination: AnyView(AutocompleteWithWidget())
+            title: "Place Details Card",
+            description: "Displays detailed place information without photos",
+            destination: AnyView(PlaceExampleWithCard())
         ),
         PlaceExample(
-            title: "Place Details Sheet",
-            description: "Displays detailed place information without photos",
-            destination: AnyView(Text("Place Details")) // Placeholder
+            title: "Place Photos",
+            description: "Demonstrates loading and displaying place photos",
+            destination: AnyView(Text("Place Photos")) // Placeholder
         ),
         PlaceExample(
             title: "Nearby Search",
@@ -37,9 +37,9 @@ class PlaceExamplesViewModel: ObservableObject {
             destination: AnyView(Text("Nearby Search")) // Placeholder
         ),
         PlaceExample(
-            title: "Place Photos",
-            description: "Demonstrates loading and displaying place photos",
-            destination: AnyView(Text("Place Photos")) // Placeholder
+            title: "Autocomplete with Controller",
+            description: "Shows Places SDK implementation of GMSAutocompleteViewController",
+            destination: AnyView(AutocompleteWithWidget())
         )
     ]
 }

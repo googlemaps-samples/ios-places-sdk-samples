@@ -17,7 +17,7 @@ import GooglePlacesSwift
 struct Dialog: View {
     
     @StateObject private var placeDetailsManager = PlaceDetailsManager()
-    @StateObject private var viewModel = PlaceExamplesViewModel()
+    @StateObject private var viewModel = PlaceExampleViewModel()
     private let placeID: String = .spaceNeedle
     
     var body: some View {
@@ -58,7 +58,7 @@ struct Dialog: View {
                     }
                 }
             }
-            .navigationTitle("Google Places SwiftUI Samples")
+            .navigationTitle("Google Places SDK (New) Samples")
             .navigationBarTitleDisplayMode(.inline)
         }
         .task {

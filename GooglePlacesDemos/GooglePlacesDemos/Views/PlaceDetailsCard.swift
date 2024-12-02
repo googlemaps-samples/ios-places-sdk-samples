@@ -55,7 +55,8 @@ struct PlaceDetailsCard: View {
            .foregroundColor(.secondary)
 
            OpeningHoursView(place.currentOpeningHours, isOpen: isOpen)
-                      
+           
+        /*
            HStack(spacing: 16) {
                if let summary = place.editorialSummary {
                    Text(summary)
@@ -64,6 +65,7 @@ struct PlaceDetailsCard: View {
            .foregroundColor(.secondary)
            .font(.subheadline)
            .padding(.top, 2)
+         */
        }
        .padding()
    }

@@ -31,7 +31,15 @@ struct PlaceCardView: View {
                 // Place Details Card in bottom portion
                 PlaceDetailsCard(place: place, isOpen: placeDetailsManager.isOpen)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
+
+                //provide place summary
+                if let summary = place.editorialSummary {
+                    Text(summary)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal)
+                        .padding(.bottom)
+                }
             } else {
                 ProgressView()
             }

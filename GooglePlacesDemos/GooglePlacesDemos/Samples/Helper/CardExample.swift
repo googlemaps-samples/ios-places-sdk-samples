@@ -19,4 +19,5 @@ struct CardExample: Identifiable {
     let placeId: String
     let type: String
     let description: String
+    let systemIcon: String  
 }

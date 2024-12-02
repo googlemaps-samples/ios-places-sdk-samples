@@ -14,55 +14,62 @@
 import SwiftUI
 
 class CardExampleViewModel: ObservableObject {
-       
     @Published var places: [CardExample] = [
         CardExample(
             name: "Taj Mahal Palace Hotel",
             placeId: "ChIJEaA-2MPiDDkR6C6xllFemnE",
             type: "lodging",
-            description: "Historic luxury hotel in Mumbai, India"
+            description: "Historic luxury hotel in Mumbai, India",
+            systemIcon: "mappin.and.ellipse"
         ),
         CardExample(
             name: "Gardens by the Bay",
             placeId: "ChIJMxZ-kwQZ2jERdsqftXeWCWI",
             type: "park",
-            description: "Nature park in Singapore"
+            description: "Nature park in Singapore",
+            systemIcon: "mappin.and.ellipse"
         ),
         CardExample(
             name: "Sydney Opera House",
             placeId: "ChIJ3S-JXmauEmsRUcIaWtf4MzE",
             type: "performing_arts_theater",
-            description: "Iconic performing arts venue in Sydney, Australia"
+            description: "Iconic arts venue in Sydney, Australia",
+            systemIcon: "mappin.and.ellipse"
         ),
         CardExample(
             name: "Noma",
             placeId: "ChIJpYCQZztTUkYRFOE368Xs6kI",
             type: "restaurant",
-            description: "World-renowned restaurant in Copenhagen, Denmark"
+            description: "Restaurant in Copenhagen, Denmark",
+            systemIcon: "mappin.and.ellipse"
         ),
         CardExample(
             name: "Eiffel Tower",
             placeId: "ChIJLU7jZClu5kcR4PcOOO6p3I0",
             type: "tourist_attraction",
-            description: "Iconic iron lattice tower in Paris, France"
+            description: "Iconic iron lattice tower in Paris, France",
+            systemIcon: "mappin.and.ellipse"
         ),
         CardExample(
             name: "Central Park",
             placeId: "ChIJ4zGFAZpYwokRGUGph3Mf37k",
             type: "park",
-            description: "Urban park in New York City, USA"
+            description: "Urban park in New York City, USA",
+            systemIcon: "mappin.and.ellipse"
         ),
         CardExample(
             name: "British Museum",
             placeId: "ChIJB9OTMDIbdkgRp0JWbQGZsS8",
             type: "museum",
-            description: "Major public museum in London, UK"
+            description: "Major public museum in London, UK",
+            systemIcon: "mappin.and.ellipse"
         ),
         CardExample(
             name: "Sistine Chapel",
             placeId: "ChIJ268jxWVgLxMRIj61f4fIFqs",
             type: "church",
-            description: "Famous chapel in Vatican City"
+            description: "Famous chapel in Vatican City",
+            systemIcon: "mappin.and.ellipse"
         )
     ]
 }

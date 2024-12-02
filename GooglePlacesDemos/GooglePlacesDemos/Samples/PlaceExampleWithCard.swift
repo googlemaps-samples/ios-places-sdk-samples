@@ -20,13 +20,20 @@ struct PlaceExampleWithCard: View {
         NavigationView {
             List(viewModel.places) { place in
                 NavigationLink(destination: PlaceCardView(placeId: place.placeId)) {
-                    VStack(alignment: .leading) {
-                        Text(place.name)
-                            .font(.headline)
-                        Text(place.description)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                    HStack {
+                        Image(systemName: place.systemIcon)
+                            .foregroundColor(.gray)
+                            .imageScale(.large)
+                        
+                        VStack(alignment: .leading) {
+                            Text(place.name)
+                                .font(.headline)
+                            Text(place.description)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
         }

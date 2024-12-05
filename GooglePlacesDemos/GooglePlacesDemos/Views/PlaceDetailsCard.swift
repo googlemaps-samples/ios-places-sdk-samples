@@ -71,6 +71,7 @@ struct PlaceDetailsCard: View {
    }
     
     @ViewBuilder
+    ///venue's local time zone
     private func OpeningHoursView(_ openingHours: OpeningHours?, isOpen: Bool?) -> some View {
         if let openingHours = openingHours {
             let todayHours = getCurrentDayHours(from: openingHours)
@@ -141,13 +142,13 @@ struct RatingStarsView: View {
        }
    }
    
-   private func starType(for index: Int) -> String {
-       if Double(index) + 0.5 < rating {
-           return "star.fill"
-       } else if Double(index) + 0.5 == rating {
-           return "star.leadinghalf.filled"
-       } else {
-           return "star"
-       }
-   }
+    private func starType(for index: Int) -> String {
+        if Double(index) + 1.0 <= rating {
+            return "star.fill"
+        } else if Double(index) + 0.5 <= rating {
+            return "star.leadinghalf.filled"
+        } else {
+            return "star"
+        }
+    }
 }

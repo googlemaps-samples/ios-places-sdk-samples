@@ -17,26 +17,37 @@ import GooglePlacesSwift
 struct AutocompleteBasic: View {
     @StateObject private var manager = PlacesAutocompleteManager()
     @FocusState private var isAddressFocused: Bool
-    @State private var address = ""
-    @State private var field_place_id = ""
-         
+    @State private var address = "" //TODO: This is really acting like as the placeName, not the address
+    @State private var placeID = ""
+    
+    // Form fields for address components
+    @State private var streetNumber = ""
+    @State private var city = ""
+    @State private var state = ""
+    @State private var zipCode = ""
+    @State private var display_address = "" //TODO: Rename to address
+
+          
     var body: some View {
         Form {
             Section {
                 HStack {
-                    TextField("Search for a place or address", text: $address)
+                    TextField("Search for a place", text: $address)
                         .focused($isAddressFocused)
                         .onChange(of: address) {
                             manager.fetchPredictions(for: $0)
                             if address == "" {
-                                field_place_id = ""
+                                self.placeID = ""
+                                self.clearAddressFields()
                             }
+                        }
+                        .onAppear {
+                            isAddressFocused = true
                         }
                     
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.gray)
                 }
-                
                 if (isAddressFocused) && (address != "") {
                     self.predictions
                 }
@@ -44,9 +55,21 @@ struct AutocompleteBasic: View {
             } footer: {
                 Text("Places autocomplete displays relevant addresses while you type.")
             }
+            
+            //additional address fields
             Section {
-                TextField("", text: $field_place_id)
-                //.disabled(true)
+               TextField("Address", text: $display_address)
+               TextField("City", text: $city)
+                
+                HStack {
+                    TextField("State", text: $state)
+                    TextField("Zipcode", text: $zipCode)
+                }
+            }
+            
+            Section {
+                TextField("", text: $placeID)
+                
             } footer: {
                 Text("The Place ID represents a unique identifer for a selected place. This can be used with additional services such as place details, text search and nearby search.")
             }
@@ -61,13 +84,92 @@ struct AutocompleteBasic: View {
                         .onTapGesture {
                             address = place.attributedPrimaryText.plainString()
                             isAddressFocused = false
-                            field_place_id = place.placeID
+                            self.placeID = place.placeID
+                            
+                            // Fetch and process additional address components
+                            Task {
+                                await fetchAddressDetails(for: place.placeID)
+                            }
                         }
                 }
             }
         }
         .frame(maxHeight: 300)
     }
+
+    //reset dependent address fields
+    private func clearAddressFields() {
+        self.streetNumber = ""
+        self.city = ""
+        self.state = ""
+        self.zipCode = ""
+        self.display_address = ""
+    }
+    
+    // Function to fetch and process address details
+    private func fetchAddressDetails(for placeID: String) async {
+        let placeDetailsManager = PlaceDetailsManager()
+        await placeDetailsManager.fetchBasicDetails(placeID: placeID)
+        
+        if let components = placeDetailsManager.place?.addressComponents {
+            print(components)
+            processAddressComponents(components)
+        }
+    }
+
+    func processAddressComponents(_ components: [AddressComponent]) {
+        // Clear existing values first
+        streetNumber = ""
+        city = ""
+        state = ""
+        zipCode = ""
+        
+        print("Started processing address components")
+        
+        for component in components {
+            // Check all types for each component
+            for type in component.types {
+                print("Processing type: \(type) with name: \(component.name)")
+                
+                switch type {
+                case .streetNumber:
+                    streetNumber = component.name
+                    print("Set street number: \(streetNumber)")
+                    
+                case .locality:
+                    city = component.name
+                    print("Set city: \(city)")
+                    
+                case .route:
+                    display_address = "\(streetNumber) \(component.name)"
+                    print("Set display address: \(display_address)")
+                    
+                case .administrativeAreaLevel1:
+                    state = component.shortName ?? component.name
+                    print("Set state: \(state)")
+                    
+                case .postalCode:
+                    zipCode = component.name
+                    print("Set zipcode: \(zipCode)")
+                    
+                default:
+                    break
+                }
+            }
+        }
+        
+        //TODO: Comment out once verified.
+        // Print final values to verify
+        print("""
+        Final address components:
+        Street Number: \(streetNumber)
+        City: \(city)
+        State: \(state)
+        Zip: \(zipCode)
+        """)
+        
+    }
+    
 }
 
 struct PlaceRow: View {

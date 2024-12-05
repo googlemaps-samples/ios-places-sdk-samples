@@ -22,7 +22,7 @@ struct PlaceExampleWithCard: View {
                 NavigationLink(destination: PlaceCardView(placeId: place.placeId)) {
                     HStack {
                         Image(systemName: place.systemIcon)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.accentColor)
                             .imageScale(.large)
                         
                         VStack(alignment: .leading) {

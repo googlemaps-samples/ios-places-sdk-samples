@@ -23,6 +23,7 @@ struct PlaceCardView: View {
     var body: some View {
         VStack(spacing: 16) {
             if let place = placeDetailsManager.place {
+                
                 // Map View in top portion
                 GoogleMapView(options: $mapOptions)
                     .ignoresSafeArea(.container, edges: [.bottom, .horizontal])

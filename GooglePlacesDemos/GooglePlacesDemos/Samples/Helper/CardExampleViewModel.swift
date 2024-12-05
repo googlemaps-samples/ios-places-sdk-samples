@@ -20,56 +20,56 @@ class CardExampleViewModel: ObservableObject {
             placeId: "ChIJEaA-2MPiDDkR6C6xllFemnE",
             type: "lodging",
             description: "Historic luxury hotel in Mumbai, India",
-            systemIcon: "mappin.and.ellipse"
+            systemIcon: "mappin"
         ),
         CardExample(
             name: "Gardens by the Bay",
             placeId: "ChIJMxZ-kwQZ2jERdsqftXeWCWI",
             type: "park",
             description: "Nature park in Singapore",
-            systemIcon: "mappin.and.ellipse"
+            systemIcon: "mappin"
         ),
         CardExample(
             name: "Sydney Opera House",
             placeId: "ChIJ3S-JXmauEmsRUcIaWtf4MzE",
             type: "performing_arts_theater",
             description: "Iconic arts venue in Sydney, Australia",
-            systemIcon: "mappin.and.ellipse"
+            systemIcon: "mappin"
         ),
         CardExample(
             name: "Noma",
             placeId: "ChIJpYCQZztTUkYRFOE368Xs6kI",
             type: "restaurant",
             description: "Restaurant in Copenhagen, Denmark",
-            systemIcon: "mappin.and.ellipse"
+            systemIcon: "mappin"
         ),
         CardExample(
             name: "Eiffel Tower",
             placeId: "ChIJLU7jZClu5kcR4PcOOO6p3I0",
             type: "tourist_attraction",
             description: "Iconic iron lattice tower in Paris, France",
-            systemIcon: "mappin.and.ellipse"
+            systemIcon: "mappin"
         ),
         CardExample(
             name: "Central Park",
             placeId: "ChIJ4zGFAZpYwokRGUGph3Mf37k",
             type: "park",
             description: "Urban park in New York City, USA",
-            systemIcon: "mappin.and.ellipse"
+            systemIcon: "mappin"
         ),
         CardExample(
             name: "British Museum",
             placeId: "ChIJB9OTMDIbdkgRp0JWbQGZsS8",
             type: "museum",
             description: "Major public museum in London, UK",
-            systemIcon: "mappin.and.ellipse"
+            systemIcon: "mappin"
         ),
         CardExample(
             name: "Sistine Chapel",
             placeId: "ChIJ268jxWVgLxMRIj61f4fIFqs",
             type: "church",
             description: "Famous chapel in Vatican City",
-            systemIcon: "mappin.and.ellipse"
+            systemIcon: "mappin"
         )
     ]
 }

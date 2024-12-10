@@ -56,7 +56,7 @@ struct ConfigurationView: View {
 }
 
 /// Displayable names for each `PlaceProperty`.
-extension PlaceProperty: CustomStringConvertible, CaseIterable, Identifiable {
+extension PlaceProperty: @retroactive CustomStringConvertible, @retroactive CaseIterable, @retroactive Identifiable {
   public var id: Self { self }
 
   public static var allCases: [PlaceProperty] = [

@@ -21,7 +21,7 @@ final class ParameterConfigurationTests: XCTestCase {
 
   func testLocationOptionConsistency() {
     // Case: .unspecified
-    var unspecified: ParameterConfiguration.LocationOption = .unspecified
+    let unspecified: ParameterConfiguration.LocationOption = .unspecified
     XCTAssertNil(unspecified.northEast)
     XCTAssertNil(unspecified.southWest)
     XCTAssertNil(unspecified.location)
@@ -41,7 +41,7 @@ final class ParameterConfigurationTests: XCTestCase {
   }
 }
 
-extension CLLocationCoordinate2D: Equatable {
+extension CLLocationCoordinate2D: @retroactive Equatable {
   public static func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
     return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
   }

@@ -138,50 +138,67 @@ struct ClientRequests: View {
       }
     }
   }
-
-  private func isOpenWithPlaceID() {
-    shouldShowInput = true
-    inputModel.options = [.placeID, .date]
-    onDismissInput = {
-      guard inputDismissedViaDoneButton else { return }
-      resultsModel = ResultsModel()
-      Task {
-        switch await Self.placesClient.isPlaceOpen(inputModel.placeID, date: inputModel.date)
-        {
-        case .success(let isOpen):
-          resultsModel = ResultsModel(displayIsOpen: true, isOpen: isOpen)
-        case .failure(let placesError):
-          errorAlertDescription = placesError.localizedDescription
-          shouldPresentError = true
+    
+    private func isOpenWithPlaceID() {
+        shouldShowInput = true
+        inputModel.options = [.placeID, .date]
+        onDismissInput = {
+            guard inputDismissedViaDoneButton else { return }
+            resultsModel = ResultsModel()
+            
+            let isOpenRequest = IsPlaceOpenRequest(placeID: inputModel.placeID, date: inputModel.date)
+            Task {
+                switch await Self.placesClient.isPlaceOpen(with: isOpenRequest) {
+                case .success(let isOpenResponse):
+                    switch isOpenResponse.status {
+                    case .some(true):  // explicitly handle true
+                        resultsModel = ResultsModel(displayIsOpen: true, isOpen: true)
+                    case .some(false): // explicitly handle false
+                        resultsModel = ResultsModel(displayIsOpen: true, isOpen: false)
+                    case .none:        // handle nil case
+                        resultsModel = ResultsModel(displayIsOpen: true, isOpen: nil)
+                    }
+                case .failure(let placesError):
+                    errorAlertDescription = placesError.localizedDescription
+                    shouldPresentError = true
+                }
+            }
         }
-      }
     }
-  }
 
-  private func isOpenWithPlace() {
-    shouldShowInput = true
-    inputModel.options = [.place, .date]
-    onDismissInput = {
-      guard inputDismissedViaDoneButton else { return }
-      resultsModel = ResultsModel()
-      guard let place = inputModel.place else {
-        errorAlertDescription =
-        "No place was selected. If the list of places was empty try fetching a place first!"
-        shouldPresentError = true
-        return
-      }
-      Task {
-        switch await Self.placesClient.isPlaceOpen(place, date: inputModel.date)
-        {
-        case .success(let isOpen):
-          resultsModel = ResultsModel(displayIsOpen: true, isOpen: isOpen)
-        case .failure(let placesError):
-          errorAlertDescription = placesError.localizedDescription
-          shouldPresentError = true
-        }
-      }
+    private func isOpenWithPlace() {
+       shouldShowInput = true
+       inputModel.options = [.place, .date]
+       onDismissInput = {
+           guard inputDismissedViaDoneButton else { return }
+           resultsModel = ResultsModel()
+           guard let place = inputModel.place else {
+               errorAlertDescription =
+                   "No place was selected. If the list of places was empty try fetching a place first!"
+               shouldPresentError = true
+               return
+           }
+           
+           let isOpenRequest = IsPlaceOpenRequest(place: place, date: inputModel.date)
+           Task {
+               switch await Self.placesClient.isPlaceOpen(with: isOpenRequest) {
+               case .success(let isOpenResponse):
+                   switch isOpenResponse.status {
+                   case .some(true):
+                       resultsModel = ResultsModel(displayIsOpen: true, isOpen: true)
+                   case .some(false):
+                       resultsModel = ResultsModel(displayIsOpen: true, isOpen: false)
+                   case .none:
+                       resultsModel = ResultsModel(displayIsOpen: true, isOpen: nil)
+                   }
+               case .failure(let placesError):
+                   errorAlertDescription = placesError.localizedDescription
+                   shouldPresentError = true
+               }
+           }
+       }
     }
-  }
+
 
   private func searchByText() {
     shouldShowInput = true
@@ -509,7 +526,7 @@ extension ClientRequests {
       MultiPicker<Text, PriceLevel>(
         label: Text("Price Levels"),
         options: PriceLevel.allCases,
-        optionFormatter: { $0.description },
+        optionFormatter: { $0.priceString() },
         selectedOptions: $inputModel.priceLevels
       )
     }
@@ -853,58 +870,57 @@ extension View {
   }
 }
 
-extension PriceLevel: CustomStringConvertible {
-  public var description: String {
-    switch self {
-    case .unspecified:
-      return "unspecified"
-    case .free:
-      return "free"
-    case .inexpensive:
-      return "inexpensive"
-    case .moderate:
-      return "moderate"
-    case .expensive:
-      return "expensive"
-    case .veryExpensive:
-      return "veryExpensive"
-    @unknown default:
-      assertionFailure("There is an unimplemented case.")
-      return ""
+extension PriceLevel {
+    public func priceString() -> String {
+        switch self {
+        case .unspecified: 
+            return "unspecified"
+        case .free: return "free"
+        case .inexpensive: 
+            return "inexpensive"
+        case .moderate: 
+            return "moderate"
+        case .expensive: 
+            return "expensive"
+        case .veryExpensive:
+            return "very_expensive"
+        @unknown default:
+            assertionFailure("Unhandled PriceLevel case")
+            return "unknown"
+        }
     }
-  }
 }
 
-extension PlaceType: CustomStringConvertible {
-  public var description: String {
-    return self.rawValue
-  }
+extension PlaceType {
+    public func typeString() -> String {
+        return self.rawValue
+    }
 }
 
-extension SearchByTextRequest.RankPreference: CustomStringConvertible {
-  public var description: String {
-    switch self {
-    case .distance:
-      return "distance"
-    case .relevance:
-      return "relevance"
-    @unknown default:
-      assertionFailure("There is an unimplemented case.")
-      return ""
+extension SearchByTextRequest.RankPreference {
+    public func preferenceString() -> String {
+        switch self {
+        case .distance: 
+            return "distance"
+        case .relevance: 
+            return "relevance"
+        @unknown default:
+            assertionFailure("Unhandled RankPreference case")
+            return "unknown"  // Better than empty string
+        }
     }
-  }
 }
 
-extension SearchNearbyRequest.RankPreference: CustomStringConvertible {
-  public var description: String {
-    switch self {
-    case .popularity:
-      return "popularity"
-    case .distance:
-      return "distance"
-    @unknown default:
-      assertionFailure("There is an unimplemented case.")
-      return ""
+extension SearchNearbyRequest.RankPreference {
+    public func preferenceString() -> String {
+        switch self {
+        case .popularity: 
+            return "popularity"
+        case .distance: 
+            return "distance"
+        @unknown default:
+            assertionFailure("Unhandled RankPreference case")
+            return "unknown"  // Better than empty string
+        }
     }
-  }
 }

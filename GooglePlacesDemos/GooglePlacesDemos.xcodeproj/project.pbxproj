@@ -35,8 +35,10 @@
 		DA85C76E2CFD3BAD0059D755 /* CardExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C76D2CFD3BAD0059D755 /* CardExample.swift */; };
 		DA85C7702CFD3DC60059D755 /* CardExampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C76F2CFD3DC60059D755 /* CardExampleViewModel.swift */; };
 		DA85C7722CFD41960059D755 /* PlaceCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C7712CFD41960059D755 /* PlaceCardView.swift */; };
-		DA85C7752CFD42B20059D755 /* PlaceExampleWithCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C7742CFD42B20059D755 /* PlaceExampleWithCard.swift */; };
+		DA85C7752CFD42B20059D755 /* PlaceCardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C7742CFD42B20059D755 /* PlaceCardList.swift */; };
 		DA85C7792CFD4A0A0059D755 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = DA85C7782CFD4A0A0059D755 /* GoogleMaps */; };
+		DA8BFFBF2D0CE00200B05221 /* PlacePhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8BFFBE2D0CE00200B05221 /* PlacePhotosView.swift */; };
+		DA8BFFC12D0CE90800B05221 /* PlacePhotoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8BFFC02D0CE90800B05221 /* PlacePhotoList.swift */; };
 		DAE2572F2CE6EB1500FD2694 /* OutlinedBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE2572E2CE6EB1500FD2694 /* OutlinedBoxStyle.swift */; };
 		DAE257332CE6FFE900FD2694 /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE257322CE6FFE900FD2694 /* AttributedText.swift */; };
 		DAE257352CE7298200FD2694 /* GooglePlacesWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE257342CE7298200FD2694 /* GooglePlacesWidget.swift */; };
@@ -100,7 +102,9 @@
 		DA85C76D2CFD3BAD0059D755 /* CardExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExample.swift; sourceTree = "<group>"; };
 		DA85C76F2CFD3DC60059D755 /* CardExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExampleViewModel.swift; sourceTree = "<group>"; };
 		DA85C7712CFD41960059D755 /* PlaceCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCardView.swift; sourceTree = "<group>"; };
-		DA85C7742CFD42B20059D755 /* PlaceExampleWithCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceExampleWithCard.swift; sourceTree = "<group>"; };
+		DA85C7742CFD42B20059D755 /* PlaceCardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCardList.swift; sourceTree = "<group>"; };
+		DA8BFFBE2D0CE00200B05221 /* PlacePhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacePhotosView.swift; sourceTree = "<group>"; };
+		DA8BFFC02D0CE90800B05221 /* PlacePhotoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacePhotoList.swift; sourceTree = "<group>"; };
 		DAE2572E2CE6EB1500FD2694 /* OutlinedBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlinedBoxStyle.swift; sourceTree = "<group>"; };
 		DAE257322CE6FFE900FD2694 /* AttributedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedText.swift; sourceTree = "<group>"; };
 		DAE257342CE7298200FD2694 /* GooglePlacesWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesWidget.swift; sourceTree = "<group>"; };
@@ -262,9 +266,11 @@
 			children = (
 				DA6D4D9C2CE5558900B6F416 /* Helper */,
 				DA6D4DCD2CE55D5D00B6F416 /* AutocompleteBasic.swift */,
-				DAE257642CE8470700FD2694 /* AutocompleteWithWidget.swift */,
-				DA85C7742CFD42B20059D755 /* PlaceExampleWithCard.swift */,
+				DA85C7742CFD42B20059D755 /* PlaceCardList.swift */,
 				DA85C7712CFD41960059D755 /* PlaceCardView.swift */,
+				DA8BFFC02D0CE90800B05221 /* PlacePhotoList.swift */,
+				DA8BFFBE2D0CE00200B05221 /* PlacePhotosView.swift */,
+				DAE257642CE8470700FD2694 /* AutocompleteWithWidget.swift */,
 			);
 			path = Samples;
 			sourceTree = "<group>";
@@ -490,8 +496,10 @@
 				567EFD6C2BD080230055E7A6 /* GooglePlacesDemosApp.swift in Sources */,
 				DAE257352CE7298200FD2694 /* GooglePlacesWidget.swift in Sources */,
 				DAE257942CEAF5B500FD2694 /* PlaceDetailsManager.swift in Sources */,
+				DA8BFFBF2D0CE00200B05221 /* PlacePhotosView.swift in Sources */,
 				DA6D4DCE2CE55D5D00B6F416 /* AutocompleteBasic.swift in Sources */,
-				DA85C7752CFD42B20059D755 /* PlaceExampleWithCard.swift in Sources */,
+				DA85C7752CFD42B20059D755 /* PlaceCardList.swift in Sources */,
+				DA8BFFC12D0CE90800B05221 /* PlacePhotoList.swift in Sources */,
 				5652AAAA2BD1D88700E55241 /* ConfigurationView.swift in Sources */,
 				DAE257332CE6FFE900FD2694 /* AttributedText.swift in Sources */,
 				5652AAA82BD1D87C00E55241 /* ParameterConfiguration.swift in Sources */,

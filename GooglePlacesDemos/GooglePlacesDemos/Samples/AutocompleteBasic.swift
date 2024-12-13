@@ -121,7 +121,7 @@ struct AutocompleteBasic: View {
         self.state = ""
         self.zipCode = ""
         self.display_address = ""
-        self.currentMarkers = []
+        self.currentMarkers = [] 
     }
     
     // Function to fetch and process address details

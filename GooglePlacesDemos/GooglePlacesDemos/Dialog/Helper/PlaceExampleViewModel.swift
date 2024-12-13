@@ -24,12 +24,12 @@ class PlaceExampleViewModel: ObservableObject {
         PlaceExample(
             title: "Place Details Card",
             description: "Displays detailed place information without photos",
-            destination: AnyView(PlaceExampleWithCard())
+            destination: AnyView(PlaceCardList())
         ),
         PlaceExample(
             title: "Place Photos",
             description: "Demonstrates loading and displaying place photos",
-            destination: AnyView(Text("Place Photos")) // Placeholder
+            destination: AnyView(PlacePhotoList())
         ),
         PlaceExample(
             title: "Nearby Search",

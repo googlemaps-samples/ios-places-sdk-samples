@@ -22,6 +22,7 @@ class PlaceDetailsManager: ObservableObject {
     @Published var isOpen: Bool?
     @Published var placePhoto: UIImage?
     @Published var photos: [Photo]?
+    @Published var loadedPhotos: [UIImage] = []
     
     private static let placesClient = PlacesClient.shared
     
@@ -118,11 +119,29 @@ class PlaceDetailsManager: ObservableObject {
         }
     }
         
+    //Obtains the first details photo
     func fetchFirstPhoto(for placeID: String) async {
         await fetchPhotoDetails(placeID: placeID)
         
         if let firstPhoto = photos?.first {
             await fetchPlacePhoto(photo: firstPhoto)
+        }
+    }
+    
+    //Obtains the first 10 details photos for presentation
+    func fetchPhotosForPlace(placeID: String, maxPhotos: Int = 10) async {
+        // First get photo metadata from place details
+        await fetchPhotoDetails(placeID: placeID)
+        
+        if let photos = self.photos?.prefix(maxPhotos) {
+            loadedPhotos.removeAll() // Clear existing photos
+            
+            for photo in photos {
+                await fetchPlacePhoto(photo: photo)
+                if let image = placePhoto {
+                    loadedPhotos.append(image)
+                }
+            }
         }
     }
 

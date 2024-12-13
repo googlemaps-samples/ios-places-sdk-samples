@@ -13,20 +13,32 @@
 
 import SwiftUI
 import GooglePlacesSwift
+import GoogleMaps
 
 struct AutocompleteBasic: View {
+    
     @StateObject private var manager = PlacesAutocompleteManager()
     @FocusState private var isAddressFocused: Bool
-    @State private var address = "" //TODO: This is really acting like as the placeName, not the address
-    @State private var placeID = ""
+    @State private var address = ""
     
     // Form fields for address components
     @State private var streetNumber = ""
     @State private var city = ""
     @State private var state = ""
     @State private var zipCode = ""
-    @State private var display_address = "" //TODO: Rename to address
+    @State private var display_address = "" 
 
+    private let mapOptions: GMSMapViewOptions = {
+        var options = GMSMapViewOptions()
+        options.camera = GMSCameraPosition(
+            latitude: 37.4220,  // Googleplex coordinates
+            longitude: -122.0841,
+            zoom: 12
+        )
+        return options
+    }()
+    
+    @State private var newCamera: GMSCameraPosition?
           
     var body: some View {
         Form {
@@ -37,7 +49,7 @@ struct AutocompleteBasic: View {
                         .onChange(of: address) {
                             manager.fetchPredictions(for: $0)
                             if address == "" {
-                                self.placeID = ""
+                                //self.placeID = ""
                                 self.clearAddressFields()
                             }
                         }
@@ -67,12 +79,15 @@ struct AutocompleteBasic: View {
                 }
             }
             
+            //map object
             Section {
-                TextField("", text: $placeID)
-                
+                GoogleMapView(options: mapOptions)
+                    .camera(newCamera)
+                    .frame(maxWidth: .infinity, minHeight: 325)
             } footer: {
-                Text("The Place ID represents a unique identifer for a selected place. This can be used with additional services such as place details, text search and nearby search.")
+                Text("Map updates to show selected place location.")
             }
+                    
         }
     }
     
@@ -84,7 +99,6 @@ struct AutocompleteBasic: View {
                         .onTapGesture {
                             address = place.attributedPrimaryText.plainString()
                             isAddressFocused = false
-                            self.placeID = place.placeID
                             
                             // Fetch and process additional address components
                             Task {
@@ -108,14 +122,22 @@ struct AutocompleteBasic: View {
     
     // Function to fetch and process address details
     private func fetchAddressDetails(for placeID: String) async {
-        let placeDetailsManager = PlaceDetailsManager()
-        await placeDetailsManager.fetchBasicDetails(placeID: placeID)
         
-        if let components = placeDetailsManager.place?.addressComponents {
-            print(components)
-            processAddressComponents(components)
-        }
-    }
+       let placeDetailsManager = PlaceDetailsManager()
+       await placeDetailsManager.fetchBasicDetails(placeID: placeID)
+       
+       if let place = placeDetailsManager.place {
+           if let components = place.addressComponents {
+               processAddressComponents(components)
+           }
+           
+           // Update map camera with place location
+           newCamera = GMSCameraPosition(
+               target: place.location,
+               zoom: 17
+           )
+       }
+   }
 
     func processAddressComponents(_ components: [AddressComponent]) {
         // Clear existing values first
@@ -158,18 +180,7 @@ struct AutocompleteBasic: View {
             }
         }
         
-        //TODO: Comment out once verified.
-        // Print final values to verify
-        print("""
-        Final address components:
-        Street Number: \(streetNumber)
-        City: \(city)
-        State: \(state)
-        Zip: \(zipCode)
-        """)
-        
     }
-    
 }
 
 struct PlaceRow: View {

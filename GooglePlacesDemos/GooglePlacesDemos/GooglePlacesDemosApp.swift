@@ -29,7 +29,7 @@ struct GooglePlacesDemosApp: App {
     }
     
     private func setupGooglePlaces() {
-        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] as? String else {
+        guard let apiKey = Bundle.main.infoDictionary?["PLACES_API_KEY"] as? String else {
             fatalError("Add your API_KEY to Info.plist - Get one at https://developers.google.com/places/ios-sdk/start#get-key")
         }
         
@@ -41,7 +41,7 @@ struct GooglePlacesDemosApp: App {
     }
     
     private func setupGoogleMaps() {
-        guard let mapKey = Bundle.main.infoDictionary?["MAP_KEY"] as? String else {
+        guard let mapKey = Bundle.main.infoDictionary?["MAPS_API_KEY"] as? String else {
             fatalError("Add your MAP_KEY to Info.plist - Get one at https://developers.google.com/maps/documentation/ios-sdk/get-api-key")
         }
         

@@ -18,14 +18,14 @@ struct PlaceCardView: View {
     
     let placeId: String
     @StateObject private var placeDetailsManager = PlaceDetailsManager()
-    @State private var mapOptions = GMSMapViewOptions()
+    var mapOptions = GMSMapViewOptions()
     
     var body: some View {
         VStack(spacing: 16) {
             if let place = placeDetailsManager.place {
                 
                 // Map View in top portion
-                GoogleMapView(options: $mapOptions)
+                GoogleMapView(options: mapOptions)
                     .ignoresSafeArea(.container, edges: [.bottom, .horizontal])
                     .frame(maxWidth: .infinity, minHeight: 325)
                 

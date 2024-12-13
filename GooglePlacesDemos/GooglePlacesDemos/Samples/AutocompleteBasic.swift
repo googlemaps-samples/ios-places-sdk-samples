@@ -26,19 +26,21 @@ struct AutocompleteBasic: View {
     @State private var city = ""
     @State private var state = ""
     @State private var zipCode = ""
-    @State private var display_address = "" 
+    @State private var display_address = ""
 
     private let mapOptions: GMSMapViewOptions = {
         var options = GMSMapViewOptions()
         options.camera = GMSCameraPosition(
             latitude: 37.4220,  // Googleplex coordinates
             longitude: -122.0841,
-            zoom: 12
+            zoom: 11
         )
         return options
     }()
     
+    // Map camera and markers
     @State private var newCamera: GMSCameraPosition?
+    @State private var currentMarkers: [GMSMarker] = []
           
     var body: some View {
         Form {
@@ -49,7 +51,6 @@ struct AutocompleteBasic: View {
                         .onChange(of: address) {
                             manager.fetchPredictions(for: $0)
                             if address == "" {
-                                //self.placeID = ""
                                 self.clearAddressFields()
                             }
                         }
@@ -83,7 +84,9 @@ struct AutocompleteBasic: View {
             Section {
                 GoogleMapView(options: mapOptions)
                     .camera(newCamera)
+                    .mapMarkers(currentMarkers)
                     .frame(maxWidth: .infinity, minHeight: 325)
+                    .listRowInsets(EdgeInsets())
             } footer: {
                 Text("Map updates to show selected place location.")
             }
@@ -118,6 +121,7 @@ struct AutocompleteBasic: View {
         self.state = ""
         self.zipCode = ""
         self.display_address = ""
+        self.currentMarkers = []
     }
     
     // Function to fetch and process address details
@@ -136,6 +140,11 @@ struct AutocompleteBasic: View {
                target: place.location,
                zoom: 17
            )
+           
+           // Create new marker at place location
+           let marker = GMSMarker(position: place.location)
+           marker.title = place.displayName
+           currentMarkers = [marker]  // Replace existing markers with new one
        }
    }
 

@@ -15,10 +15,11 @@ struct PlacePhotoList: View {
             List(viewModel.places) { place in
                 NavigationLink(destination: PlacePhotosView(placeId: place.placeId)) {
                     HStack {
+                        /*
                         Image(systemName: place.systemIcon)
                             .foregroundColor(.yellow)
                             .imageScale(.medium)
-                        
+                        */
                         VStack(alignment: .leading) {
                             Text(place.name)
                                 .font(.headline)
@@ -30,6 +31,8 @@ struct PlacePhotoList: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
+            .navigationTitle("Place Photos")  //TODO: Can we just remove this and have a regular VStack with a title heading?
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

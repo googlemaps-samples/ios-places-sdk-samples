@@ -88,7 +88,7 @@ struct AutocompleteBasic: View {
                     .frame(maxWidth: .infinity, minHeight: 325)
                     .listRowInsets(EdgeInsets())
             } footer: {
-                Text("Map updates to show selected place location.")
+                Text("The map updates to show selected place location.")
             }
                     
         }

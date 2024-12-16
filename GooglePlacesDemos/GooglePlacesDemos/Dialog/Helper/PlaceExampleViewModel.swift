@@ -35,11 +35,6 @@ class PlaceExampleViewModel: ObservableObject {
             title: "Nearby Search",
             description: "Performs location-based nearby place searches with results list",
             destination: AnyView(Text("Nearby Search")) // Placeholder
-        ),
-        PlaceExample(
-            title: "Autocomplete with Controller",
-            description: "Shows Places SDK implementation of GMSAutocompleteViewController",
-            destination: AnyView(AutocompleteWithWidget())
         )
     ]
 }

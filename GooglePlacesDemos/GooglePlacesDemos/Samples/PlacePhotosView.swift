@@ -22,10 +22,11 @@ struct PlacePhotosView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             if let place = placeDetailsManager.place {
-                // Place Details Card at top-left
+
+                //Place Details Card
                 PlaceDetailsCard(place: place, isOpen: placeDetailsManager.isOpen)
                 
-                //provide place summary
+                // Editorial summary
                 if let summary = place.editorialSummary {
                     Text(summary)
                         .font(.subheadline)
@@ -38,34 +39,28 @@ struct PlacePhotosView: View {
                 if !placeDetailsManager.loadedPhotos.isEmpty {
                     TabView {
                         ForEach(placeDetailsManager.loadedPhotos.indices, id: \.self) { index in
-                            VStack {  // Added VStack with default top alignment
+                            VStack {
                                 Image(uiImage: placeDetailsManager.loadedPhotos[index])
                                     .resizable()
                                     .scaledToFit()
                                     .clipShape(RoundedRectangle(cornerRadius: 12))
                                     .padding(.horizontal, 10)
-                                
-                                Spacer()  // Pushes image to top
+                                Spacer()
                             }
                         }
                     }
                     .tabViewStyle(.page)
                     .frame(height: photosHeight)
-                } else {
+                } else { //TODO: Is there any way to simplify all of these else clauses in code?
                     if let photos = place.photos, !photos.isEmpty {
-                        ProgressView()
-                            .frame(height: photosHeight)
+                        LoadingView()
                     } else {
-                        Text("No photos available")
-                            .foregroundColor(.secondary)
-                            .frame(height: photosHeight)
+                        LoadingView()
                     }
                 }
-                
                 Spacer()
-                
             } else {
-                ProgressView()
+                LoadingView()
             }
         }
         .task {

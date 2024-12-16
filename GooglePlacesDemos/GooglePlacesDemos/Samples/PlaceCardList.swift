@@ -21,10 +21,11 @@ struct PlaceCardList: View {
             List(viewModel.places) { place in
                 NavigationLink(destination: PlaceCardView(placeId: place.placeId)) {
                     HStack {
+                        /*
                         Image(systemName: place.systemIcon)
                             .foregroundColor(.yellow)
                             .imageScale(.medium)
-                        
+                        */
                         VStack(alignment: .leading) {
                             Text(place.name)
                                 .font(.headline)
@@ -36,6 +37,8 @@ struct PlaceCardList: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
+            .navigationTitle("Place Details Card ")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

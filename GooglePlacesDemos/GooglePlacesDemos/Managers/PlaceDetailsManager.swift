@@ -130,18 +130,20 @@ class PlaceDetailsManager: ObservableObject {
     
     //Obtains the first 10 details photos for presentation
     func fetchPhotosForPlace(placeID: String, maxPhotos: Int = 10) async {
-        // First get photo metadata from place details
         await fetchPhotoDetails(placeID: placeID)
         
         if let photos = self.photos?.prefix(maxPhotos) {
-            loadedPhotos.removeAll() // Clear existing photos
+            var tempPhotos: [UIImage] = []
             
             for photo in photos {
                 await fetchPlacePhoto(photo: photo)
                 if let image = placePhoto {
-                    loadedPhotos.append(image)
+                    tempPhotos.append(image)
                 }
             }
+            
+            // Update loadedPhotos only once with all images
+            self.loadedPhotos = tempPhotos
         }
     }
 

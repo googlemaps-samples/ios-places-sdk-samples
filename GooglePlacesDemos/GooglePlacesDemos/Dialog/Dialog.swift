@@ -58,7 +58,7 @@ struct Dialog: View {
                     }
                 }
             }
-            .navigationTitle("Google Places SDK (New) Samples")
+            .navigationTitle("Google Places (New) Samples")
             .navigationBarTitleDisplayMode(.inline)
         }
         .task {

@@ -154,34 +154,28 @@ struct AutocompleteBasic: View {
         city = ""
         state = ""
         zipCode = ""
-        
-        print("Started processing address components")
-        
+                
         for component in components {
             // Check all types for each component
             for type in component.types {
-                print("Processing type: \(type) with name: \(component.name)")
+               //print("Processing type: \(type) with name: \(component.name)")
                 
                 switch type {
                 case .streetNumber:
                     streetNumber = component.name
-                    print("Set street number: \(streetNumber)")
+                //print("Set street number: \(streetNumber)")
                     
                 case .locality:
                     city = component.name
-                    print("Set city: \(city)")
                     
                 case .route:
                     display_address = "\(streetNumber) \(component.name)"
-                    print("Set display address: \(display_address)")
                     
                 case .administrativeAreaLevel1:
                     state = component.shortName ?? component.name
-                    print("Set state: \(state)")
                     
                 case .postalCode:
                     zipCode = component.name
-                    print("Set zipcode: \(zipCode)")
                     
                 default:
                     break

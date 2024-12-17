@@ -15,9 +15,11 @@ import SwiftUI
 import GooglePlacesSwift
 
 struct PlacePhotosView: View {
-    let placeId: String
+    
     @StateObject private var placeDetailsManager = PlaceDetailsManager()
+    
     private let photosHeight: CGFloat = 450
+    let placeId: String
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {

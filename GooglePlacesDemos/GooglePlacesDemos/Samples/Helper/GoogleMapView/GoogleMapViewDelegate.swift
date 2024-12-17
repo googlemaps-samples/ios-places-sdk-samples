@@ -20,6 +20,7 @@ class GoogleMapViewDelegate: NSObject, GMSMapViewDelegate {
     
    var tapHandler: ((CLLocationCoordinate2D) -> Void)?
    var markerTapHandler: ((GMSMarker) -> Bool)?
+   var cameraPositionHandler: ((GMSCameraPosition) -> Void)?
    
    /// Called by GMSMapView when user taps the map at a specific coordinate
    /// - Parameters:
@@ -37,4 +38,13 @@ class GoogleMapViewDelegate: NSObject, GMSMapViewDelegate {
    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
        return markerTapHandler?(marker) ?? false // Forward to handler or use default behavior
    }
+    
+   /// Called by GMSMapView when the camera stops moving
+   /// - Parameters:
+   ///   - mapView: The GMSMapView whose camera position changed
+   ///   - position: The final GMSCameraPosition containing location, zoom, bearing and viewingAngle
+   func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+       cameraPositionHandler?(position)
+   }
+    
 }

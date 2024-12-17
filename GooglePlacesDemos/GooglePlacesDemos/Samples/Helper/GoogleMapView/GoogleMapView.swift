@@ -137,6 +137,14 @@ extension GoogleMapView {
        Self.mapDelegate.markerTapHandler = handler
        return self
    }
+    
+   /// Updates the handler for when the map camera comes to rest
+   /// - Parameter handler: Closure to call with the final camera position
+   /// - Returns: Updated GoogleMapView instance
+   func onCameraIdle(_ handler: @escaping (GMSCameraPosition) -> Void) -> GoogleMapView {
+        Self.mapDelegate.cameraPositionHandler = handler
+        return self
+   }
 }
 
 extension View {

@@ -34,7 +34,7 @@ class PlaceExampleViewModel: ObservableObject {
         PlaceExample(
             title: "Nearby Search",
             description: "Performs location-based nearby place searches with results list",
-            destination: AnyView(Text("Nearby Search")) // Placeholder
+            destination: AnyView(NearbySearchView())
         )
     ]
 }

@@ -17,43 +17,76 @@ import SwiftUI
 
 struct NearbySearchView: View {
     
-    @State private var currentLocation = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-    @State private var currentZoom: Float = 14.0
-    @State private var markers: [GMSMarker] = []
-    
-    let parkTypes: Set<PlaceType> = [.park, .touristAttraction]
-    
-    private let mapOptions: GMSMapViewOptions = {
-        var options = GMSMapViewOptions()
-        options.camera = GMSCameraPosition(
-            latitude: 37.4220,  // Googleplex coordinates
-            longitude: -122.0841,
-            zoom: 11
-        )
-        return options
-    }()
-        
-    var body: some View {
-        VStack(spacing: 0) {
-            GoogleMapView(options: mapOptions)
-                .mapMarkers(markers)
-                .onCameraIdle { position in
-                    currentLocation = position.target
-                    currentZoom = position.zoom
-                }
-                .ignoresSafeArea(.container, edges: [.bottom, .horizontal])
-                .frame(maxWidth: .infinity, minHeight: 325)
-        }
-        
-        //TODO: Now call function to obtain the Nearby search place content based coordinates and radius
-    }
-    
-    // Simple helper to calculate search radius based on zoom
+    @State private var currentLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(
+          latitude: 37.4220,
+          longitude: -122.0841
+      )
+      @State private var currentZoom: Float = 14.0
+      @State private var showingPlacesList = false
+      @State private var markers: [GMSMarker] = []
+      @StateObject private var searchManager = NearbySearchManager()
+      
+      private let mapOptions: GMSMapViewOptions = {
+          var options = GMSMapViewOptions()
+          options.camera = GMSCameraPosition(
+              latitude: 37.4220,
+              longitude: -122.0841,
+              zoom: 14
+          )
+          return options
+      }()
+      
     private func calculateSearchRadius(zoom: Float) -> Double {
-        // At zoom level 10, radius = ~10km
-        // At zoom level 15, radius = ~1km
-        // At zoom level 20, radius = ~100m
-        return 10000 * pow(0.5, Double(zoom - 10))
+        // At zoom level 20 (maximum zoom): ~500m radius
+        // At zoom level 15: ~8km radius
+        // At zoom level 10: ~128km radius
+        let baseRadius = 500.0  // meters at max zoom
+        let zoomScale = pow(2.0, Double(20 - zoom))
+        return min(baseRadius * zoomScale, 50000) // Cap at 50km (API limit)
     }
-    
+      
+      private func updateMarkers(from places: [Place]) {
+          markers = places.map { place in
+              let marker = GMSMarker(position: place.location)
+              marker.title = place.displayName
+              return marker
+          }
+      }
+      
+      var body: some View {
+          GoogleMapView(options: mapOptions)
+              .mapMarkers(markers)
+              .onMarkerTapped { marker in
+                  if let mapView = marker.map {
+                          mapView.selectedMarker = marker
+                      }
+                  //Prevent default centering behavior
+                  return true
+              }
+              .onCameraIdle { position in
+                  currentLocation = position.target
+                  currentZoom = position.zoom
+                  
+                  Task {
+                      await searchManager.searchNearby(
+                          location: position.target,
+                          includedTypes: [.cafe],
+                          radius: calculateSearchRadius(zoom: position.zoom)
+                      )
+                      
+                      if let places = searchManager.places {
+                          updateMarkers(from: places)
+                      }
+                      showingPlacesList = true
+                  }
+              }
+            /*
+              .sheet(isPresented: $showingPlacesList) {
+                  NearbyPlacesListView(searchManager: searchManager)
+                      .presentationDetents([.medium, .large])
+              }
+            */
+              .ignoresSafeAreaExceptTop()
+      }
+
 }

@@ -15,7 +15,6 @@ import GooglePlacesSwift
 import CoreLocation
 import SwiftUI
 
-
 /// Manager class that handles nearby place searches using the Places SDK
 /// Provides async search functionality and publishes results to observing views
 @MainActor
@@ -27,11 +26,16 @@ class NearbySearchManager: ObservableObject {
     /// Most recent error, if any. Published to update observing views
     @Published var error: Error?
     
+    /// Dictionary of place open statuses keyed by placeID
+    @Published var placeOpenStatuses: [String: Bool] = [:]
+    
     /// Shared Places SDK client instance
     private static let placesClient = PlacesClient.shared
     
+    /// PlaceDetailsManager instance for handling open status checks
+    private let placeDetailsManager = PlaceDetailsManager()
+    
     /// Default place properties to request for each returned place
-    /// Modify this array to request different place details
     private let defaultProperties: [PlaceProperty] = [
         .displayName,          // Place name
         .placeID,             // For identification
@@ -44,6 +48,15 @@ class NearbySearchManager: ObservableObject {
         .types,              // Place types (e.g., park, museum)
         .priceLevel          // Price level if applicable
     ]
+    
+    /// Fetches the open status for a single place
+    /// - Parameter placeId: The ID of the place to check
+    func fetchOpenStatus(for placeId: String) async {
+        await placeDetailsManager.checkIfOpen(placeID: placeId)
+        if let isOpen = placeDetailsManager.isOpen {
+            placeOpenStatuses[placeId] = isOpen
+        }
+    }
     
     /// Performs a nearby search for places using the Places SDK
     /// - Parameters:
@@ -59,6 +72,10 @@ class NearbySearchManager: ObservableObject {
         maxResults: Int = 20,
         rankPreference: SearchNearbyRequest.RankPreference = .distance
     ) async {
+        
+        // Clear previous open statuses when starting new search
+        placeOpenStatuses.removeAll()
+        
         // Create circular region for search area
         let region = CircularCoordinateRegion(
             center: location,

@@ -15,17 +15,17 @@ import SwiftUI
 import GoogleMaps
 
 struct PlaceCardView: View {
-    
     let placeId: String
     @StateObject private var placeDetailsManager = PlaceDetailsManager()
-    var mapOptions = GMSMapViewOptions()
+    @State private var cameraPosition: GMSCameraPosition?
     
     var body: some View {
         VStack(spacing: 16) {
             if let place = placeDetailsManager.place {
                 
                 // Map View in top portion
-                GoogleMapView(options: mapOptions)
+                GoogleMapView(options: GMSMapViewOptions())
+                    .camera(cameraPosition)
                     .ignoresSafeArea(.container, edges: [.bottom, .horizontal])
                     .frame(maxWidth: .infinity, minHeight: 325)
                 
@@ -49,7 +49,7 @@ struct PlaceCardView: View {
             await placeDetailsManager.fetchPlaceDetails(placeID: placeId)
             
             if let place = placeDetailsManager.place {
-                mapOptions.camera = GMSCameraPosition(
+                cameraPosition = GMSCameraPosition(
                     latitude: place.location.latitude,
                     longitude: place.location.longitude,
                     zoom: 15

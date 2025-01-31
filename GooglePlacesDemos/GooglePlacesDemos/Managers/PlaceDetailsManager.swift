@@ -152,30 +152,35 @@ class PlaceDetailsManager: ObservableObject {
     
     //MARK: Text Search Functionality
     
-    func searchByText(
-        query: String,
-        location: CLLocationCoordinate2D,
-        radius: Double = 5000, // Default 5km radius
-        properties: [PlaceProperty]? = nil
-    ) async {
-        // Create circular region for location bias
-        let region = CircularCoordinateRegion(
+    func searchByText(query: String, location: CLLocationCoordinate2D, radius: Double) async {
+        let searchPlaceFields: [PlaceProperty] = [
+            .formattedAddress,      // Add this to get formatted address
+            .addressComponents,     // Add this if you need detailed address components
+            .displayName,
+            .placeID,
+            .priceLevel,
+            .rating,
+            .numberOfUserRatings,
+            .types,
+            .coordinate
+        ]
+        
+        let locationBias = CircularCoordinateRegion(
             center: location,
             radius: radius
         )
         
-        let searchRequest = SearchByTextRequest(
+        let searchByTextRequest = SearchByTextRequest(
             textQuery: query,
-            placeProperties: properties ?? defaultProperties,
-            locationBias: region,
-            maxResultCount: 10
+            placeProperties: searchPlaceFields,  
+            locationBias: locationBias
         )
         
-        switch await Self.placesClient.searchByText(with: searchRequest) {
+        switch await PlacesClient.shared.searchByText(with: searchByTextRequest) {
         case .success(let places):
             self.textResults = places
-        case .failure(let placesError):
-            self.error = placesError
+        case .failure(let error):
+            self.error = error
             self.textResults = nil
         }
     }

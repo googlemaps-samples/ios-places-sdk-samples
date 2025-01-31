@@ -28,7 +28,7 @@ struct TextSearchView: View {
     private let defaultRadius = 5000.0 // 5km radius
     
     private let samplePrompts = [
-        "Find me a cozy coffee shop near Central Park",
+        "Find me a cozy coffee shop near Google",
         "What's a good Italian restaurant that's open now?",
         "Where's an affordable gym in downtown?",
         "Show me highly rated sushi places under $30"
@@ -128,26 +128,17 @@ struct TextPlaceRow: View {
     let place: Place
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) { // This ensures left alignment of all content
+        VStack(alignment: .leading, spacing: 12) {
             // Place name
             Text(place.displayName ?? "")
                 .font(.system(size: 18, weight: .medium))
                 .lineLimit(2)
-                .frame(maxWidth: .infinity, alignment: .leading) // Forces left alignment
+                .frame(maxWidth: .infinity, alignment: .leading)
             
-            // Address
-            if let address = place.formattedAddress {
-                Text(address)
-                    .font(.system(size: 16))
-                    .foregroundColor(.secondary)
-                    .lineLimit(2)
-                    .frame(maxWidth: .infinity, alignment: .leading) // Forces left alignment
-            }
-            
-            // Rating and price level
+            // Rating, reviews and place type
             HStack(spacing: 16) {
                 if let rating = place.rating {
-                    HStack(spacing: 6) {
+                    HStack(spacing: 4) {
                         Text(String(format: "%.1f", rating))
                             .font(.system(size: 16, weight: .medium))
                         
@@ -161,20 +152,41 @@ struct TextPlaceRow: View {
                     }
                 }
                 
+                Text("•")
+                
+                if let firstType = place.types.first {
+                    Text(firstType.displayString())
+                        .font(.system(size: 16))
+                        .foregroundColor(.secondary)
+                }
+                
+                Text("•")
+                
                 if place.priceLevel != .unspecified {
                     Text(String(repeating: "$", count: place.priceLevel.dollarSignCount()))
                         .font(.system(size: 16))
                         .foregroundColor(.secondary)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading) // Forces left alignment for HStack
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            // Address
+            if let address = place.formattedAddress {
+                Text(address)
+                    .font(.system(size: 16))
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
         .padding(.vertical, 12)
         .padding(.horizontal, 16)
         .background(Color(uiColor: .systemBackground))
-        .frame(maxWidth: .infinity, alignment: .leading) // Forces left alignment for entire row
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
+
 
 #Preview("Text Search View") {
     TextSearchView()

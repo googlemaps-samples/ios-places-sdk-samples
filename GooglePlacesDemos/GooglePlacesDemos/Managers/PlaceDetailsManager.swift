@@ -14,6 +14,7 @@
 import Foundation
 import GooglePlacesSwift
 import UIKit  //required for photos
+import CoreLocation
 
 @MainActor
 class PlaceDetailsManager: ObservableObject {
@@ -23,6 +24,7 @@ class PlaceDetailsManager: ObservableObject {
     @Published var placePhoto: UIImage?
     @Published var photos: [Photo]?
     @Published var loadedPhotos: [UIImage] = []
+    @Published var textResults: [Place]?
     
     private static let placesClient = PlacesClient.shared
     
@@ -144,6 +146,37 @@ class PlaceDetailsManager: ObservableObject {
             
             // Update loadedPhotos only once with all images
             self.loadedPhotos = tempPhotos
+        }
+    }
+
+    
+    //MARK: Text Search Functionality
+    
+    func searchByText(
+        query: String,
+        location: CLLocationCoordinate2D,
+        radius: Double = 5000, // Default 5km radius
+        properties: [PlaceProperty]? = nil
+    ) async {
+        // Create circular region for location bias
+        let region = CircularCoordinateRegion(
+            center: location,
+            radius: radius
+        )
+        
+        let searchRequest = SearchByTextRequest(
+            textQuery: query,
+            placeProperties: properties ?? defaultProperties,
+            locationBias: region,
+            maxResultCount: 10
+        )
+        
+        switch await Self.placesClient.searchByText(with: searchRequest) {
+        case .success(let places):
+            self.textResults = places
+        case .failure(let placesError):
+            self.error = placesError
+            self.textResults = nil
         }
     }
 

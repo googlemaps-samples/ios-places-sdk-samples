@@ -35,6 +35,11 @@ class PlaceExampleViewModel: ObservableObject {
             title: "Nearby Search",
             description: "Performs location-based nearby place searches with results list",
             destination: AnyView(NearbySearchView())
+        ),
+        PlaceExample(
+            title: "Text Search",
+            description: "Provides information about a set of places based on a natural language text search query.",
+            destination: AnyView(TextSearchView())
         )
     ]
 }

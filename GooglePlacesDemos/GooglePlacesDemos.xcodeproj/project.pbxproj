@@ -42,6 +42,7 @@
 		DA8BFFC12D0CE90800B05221 /* PlacePhotoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8BFFC02D0CE90800B05221 /* PlacePhotoList.swift */; };
 		DA8BFFC32D0D0E3100B05221 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8BFFC22D0D0E3100B05221 /* LoadingView.swift */; };
 		DA8BFFF72D10FA7800B05221 /* NearbySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8BFFF62D10FA7800B05221 /* NearbySearchView.swift */; };
+		DA9B176B2D4D79D300537B18 /* TextSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9B176A2D4D79D300537B18 /* TextSearchView.swift */; };
 		DAE2572F2CE6EB1500FD2694 /* OutlinedBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE2572E2CE6EB1500FD2694 /* OutlinedBoxStyle.swift */; };
 		DAE257332CE6FFE900FD2694 /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE257322CE6FFE900FD2694 /* AttributedText.swift */; };
 		DAE257352CE7298200FD2694 /* GooglePlacesWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE257342CE7298200FD2694 /* GooglePlacesWidget.swift */; };
@@ -111,6 +112,7 @@
 		DA8BFFC02D0CE90800B05221 /* PlacePhotoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacePhotoList.swift; sourceTree = "<group>"; };
 		DA8BFFC22D0D0E3100B05221 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		DA8BFFF62D10FA7800B05221 /* NearbySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbySearchView.swift; sourceTree = "<group>"; };
+		DA9B176A2D4D79D300537B18 /* TextSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSearchView.swift; sourceTree = "<group>"; };
 		DAE2572E2CE6EB1500FD2694 /* OutlinedBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlinedBoxStyle.swift; sourceTree = "<group>"; };
 		DAE257322CE6FFE900FD2694 /* AttributedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedText.swift; sourceTree = "<group>"; };
 		DAE257342CE7298200FD2694 /* GooglePlacesWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesWidget.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				DA8BFFC02D0CE90800B05221 /* PlacePhotoList.swift */,
 				DA8BFFBE2D0CE00200B05221 /* PlacePhotosView.swift */,
 				DA8BFFF62D10FA7800B05221 /* NearbySearchView.swift */,
+				DA9B176A2D4D79D300537B18 /* TextSearchView.swift */,
 				DAE257642CE8470700FD2694 /* AutocompleteWithWidget.swift */,
 			);
 			path = Samples;
@@ -491,6 +494,7 @@
 				DA85C6802CF6C2F70059D755 /* PlaceExample.swift in Sources */,
 				DA8BFFC32D0D0E3100B05221 /* LoadingView.swift in Sources */,
 				567EFD6E2BD080230055E7A6 /* SampleList.swift in Sources */,
+				DA9B176B2D4D79D300537B18 /* TextSearchView.swift in Sources */,
 				DA85C7722CFD41960059D755 /* PlaceCardView.swift in Sources */,
 				DA8B00592D12530600B05221 /* NearbySearchManager.swift in Sources */,
 				DA85C76E2CFD3BAD0059D755 /* CardExample.swift in Sources */,
@@ -633,7 +637,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

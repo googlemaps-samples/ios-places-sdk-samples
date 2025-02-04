@@ -142,6 +142,8 @@ struct TextPlaceRow: View {
                         Text(String(format: "%.1f", rating))
                             .font(.system(size: 16, weight: .medium))
                         
+                        //TODO: Can I mimic the same star logic from RatingStarsView
+                        // from the PlaceCardView?
                         Image(systemName: "star.fill")
                             .foregroundColor(.yellow)
                             .font(.system(size: 14))
@@ -188,6 +190,6 @@ struct TextPlaceRow: View {
 }
 
 
-#Preview("Text Search View") {
-    TextSearchView()
-}
+ #Preview("Text Search View") {
+   TextSearchView()
+ }

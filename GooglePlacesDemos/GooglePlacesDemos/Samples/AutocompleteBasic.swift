@@ -48,10 +48,10 @@ struct AutocompleteBasic: View {
                 HStack {
                     TextField("Search for a place", text: $address)
                         .focused($isAddressFocused)
-                        .onChange(of: address) {
-                            manager.fetchPredictions(for: $0)
-                            if address == "" {
-                                self.clearAddressFields()
+                        .onChange(of: address) { oldValue, newValue in
+                            manager.fetchPredictions(for: newValue)
+                            if newValue.isEmpty {
+                                clearAddressFields()
                             }
                         }
                         .onAppear {

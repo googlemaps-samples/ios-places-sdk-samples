@@ -154,8 +154,8 @@ class PlaceDetailsManager: ObservableObject {
     
     func searchByText(query: String, location: CLLocationCoordinate2D, radius: Double) async {
         let searchPlaceFields: [PlaceProperty] = [
-            .formattedAddress,      // Add this to get formatted address
-            .addressComponents,     // Add this if you need detailed address components
+            .formattedAddress,
+            .addressComponents,
             .displayName,
             .placeID,
             .priceLevel,

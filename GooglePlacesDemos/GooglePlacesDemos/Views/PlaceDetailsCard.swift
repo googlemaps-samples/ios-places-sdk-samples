@@ -15,6 +15,14 @@ import SwiftUI
 import GooglePlacesSwift
 
 
+/// A SwiftUI view component that displays key place information in a card format.
+/// Presents essential details like name, rating, price level, and operating hours
+/// from a Place object retrieved via the GooglePlacesSwift SDK.
+///
+/// - Parameters:
+///   - place: A `Place` object containing the details to display
+///   - isOpen: Optional Boolean indicating if the place is currently open
+
 struct PlaceDetailsCard: View {
    let place: Place
    let isOpen: Bool?
@@ -130,25 +138,4 @@ struct PlaceDetailsCard: View {
     
 }
 
-struct RatingStarsView: View {
-   let rating: Double
-   
-   var body: some View {
-       HStack(spacing: 2) {
-           ForEach(0..<5) { index in
-               Image(systemName: starType(for: index))
-                   .foregroundColor(.yellow)
-           }
-       }
-   }
-   
-    private func starType(for index: Int) -> String {
-        if Double(index) + 1.0 <= rating {
-            return "star.fill"
-        } else if Double(index) + 0.5 <= rating {
-            return "star.leadinghalf.filled"
-        } else {
-            return "star"
-        }
-    }
-}
+

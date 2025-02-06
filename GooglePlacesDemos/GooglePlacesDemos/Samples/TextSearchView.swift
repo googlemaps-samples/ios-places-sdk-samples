@@ -21,6 +21,7 @@ struct TextSearchView: View {
     @State private var searchPrompt = ""
     @State private var isLoading = false
     
+    // Googleplex (Google HQ) in Mountain View, CA
     private let defaultLocation = CLLocationCoordinate2D(
         latitude: 37.4220,
         longitude: -122.0841
@@ -128,7 +129,7 @@ struct TextPlaceRow: View {
     let place: Place
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 7) {
             // Place name
             Text(place.displayName ?? "")
                 .font(.system(size: 18, weight: .medium))
@@ -136,26 +137,24 @@ struct TextPlaceRow: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             // Rating, reviews and place type
-            HStack(spacing: 16) {
+            HStack(spacing: 4) {
                 if let rating = place.rating {
                     HStack(spacing: 4) {
                         Text(String(format: "%.1f", rating))
                             .font(.system(size: 16, weight: .medium))
                         
-                        //TODO: Can I mimic the same star logic from RatingStarsView
-                        // from the PlaceCardView?
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
-                            .font(.system(size: 14))
-                        
+                        // Using the existing RatingStarsView
+                        RatingStarsView(rating: Double(rating))
+                            .font(.system(size: 14)) // Maintain the desired font size
+                                                                        
                         Text("(\(place.numberOfUserRatings))")
                             .font(.system(size: 16))
                             .foregroundColor(.secondary)
                     }
                 }
+            }
                 
-                Text("•")
-                
+            HStack(spacing: 8) {
                 if let firstType = place.types.first {
                     Text(firstType.displayString())
                         .font(.system(size: 16))
@@ -189,7 +188,6 @@ struct TextPlaceRow: View {
     }
 }
 
-
- #Preview("Text Search View") {
-   TextSearchView()
- }
+#Preview("Text Search View") {
+  TextSearchView()
+}

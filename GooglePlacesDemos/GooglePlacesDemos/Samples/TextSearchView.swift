@@ -49,7 +49,7 @@ struct TextSearchView: View {
                     .frame(maxWidth: .infinity)
                     .frame(minHeight: 100)
                     .padding(.horizontal)
-                    .onChange(of: searchPrompt) { oldValue, newValue in
+                    .onChange(of: searchPrompt) { newValue in
                         if newValue.isEmpty {
                             manager.textResults = nil  // Clear the results when text is empty
                         }

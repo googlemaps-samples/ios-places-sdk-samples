@@ -83,7 +83,7 @@ struct TextSearchView: View {
             }
             .padding(.vertical, 24)
             
-            Divider()
+           // Divider()
             
             // Results area
             if isLoading {
@@ -103,6 +103,7 @@ struct TextSearchView: View {
                     }
                     .padding(.vertical, 8)
                 }
+                
             }
             
             Spacer()
@@ -118,7 +119,8 @@ struct TextSearchView: View {
             await manager.searchByText(
                 query: searchPrompt,
                 location: defaultLocation,
-                radius: defaultRadius
+                radius: defaultRadius,
+                isOpenNow: true             //defaults to open businesses
             )
             isLoading = false
         }

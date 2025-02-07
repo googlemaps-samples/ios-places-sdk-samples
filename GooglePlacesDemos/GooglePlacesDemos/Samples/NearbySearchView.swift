@@ -16,14 +16,12 @@ import GoogleMaps
 import SwiftUI
 
 struct NearbySearchView: View {
-    
-    @State private var currentZoom: Float = 14.0
     @State private var selectedMarker: GMSMarker?
     @State private var markers: [GMSMarker] = []
+    @State private var hasInitializedSearch = false
     
     @StateObject private var searchManager = NearbySearchManager()
     
-    // Add computed property to easily access open status
     private var selectedPlaceOpenStatus: Bool? {
         guard let place = selectedMarker?.userData as? Place,
               let placeId = place.placeID else {
@@ -35,14 +33,13 @@ struct NearbySearchView: View {
     private let mapOptions: GMSMapViewOptions = {
         var options = GMSMapViewOptions()
         options.camera = GMSCameraPosition(
-            latitude: 37.4220,
+            latitude: 37.4220,  // Googleplex coordinates
             longitude: -122.0841,
             zoom: 14
         )
         return options
     }()
     
-    // Existing helper functions remain the same
     private func calculateSearchRadius(zoom: Float) -> Double {
         let baseRadius = 500.0
         let zoomScale = pow(2.0, Double(20 - zoom))
@@ -58,6 +55,26 @@ struct NearbySearchView: View {
         }
     }
     
+    private func performInitialSearch() async {
+        guard !hasInitializedSearch else { return }
+
+        if let camera = mapOptions.camera {
+            
+            await searchManager.searchNearby(
+                location: camera.target,
+                includedTypes: [.cafe],
+                radius: calculateSearchRadius(zoom: camera.zoom)
+            )
+            
+            if let places = searchManager.places {
+                updateMarkers(from: places)
+            }
+            
+            hasInitializedSearch = true
+        }
+        
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             GoogleMapView(options: mapOptions)
@@ -67,7 +84,6 @@ struct NearbySearchView: View {
                         mapView.selectedMarker = marker
                         selectedMarker = marker
                         
-                        // Fetch open status when marker is tapped
                         if let place = marker.userData as? Place,
                            let placeId = place.placeID {
                             Task {
@@ -77,29 +93,18 @@ struct NearbySearchView: View {
                     }
                     return true
                 }
-                .onCameraIdle { position in
-                    currentZoom = position.zoom
-                    
-                    Task {
-                        await searchManager.searchNearby(
-                            location: position.target,
-                            includedTypes: [.cafe],
-                            radius: calculateSearchRadius(zoom: position.zoom)
-                        )
-                        
-                        if let places = searchManager.places {
-                            updateMarkers(from: places)
-                        }
-                    }
-                }
                 .ignoresSafeArea(.container, edges: [.bottom, .horizontal])
                 .frame(maxWidth: .infinity, minHeight: 325)
+                .onAppear {
+                    Task {
+                        await performInitialSearch()
+                    }
+                }
             
-            // Show place details when marker is selected
             if let selectedPlace = selectedMarker?.userData as? Place {
                 PlaceDetailsCard(
                     place: selectedPlace,
-                    isOpen: selectedPlaceOpenStatus // Use computed property here
+                    isOpen: selectedPlaceOpenStatus
                 )
                 .frame(maxWidth: .infinity, alignment: .leading)
             } else {

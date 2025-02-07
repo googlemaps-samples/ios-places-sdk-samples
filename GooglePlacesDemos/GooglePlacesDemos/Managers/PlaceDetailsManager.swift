@@ -152,7 +152,7 @@ class PlaceDetailsManager: ObservableObject {
     
     //MARK: Text Search Functionality
     
-    func searchByText(query: String, location: CLLocationCoordinate2D, radius: Double) async {
+    func searchByText(query: String, location: CLLocationCoordinate2D, radius: Double, isOpenNow: Bool = false) async {
         let searchPlaceFields: [PlaceProperty] = [
             .formattedAddress,
             .addressComponents,
@@ -172,8 +172,9 @@ class PlaceDetailsManager: ObservableObject {
         
         let searchByTextRequest = SearchByTextRequest(
             textQuery: query,
-            placeProperties: searchPlaceFields,  
-            locationBias: locationBias
+            placeProperties: searchPlaceFields,
+            locationBias: locationBias,
+            isOpenNow: isOpenNow // Add this parameter
         )
         
         switch await PlacesClient.shared.searchByText(with: searchByTextRequest) {
@@ -183,6 +184,7 @@ class PlaceDetailsManager: ObservableObject {
             self.error = error
             self.textResults = nil
         }
+    
     }
 
     // Clear current place details

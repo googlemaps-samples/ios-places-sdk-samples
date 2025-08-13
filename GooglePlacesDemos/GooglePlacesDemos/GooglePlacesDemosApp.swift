@@ -28,7 +28,19 @@ struct GooglePlacesDemosApp: App {
         }
     }
     
+    private var isTestEnvironment: Bool {
+        // Check if running in any test environment (unit tests or UI tests)
+        NSClassFromString("XCTestCase") != nil ||
+        ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+    }
+    
     private func setupGooglePlaces() {
+        // Skip API key requirement in test environments
+        if isTestEnvironment {
+            let _ = PlacesClient.provideAPIKey("TEST_DUMMY_KEY")
+            return
+        }
+        
         guard let apiKey = Bundle.main.infoDictionary?["PLACES_API_KEY"] as? String, !apiKey.isEmpty else {
             fatalError("Add your PLACES_API_KEY to Info.plist - Get one at https://developers.google.com/places/ios-sdk/start#get-key")
         }
@@ -41,6 +53,12 @@ struct GooglePlacesDemosApp: App {
     }
     
     private func setupGoogleMaps() {
+        // Skip API key requirement in test environments
+        if isTestEnvironment {
+            let _ = GMSServices.provideAPIKey("TEST_DUMMY_KEY")
+            return
+        }
+        
         guard let mapKey = Bundle.main.infoDictionary?["MAPS_API_KEY"] as? String, !mapKey.isEmpty else {
             fatalError("Add your MAPS_API_KEY to Info.plist - Get one at https://developers.google.com/maps/documentation/ios-sdk/get-api-key")
         }

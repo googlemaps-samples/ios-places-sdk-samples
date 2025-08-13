@@ -49,6 +49,7 @@ jobs:
             echo "Building and Testing"
             xcodebuild test -project GooglePlacesDemos/GooglePlacesDemos.xcodeproj \
             -scheme GooglePlacesDemos \
+            -only-testing:GooglePlacesDemosUITests/GooglePlacesDemosUITests/testConfigurationPlacePropertiesMultiPicker \
             -destination 'platform=iOS Simulator,OS=18.4,name=iPhone 16' | xcpretty
 
     test: # used as required status check

@@ -23,7 +23,6 @@ final class GooglePlacesDemosUITests: XCTestCase {
   func testConfigurationPlacePropertiesMultiPicker() throws {
     // UI tests must launch the application that they test.
     let app = XCUIApplication()
-    app.launchArguments.append("-UITESTS_NO_API_KEYS")
     app.launch()
 
     // Go to the configuration's Place Properties picker.

@@ -28,18 +28,8 @@ struct GooglePlacesDemosApp: App {
         }
     }
     
-    private var isUITestBypassEnabled: Bool {
-        ProcessInfo.processInfo.arguments.contains("-UITESTS_NO_API_KEYS") ||
-        ProcessInfo.processInfo.environment["UITESTS_NO_API_KEYS"] == "1"
-    }
-
     private func setupGooglePlaces() {
-        // Allow UI tests to bypass API key requirement by providing a dummy key
-        if isUITestBypassEnabled {
-            let _ = PlacesClient.provideAPIKey("UI_TEST_DUMMY_KEY")
-            return
-        }
-        guard let apiKey = Bundle.main.infoDictionary?["PLACES_API_KEY"] as? String else {
+        guard let apiKey = Bundle.main.infoDictionary?["PLACES_API_KEY"] as? String, !apiKey.isEmpty else {
             fatalError("Add your PLACES_API_KEY to Info.plist - Get one at https://developers.google.com/places/ios-sdk/start#get-key")
         }
         
@@ -51,12 +41,7 @@ struct GooglePlacesDemosApp: App {
     }
     
     private func setupGoogleMaps() {
-        // Allow UI tests to bypass API key requirement by providing a dummy key
-        if isUITestBypassEnabled {
-            let _ = GMSServices.provideAPIKey("UI_TEST_DUMMY_KEY")
-            return
-        }
-        guard let mapKey = Bundle.main.infoDictionary?["MAPS_API_KEY"] as? String else {
+        guard let mapKey = Bundle.main.infoDictionary?["MAPS_API_KEY"] as? String, !mapKey.isEmpty else {
             fatalError("Add your MAPS_API_KEY to Info.plist - Get one at https://developers.google.com/maps/documentation/ios-sdk/get-api-key")
         }
         

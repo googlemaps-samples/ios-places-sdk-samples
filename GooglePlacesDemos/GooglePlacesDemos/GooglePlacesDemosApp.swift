@@ -28,9 +28,14 @@ struct GooglePlacesDemosApp: App {
         }
     }
     
+    private var isUITestBypassEnabled: Bool {
+        ProcessInfo.processInfo.arguments.contains("-UITESTS_NO_API_KEYS") ||
+        ProcessInfo.processInfo.environment["UITESTS_NO_API_KEYS"] == "1"
+    }
+
     private func setupGooglePlaces() {
         // Allow UI tests to bypass API key requirement by providing a dummy key
-        if ProcessInfo.processInfo.arguments.contains("-UITESTS_NO_API_KEYS") {
+        if isUITestBypassEnabled {
             let _ = PlacesClient.provideAPIKey("UI_TEST_DUMMY_KEY")
             return
         }
@@ -47,7 +52,7 @@ struct GooglePlacesDemosApp: App {
     
     private func setupGoogleMaps() {
         // Allow UI tests to bypass API key requirement by providing a dummy key
-        if ProcessInfo.processInfo.arguments.contains("-UITESTS_NO_API_KEYS") {
+        if isUITestBypassEnabled {
             let _ = GMSServices.provideAPIKey("UI_TEST_DUMMY_KEY")
             return
         }

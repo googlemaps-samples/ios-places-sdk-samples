@@ -18,6 +18,7 @@ struct Dialog: View {
     
     @StateObject private var placeDetailsManager = PlaceDetailsManager()
     @StateObject private var viewModel = PlaceExampleViewModel()
+    @StateObject private var configuration = ParameterConfiguration()
     private let placeID: String = .spaceNeedle
     
     var body: some View {
@@ -60,6 +61,11 @@ struct Dialog: View {
             }
             .navigationTitle("Google Places (New) Samples")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                NavigationLink("Configure") {
+                    ConfigurationView(configuration: configuration)
+                }
+            }
         }
         .task {
             await placeDetailsManager.fetchPlaceDetails(placeID: placeID)

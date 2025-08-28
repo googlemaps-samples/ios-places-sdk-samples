@@ -149,8 +149,6 @@
 /* Begin XCBuildConfiguration section */
 		9D064BD72E44E9E1000F65EB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 9D064BCD2E44E9E0000F65EB /* GooglePlacesUIKitDemos */;
-			baseConfigurationReferenceRelativePath = GooglePlacesUIKitDemos.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -214,8 +212,6 @@
 		};
 		9D064BD82E44E9E1000F65EB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 9D064BCD2E44E9E0000F65EB /* GooglePlacesUIKitDemos */;
-			baseConfigurationReferenceRelativePath = GooglePlacesUIKitDemos.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;

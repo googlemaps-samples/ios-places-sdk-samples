@@ -37,10 +37,27 @@ struct GooglePlacesUIKitDemosApp: App {
       fatalError("API_KEY is empty in Info.plist")
     }
     let _ = PlacesClient.provideAPIKey(apiKey)
+    print("apiKey: \(apiKey)")
   }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+          Text("Google Places UIKit Demos")
+          NavigationView {
+            List {
+              NavigationLink(destination: BasicPlaceAutocompleteDemo()) {
+                Text("Basic Place Autocomplete")
+              }
+              NavigationLink(destination: PlaceAutocompleteDemo()) {
+                Text("Place Autocomplete")
+              }
+              NavigationLink(destination: PlaceDetailsDemo()) {
+                Text("Place Details")
+              }
+              NavigationLink(destination: PlaceSearchDemo()) {
+                Text("Place Search")
+              }
+            }
+          }
         }
     }
 }

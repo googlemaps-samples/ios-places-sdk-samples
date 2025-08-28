@@ -48,12 +48,8 @@ struct PlaceSearchDemo: View {
 
   var body: some View {
     VStack {
-      if(searchToggle) {
-        Text ("Search by Text")
-      } else {
-        Text ("Search Nearby")
-      }
-
+      Text(searchToggle ? "Text Search" : "Nearby Search")
+        .padding()
       PlaceSearchView(
         orientation: .vertical,
         request: searchToggle ? $placeTextSearchRequest : $placeSearchNearbyRequest,

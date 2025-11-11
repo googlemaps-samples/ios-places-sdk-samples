@@ -17,10 +17,9 @@ import GooglePlacesSwift
 extension PlaceType {
     /// Returns a formatted display string with hyphens removed and proper capitalization
     public func displayString() -> String {
-        // Replace hyphens with spaces and capitalize each word
+        // Replace underscores with spaces and capitalize each word
         return self.rawValue
-            .replacingOccurrences(of: "_", with: " ")
-            .split(separator: " ")
+            .split(separator: "_")
             .map { $0.capitalized }
             .joined(separator: " ")
     }

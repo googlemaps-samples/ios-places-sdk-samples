@@ -55,6 +55,7 @@ class PlaceDetailsManager: ObservableObject {
         switch result {
         case .success(let fetchedPlace):
             self.place = fetchedPlace
+            self.error = nil
         case .failure(let placesError):
             self.error = placesError
             self.place = nil
@@ -67,6 +68,7 @@ class PlaceDetailsManager: ObservableObject {
         switch await Self.placesClient.isPlaceOpen(with: request) {
             case .success(let response):
                 self.isOpen = response.status
+                self.error = nil
             case .failure(let error):
                 self.error = error
                 self.isOpen = nil
@@ -102,6 +104,7 @@ class PlaceDetailsManager: ObservableObject {
         switch await Self.placesClient.fetchPlace(with: fetchPlaceRequest) {
         case .success(let fetchedPlace):
             self.photos = fetchedPlace.photos
+            self.error = nil
         case .failure(let placesError):
             self.error = placesError
             self.photos = nil
@@ -115,6 +118,7 @@ class PlaceDetailsManager: ObservableObject {
         switch await Self.placesClient.fetchPhoto(with: fetchPhotoRequest) {
         case .success(let uiImage):
             self.placePhoto = uiImage
+            self.error = nil
         case .failure(let placesError):
             self.error = placesError
             self.placePhoto = nil
@@ -180,6 +184,7 @@ class PlaceDetailsManager: ObservableObject {
         switch await PlacesClient.shared.searchByText(with: searchByTextRequest) {
         case .success(let places):
             self.textResults = places
+            self.error = nil
         case .failure(let error):
             self.error = error
             self.textResults = nil

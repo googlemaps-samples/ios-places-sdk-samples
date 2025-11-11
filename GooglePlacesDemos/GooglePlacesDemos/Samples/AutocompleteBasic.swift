@@ -98,7 +98,7 @@ struct AutocompleteBasic: View {
         LazyVStack(alignment: .leading, spacing: 8) {
             ForEach(manager.predictions, id: \.self) { suggestion in
                 if case .place(let place) = suggestion {
-                    PlaceRow(place: place)
+                    PlaceRow(placeSuggestion: place)
                         .onTapGesture {
                             address = place.attributedPrimaryText.plainString()
                             isAddressFocused = false
@@ -158,13 +158,11 @@ struct AutocompleteBasic: View {
         for component in components {
             // Check all types for each component
             for type in component.types {
-               //print("Processing type: \(type) with name: \(component.name)")
-                
+
                 switch type {
                 case .streetNumber:
                     streetNumber = component.name
-                //print("Set street number: \(streetNumber)")
-                    
+
                 case .locality:
                     city = component.name
                     
@@ -187,16 +185,16 @@ struct AutocompleteBasic: View {
 }
 
 struct PlaceRow: View {
-    let place: AutocompletePlaceSuggestion
-    
+    let placeSuggestion: AutocompletePlaceSuggestion
+
     var body: some View {
         VStack(alignment: .leading) {
-            Text(place.attributedPrimaryText)
+            Text(placeSuggestion.attributedPrimaryText)
                 .font(.headline)
                 .lineLimit(1)
                 .truncationMode(.tail)
                                     
-            if let secondaryText = place.attributedSecondaryText {
+            if let secondaryText = placeSuggestion.attributedSecondaryText {
                 Text(secondaryText)
                     .font(.subheadline)
                     .foregroundColor(.secondary)

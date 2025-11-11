@@ -32,7 +32,7 @@ struct PlacePhotoList: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
-            .navigationTitle("Place Photos")  //TODO: Can we just remove this and have a regular VStack with a title heading?
+            .navigationTitle("Place Photos")  
             .navigationBarTitleDisplayMode(.inline)
         }
     }

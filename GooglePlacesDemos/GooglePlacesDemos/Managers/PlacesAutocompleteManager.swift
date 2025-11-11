@@ -58,6 +58,7 @@ class PlacesAutocompleteManager: ObservableObject {
                 // Update the predictions property with the new suggestions
                 // This will automatically trigger UI updates due to @Published
                 self.predictions = suggestions
+                self.error = nil
             case .failure(let placesError):
                 // Handle any errors by updating the error property and clearing predictions
                 self.error = placesError

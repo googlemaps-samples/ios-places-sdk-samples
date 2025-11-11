@@ -29,8 +29,8 @@ class PlaceDetailsManager: ObservableObject {
     private static let placesClient = PlacesClient.shared
     
     private let defaultProperties: [PlaceProperty] = [
-        .businessStatus,        // For open/closed status
-        .displayName,          // For place name
+        .businessStatus,      // For open/closed status
+        .displayName,         // For place name
         .placeID,             // For identification
         .priceLevel,          // For price level ($, $$, etc)
         .rating,              // For star rating

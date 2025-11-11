@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC. All rights reserved.
+// Copyright 2025 Google LLC. All rights reserved.
 //
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -21,11 +21,6 @@ struct PlaceCardList: View {
             List(viewModel.places) { place in
                 NavigationLink(destination: PlaceCardView(placeId: place.placeId)) {
                     HStack {
-                        /*
-                        Image(systemName: place.systemIcon)
-                            .foregroundColor(.yellow)
-                            .imageScale(.medium)
-                        */
                         VStack(alignment: .leading) {
                             Text(place.name)
                                 .font(.headline)
@@ -37,7 +32,7 @@ struct PlaceCardList: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
-            .navigationTitle("Place Details Card ")
+            .navigationTitle("Place Details Card")
             .navigationBarTitleDisplayMode(.inline)
         }
     }

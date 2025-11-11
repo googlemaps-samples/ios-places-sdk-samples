@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC. All rights reserved.
+// Copyright 2025 Google LLC. All rights reserved.
 //
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -17,7 +17,7 @@ import GooglePlacesSwift
 struct Dialog: View {
     
     @StateObject private var placeDetailsManager = PlaceDetailsManager()
-    @StateObject private var viewModel = PlaceExampleViewModel()
+    private var viewModel = PlaceExampleViewModel()
     @StateObject private var configuration = ParameterConfiguration()
     private let placeID: String = .spaceNeedle
     

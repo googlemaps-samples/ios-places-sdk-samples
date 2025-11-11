@@ -38,15 +38,15 @@ class NearbySearchManager: ObservableObject {
     /// Default place properties to request for each returned place
     private let defaultProperties: [PlaceProperty] = [
         .displayName,          // Place name
-        .placeID,             // For identification
-        .rating,              // Rating out of 5
-        .numberOfUserRatings, // Number of ratings
-        .coordinate,          // Location coordinates
-        .photos,             // Place photos
-        .editorialSummary,    // Brief description
-        .currentOpeningHours, // Operating hours
-        .types,              // Place types (e.g., park, museum)
-        .priceLevel          // Price level if applicable
+        .placeID,              // For identification
+        .rating,               // Rating out of 5
+        .numberOfUserRatings,  // Number of ratings
+        .coordinate,           // Location coordinates
+        .photos,               // Place photos
+        .editorialSummary,     // Brief description
+        .currentOpeningHours,  // Operating hours
+        .types,                // Place types (e.g., park, museum)
+        .priceLevel            // Price level if applicable
     ]
     
     /// Fetches the open status for a single place

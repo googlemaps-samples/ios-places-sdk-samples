@@ -12,10 +12,10 @@
 // permissions and limitations under the License.
 
 import SwiftUI
-import GooglePlaces
+import GooglePlacesSwift
 
 struct AutocompleteWithWidget: View {
-    @State private var selectedPlace: GMSPlace?
+    @State private var selectedPlace: Place?
     @State private var showingPlacePicker = false
     @State private var address = ""
     
@@ -36,13 +36,12 @@ struct AutocompleteWithWidget: View {
             }
             
             // Display selected place details if available
-            //TODO: Change this to update a local GMSPlace object
             if let place = selectedPlace {
                 Section("Selected Place Details") {
-                    Text("Name: \(place.name ?? "N/A")")
+                    Text("Name: \(place.displayName ?? "N/A")")
                     Text("Address: \(place.formattedAddress ?? "N/A")")
                     Text("Place ID: \(place.placeID ?? "N/A")")
-                    Text("Location \(place.coordinate.latitude), \(place.coordinate.longitude)")
+                    Text("Location \(place.location.latitude), \(place.location.longitude)")
                 }
             }
         }
@@ -50,9 +49,10 @@ struct AutocompleteWithWidget: View {
             GooglePlacesWidget(selectedPlace: $selectedPlace)
                 .onDisappear {
                     if let place = selectedPlace {
-                        address = place.formattedAddress ?? place.name ?? ""
+                        address = place.formattedAddress ?? place.displayName ?? ""
                     }
                 }
         }
     }
 }
+

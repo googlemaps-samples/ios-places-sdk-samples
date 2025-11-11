@@ -12,55 +12,41 @@
 // permissions and limitations under the License.
 
 import SwiftUI
-import GooglePlaces
+import GooglePlacesSwift
 
-struct GooglePlacesWidget: UIViewControllerRepresentable {
-    @Binding var selectedPlace: GMSPlace?
+struct GooglePlacesWidget: View {
+    @Binding var selectedPlace: Place?
     @Environment(\.dismiss) private var dismiss
-    
-    class Coordinator: NSObject, GMSAutocompleteViewControllerDelegate {
-        var parent: GooglePlacesWidget
-        
-        init(_ parent: GooglePlacesWidget) {
-            self.parent = parent
-        }
-        
-        func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-            parent.selectedPlace = place
-            parent.dismiss()
-        }
-        
-        func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-            print("Error: ", error.localizedDescription)
-            parent.dismiss()
-        }
-        
-        func wasCancelled(_ viewController: GMSAutocompleteViewController) {
-            parent.dismiss()
-        }
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-    
-    func makeUIViewController(context: Context) -> GMSAutocompleteViewController {
-        let autocompleteController = GMSAutocompleteViewController()
-        autocompleteController.delegate = context.coordinator
-        
-        // Configure the autocomplete controller
-        let fields: GMSPlaceField = [.name, .placeID, .coordinate, .formattedAddress]
-        autocompleteController.placeFields = fields
-        
-        // Optional: Configure filters
-        let filter = GMSAutocompleteFilter()
-        filter.types = ["address"]
-        autocompleteController.autocompleteFilter = filter
-        
-        return autocompleteController
-    }
-    
-    func updateUIViewController(_ uiViewController: GMSAutocompleteViewController, context: Context) {
-        // Updates to the controller can be handled here if needed
+    @State private var isPresented = true
+
+    var body: some View {
+        Color.clear
+            .placeAutocomplete(
+                // You can pass a filter, customization, initialQuery, and sessionToken if desired.
+                // Using defaults for those here and only binding show.
+                show: $isPresented,
+                onSelection: { suggestion, sessionToken in
+                    // suggestion is AutocompletePlaceSuggestion
+                    // sessionToken is AutocompleteSessionToken (if you want to reuse it)
+                    Task {
+                        let request = FetchPlaceRequest(
+                            placeID: suggestion.placeID,
+                            placeProperties: [.displayName, .placeID, .coordinate, .formattedAddress]
+                        )
+                        switch await PlacesClient.shared.fetchPlace(with: request) {
+                        case .success(let place):
+                            selectedPlace = place
+                        case .failure:
+                            break
+                        }
+                        dismiss()
+                    }
+                },
+                onError: { error in
+                    // Handle PlacesError if needed
+                    // print("Places error: \(error.localizedDescription)")
+                    dismiss()
+                }
+            )
     }
 }

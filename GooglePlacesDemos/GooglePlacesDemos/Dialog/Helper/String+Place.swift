@@ -13,8 +13,6 @@
 
 import Foundation
 
-//TODO: Expand on this model to create a PlaceExample
-
 extension String {
     static let spaceNeedle = "ChIJ-bfVTh8VkFQRDZLQnmioK9s"
     static let pikePlace = "ChIJPcr187JrkFQRLApO8QKP8ZM"

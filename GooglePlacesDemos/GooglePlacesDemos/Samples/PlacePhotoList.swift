@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC. All rights reserved.
+// Copyright 2025 Google LLC. All rights reserved.
 //
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -21,11 +21,6 @@ struct PlacePhotoList: View {
             List(viewModel.places) { place in
                 NavigationLink(destination: PlacePhotosView(placeId: place.placeId)) {
                     HStack {
-                        /*
-                        Image(systemName: place.systemIcon)
-                            .foregroundColor(.yellow)
-                            .imageScale(.medium)
-                        */
                         VStack(alignment: .leading) {
                             Text(place.name)
                                 .font(.headline)

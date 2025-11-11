@@ -29,7 +29,7 @@
 		DA85C5412CF1296B0059D755 /* PlaceDetailsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C5402CF1296B0059D755 /* PlaceDetailsCard.swift */; };
 		DA85C5432CF131020059D755 /* PriceLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C5422CF131020059D755 /* PriceLevel.swift */; };
 		DA85C5452CF1387B0059D755 /* PlaceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C5442CF1387B0059D755 /* PlaceType.swift */; };
-		DA85C5F72CF54FD60059D755 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C5F62CF54FD60059D755 /* String.swift */; };
+		DA85C5F72CF54FD60059D755 /* String+Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C5F62CF54FD60059D755 /* String+Place.swift */; };
 		DA85C6802CF6C2F70059D755 /* PlaceExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C67F2CF6C2F70059D755 /* PlaceExample.swift */; };
 		DA85C6822CF6C3240059D755 /* PlaceExampleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C6812CF6C3240059D755 /* PlaceExampleViewModel.swift */; };
 		DA85C76E2CFD3BAD0059D755 /* CardExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85C76D2CFD3BAD0059D755 /* CardExample.swift */; };
@@ -95,13 +95,14 @@
 		567EFDAE2BD083B40055E7A6 /* ClientRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientRequests.swift; sourceTree = "<group>"; };
 		567EFDB32BD08F6D0055E7A6 /* MultiPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPicker.swift; sourceTree = "<group>"; };
 		56E420C72C33562D005BBBE7 /* ParameterConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterConfigurationTests.swift; sourceTree = "<group>"; };
+		9D4F61CE2EC38CB700A37F46 /* GooglePlacesDemos.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GooglePlacesDemos.xcconfig; path = GooglePlacesDemos/GooglePlacesDemos.xcconfig; sourceTree = "<group>"; };
 		DA6D4D9D2CE555C300B6F416 /* PlacesAutocompleteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesAutocompleteManager.swift; sourceTree = "<group>"; };
 		DA6D4DCD2CE55D5D00B6F416 /* AutocompleteBasic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteBasic.swift; sourceTree = "<group>"; };
 		DA85C5032CF035850059D755 /* Dialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialog.swift; sourceTree = "<group>"; };
 		DA85C5402CF1296B0059D755 /* PlaceDetailsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsCard.swift; sourceTree = "<group>"; };
 		DA85C5422CF131020059D755 /* PriceLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceLevel.swift; sourceTree = "<group>"; };
 		DA85C5442CF1387B0059D755 /* PlaceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceType.swift; sourceTree = "<group>"; };
-		DA85C5F62CF54FD60059D755 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		DA85C5F62CF54FD60059D755 /* String+Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Place.swift"; sourceTree = "<group>"; };
 		DA85C67F2CF6C2F70059D755 /* PlaceExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceExample.swift; sourceTree = "<group>"; };
 		DA85C6812CF6C3240059D755 /* PlaceExampleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceExampleViewModel.swift; sourceTree = "<group>"; };
 		DA85C76D2CFD3BAD0059D755 /* CardExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardExample.swift; sourceTree = "<group>"; };
@@ -157,6 +158,7 @@
 		567EFD5F2BD080230055E7A6 = {
 			isa = PBXGroup;
 			children = (
+				9D4F61CE2EC38CB700A37F46 /* GooglePlacesDemos.xcconfig */,
 				567EFD6A2BD080230055E7A6 /* GooglePlacesDemos */,
 				567EFD7B2BD080250055E7A6 /* GooglePlacesDemosTests */,
 				567EFD852BD080250055E7A6 /* GooglePlacesDemosUITests */,
@@ -314,7 +316,7 @@
 			children = (
 				DA85C6812CF6C3240059D755 /* PlaceExampleViewModel.swift */,
 				DA85C67F2CF6C2F70059D755 /* PlaceExample.swift */,
-				DA85C5F62CF54FD60059D755 /* String.swift */,
+				DA85C5F62CF54FD60059D755 /* String+Place.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -490,7 +492,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA85C5F72CF54FD60059D755 /* String.swift in Sources */,
+				DA85C5F72CF54FD60059D755 /* String+Place.swift in Sources */,
 				561B01AD2C542F5F003BA3F0 /* ParameterInputTextField.swift in Sources */,
 				DA6D4D9E2CE555C300B6F416 /* PlacesAutocompleteManager.swift in Sources */,
 				DA85C5412CF1296B0059D755 /* PlaceDetailsCard.swift in Sources */,
@@ -626,6 +628,7 @@
 		};
 		567EFD8D2BD080250055E7A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 567EFDA92BD0812A0055E7A6 /* GooglePlacesDemos.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -641,7 +644,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -650,6 +653,9 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example-1.GooglePlacesDemos";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -658,6 +664,7 @@
 		};
 		567EFD902BD080250055E7A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 567EFDA92BD0812A0055E7A6 /* GooglePlacesDemos.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -676,6 +683,7 @@
 		};
 		567EFD932BD080250055E7A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 567EFDA92BD0812A0055E7A6 /* GooglePlacesDemos.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -733,7 +741,7 @@
 			repositoryURL = "https://github.com/googlemaps/ios-places-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 9.2.0;
+				minimumVersion = 10.4.0;
 			};
 		};
 		DA85C7772CFD4A0A0059D755 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
@@ -741,7 +749,7 @@
 			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 9.2.0;
+				minimumVersion = 10.4.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

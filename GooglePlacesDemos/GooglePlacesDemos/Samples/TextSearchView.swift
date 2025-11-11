@@ -83,8 +83,6 @@ struct TextSearchView: View {
             }
             .padding(.vertical, 24)
             
-           // Divider()
-            
             // Results area
             if isLoading {
                 ProgressView()

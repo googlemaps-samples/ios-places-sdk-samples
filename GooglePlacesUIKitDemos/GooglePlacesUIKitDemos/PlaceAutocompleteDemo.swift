@@ -59,7 +59,7 @@ struct PlaceAutocompleteDemo: View {
           .font(.title)
           .fontWeight(.bold)
 
-      Text("Tap the button to search. The result will be displayed using the official `PlaceDetailsView` component.")
+      Text("Tap the button to search. The selected result will be displayed using the official `PlaceDetailsCompactView` component.")
           .font(.subheadline)
           .foregroundColor(.secondary)
           .multilineTextAlignment(.center)
@@ -81,7 +81,7 @@ struct PlaceAutocompleteDemo: View {
           Text(placesError.localizedDescription)
             .frame(maxWidth: .infinity, alignment: .leading)
         } else if let fetchedPlace = $fetchedPlace.wrappedValue {
-          Text("\(fetchedPlace)")
+          Text(String(describing: fetchedPlace))
             .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
@@ -105,11 +105,11 @@ struct PlaceAutocompleteDemo: View {
     .sheet(isPresented: $showDetailsSheet) {
 
       NavigationStack {
-        PlaceDetailsView(
+        PlaceDetailsCompactView(
           orientation: .vertical,
           query: $selectedPlaceQuery,
-          configuration: PlaceDetailsConfiguration(
-            content: [.address(), .rating(), .reviews(), .summary()],
+          configuration: PlaceDetailsCompactConfiguration(
+            content: [.address(), .rating(), .type(), .media()],
             theme: PlacesMaterialTheme()
           ),
           placeDetailsCallback: { placeDetails in

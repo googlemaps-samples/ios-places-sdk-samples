@@ -58,11 +58,11 @@ struct BasicPlaceAutocompleteDemo: View {
                 .font(.system(size: 60))
                 .foregroundColor(.blue)
 
-            Text("Places UI Kit Basic Autocomplete Demo")
+            Text("Places UI Kit Basic Place Autocomplete Demo")
                 .font(.title)
                 .fontWeight(.bold)
 
-            Text("Tap the button to search. The result will be displayed using the official `PlaceDetailsView` component.")
+            Text("Tap the button to search. The selected result will be displayed using the official `PlaceDetailsView` component.")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)

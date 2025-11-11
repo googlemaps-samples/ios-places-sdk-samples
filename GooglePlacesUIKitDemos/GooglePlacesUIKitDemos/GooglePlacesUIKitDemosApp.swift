@@ -17,27 +17,28 @@ import GooglePlacesSwift
 
 @main
 struct GooglePlacesUIKitDemosApp: App {
-  init(){
-    /*
-     API Key Setup:
-     1. Get an API key using the instructions at: https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key#creating-api-keys
-     2. Create a .xcconfig file at the project root level
-     3. Add this line: API_KEY = your_api_key_here
-     4. Replace "your_api_key_here" with the API key obtained in step 1
-
-     Note: Never commit your actual API key to source control
-    */
+  init() {
     guard let infoDictionary: [String: Any] = Bundle.main.infoDictionary else {
       fatalError("Info.plist not found")
     }
     guard let apiKey: String = infoDictionary["API_KEY"] as? String else {
+      // To use GooglePlacesDemos, please register an API Key for your application. Your API Key
+      // should be kept private and not be checked in.
+      //
+      // Create an xcconfig file for your API key. By default the file should be named
+      // "GooglePlacesDemos.xcconfig" and be located at the same directory level as the demo
+      // application's "Info.plist" file. The contents of this file should contain at least a line
+      // like `API_KEY = <insert your API key here>`.
+      //
+      // See documentation on getting an API Key for your API Project here:
+      // https://developers.google.com/places/ios-sdk/start#get-key
       fatalError("API_KEY not set in Info.plist")
     }
-    guard apiKey.isEmpty == false else {
-      fatalError("API_KEY is empty in Info.plist")
-    }
     let _ = PlacesClient.provideAPIKey(apiKey)
-    print("apiKey: \(apiKey)")
+
+    // Log the required open source licenses! Yes, just NSLog-ing them is not enough but is good
+    // for a demo.
+    print("Google Places Swift open source licenses:\n%@", PlacesClient.openSourceLicenseInfo)
   }
     var body: some Scene {
         WindowGroup {

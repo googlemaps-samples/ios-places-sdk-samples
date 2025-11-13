@@ -29,8 +29,6 @@ struct BasicPlaceAutocompleteDemo: View {
     @State private var detailsQuery: PlaceDetailsQuery = PlaceDetailsQuery(
       identifier: .placeID(""))
 
-
-
     var body: some View {
 
       let types: Set<PlaceType> = [.bakery, .cafe, .restaurant]

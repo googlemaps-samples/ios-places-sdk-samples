@@ -14,22 +14,9 @@
 		9D064BCB2E44E9E0000F65EB /* GooglePlacesUIKitDemos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GooglePlacesUIKitDemos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		9D064BF52E44FDD2000F65EB /* Exceptions for "GooglePlacesUIKitDemos" folder in "GooglePlacesUIKitDemos" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 9D064BCA2E44E9E0000F65EB /* GooglePlacesUIKitDemos */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9D064BCD2E44E9E0000F65EB /* GooglePlacesUIKitDemos */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				9D064BF52E44FDD2000F65EB /* Exceptions for "GooglePlacesUIKitDemos" folder in "GooglePlacesUIKitDemos" target */,
-			);
 			path = GooglePlacesUIKitDemos;
 			sourceTree = "<group>";
 		};

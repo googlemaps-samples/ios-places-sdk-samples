@@ -59,7 +59,7 @@ struct PlaceAutocompleteDemo: View {
           .font(.title)
           .fontWeight(.bold)
 
-      Text("Tap the button to search. The selected result will be displayed using the official `PlaceDetailsCompactView` component.")
+      Text("Tap the button to search. The selected result will be displayed using the `PlaceDetailsCompactView` component.")
           .font(.subheadline)
           .foregroundColor(.secondary)
           .multilineTextAlignment(.center)

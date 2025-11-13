@@ -37,13 +37,14 @@ jobs:
         - name: Set Xcode version
           uses: maxim-lobanov/setup-xcode@v1
           with:
-            xcode-version: latest-stable
+            xcode-version: '16.4.0'
 
         - name: Build and Test ( iOS 18.4)
           run: |
             set -o pipefail
-            echo "Adding empty GooglePlacesDemos.xcconfig file"
-            touch GooglePlacesDemos/GooglePlacesDemos/GooglePlacesDemos.xcconfig
+            echo "Adding GooglePlacesDemos.xcconfig file with dummy API keys"
+            echo "PLACES_API_KEY = UI_TEST_DUMMY_KEY" > GooglePlacesDemos/GooglePlacesDemos/GooglePlacesDemos.xcconfig
+            echo "MAPS_API_KEY = UI_TEST_DUMMY_KEY" >> GooglePlacesDemos/GooglePlacesDemos/GooglePlacesDemos.xcconfig
 
             echo "Building and Testing"
             xcodebuild test -project GooglePlacesDemos/GooglePlacesDemos.xcodeproj \

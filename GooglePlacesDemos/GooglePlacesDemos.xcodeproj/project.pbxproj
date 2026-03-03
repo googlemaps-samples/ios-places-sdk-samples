@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C1CDA3F2F57915C002BA938 /* MainTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1CDA3E2F578FE1002BA938 /* MainTab.swift */; };
 		561B01AB2C542EB0003BA3F0 /* SearchNearbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561B01AA2C542EB0003BA3F0 /* SearchNearbyViewController.swift */; };
 		561B01AD2C542F5F003BA3F0 /* ParameterInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561B01AC2C542F5F003BA3F0 /* ParameterInputTextField.swift */; };
 		5652AAA82BD1D87C00E55241 /* ParameterConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5652AAA72BD1D87C00E55241 /* ParameterConfiguration.swift */; };
@@ -69,6 +70,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C1CDA3E2F578FE1002BA938 /* MainTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTab.swift; sourceTree = "<group>"; };
 		561B01AA2C542EB0003BA3F0 /* SearchNearbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNearbyViewController.swift; sourceTree = "<group>"; };
 		561B01AC2C542F5F003BA3F0 /* ParameterInputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterInputTextField.swift; sourceTree = "<group>"; };
 		562FC5042BD1DDEE00CD9057 /* GooglePlacesSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = GooglePlacesSwift.xcframework; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 		567EFD6A2BD080230055E7A6 /* GooglePlacesDemos */ = {
 			isa = PBXGroup;
 			children = (
+				4C1CDA3E2F578FE1002BA938 /* MainTab.swift */,
 				567EFD6B2BD080230055E7A6 /* GooglePlacesDemosApp.swift */,
 				DAE257632CE843AC00FD2694 /* GooglePlacesWidget */,
 				DA85C5022CF035580059D755 /* Dialog */,
@@ -492,6 +495,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C1CDA3F2F57915C002BA938 /* MainTab.swift in Sources */,
 				DA85C5F72CF54FD60059D755 /* String+Place.swift in Sources */,
 				561B01AD2C542F5F003BA3F0 /* ParameterInputTextField.swift in Sources */,
 				DA6D4D9E2CE555C300B6F416 /* PlacesAutocompleteManager.swift in Sources */,

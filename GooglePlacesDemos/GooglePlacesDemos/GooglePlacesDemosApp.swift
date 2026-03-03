@@ -24,7 +24,7 @@ struct GooglePlacesDemosApp: App {
     
     var body: some Scene {
         WindowGroup {
-           Dialog()
+            MainTabView()
         }
     }
     

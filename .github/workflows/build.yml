@@ -39,7 +39,7 @@ jobs:
           with:
             xcode-version: '16.4.0'
 
-        - name: Build and Test ( iOS 18.4)
+        - name: Build and Test ( iOS 18.5)
           run: |
             set -o pipefail
             echo "Adding GooglePlacesDemos.xcconfig file with dummy API keys"
@@ -49,7 +49,7 @@ jobs:
             echo "Building and Testing"
             xcodebuild test -project GooglePlacesDemos/GooglePlacesDemos.xcodeproj \
             -scheme GooglePlacesDemos \
-            -destination 'platform=iOS Simulator,OS=18.4,name=iPhone 16' | xcpretty
+            -destination 'platform=iOS Simulator,OS=18.5,name=iPhone 16' | xcpretty
 
     test: # used as required status check
       runs-on: ubuntu-latest

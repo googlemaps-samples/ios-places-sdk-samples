@@ -39,7 +39,7 @@ jobs:
           with:
             xcode-version: 'latest-stable'
 
-        - name: Build and Test ( iOS 18.5)
+        - name: Build and Test ( iOS 26.2)
           run: |
             set -o pipefail
             echo "Adding GooglePlacesDemos.xcconfig file with dummy API keys"

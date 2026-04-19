@@ -21,5 +21,5 @@
  * https://developers.google.com/places/ios-sdk/start#get-key
  */
 
-#error Register your API key and insert here, then delete this line.
-static NSString *const kAPIKey = @"";
+//#error Register your API key and insert here, then delete this line.
+static NSString *const kAPIKey = @"111";

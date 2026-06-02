@@ -46,7 +46,7 @@ struct GooglePlacesDemosApp: App {
         }
         
         let _ = PlacesClient.provideAPIKey(apiKey)
-        
+        GMSServices.addInternalUsageAttributionID("gmp_git_iosplacessamples_v1.0.0")
         #if DEBUG
         print("Places SDK Licenses:\n\(PlacesClient.openSourceLicenseInfo)")
         #endif

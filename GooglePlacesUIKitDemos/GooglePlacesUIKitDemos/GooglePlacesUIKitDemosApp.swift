@@ -35,6 +35,7 @@ struct GooglePlacesUIKitDemosApp: App {
       fatalError("API_KEY not set in Info.plist")
     }
     let _ = PlacesClient.provideAPIKey(apiKey)
+    PlacesClient.addInternalUsageAttributionID("gmp_git_iosplacesuikitsamples_v1.0.0")
 
     // Log the required open source licenses! Yes, just NSLog-ing them is not enough but is good
     // for a demo.

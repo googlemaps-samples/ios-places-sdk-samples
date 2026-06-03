@@ -43,6 +43,7 @@
 
   // Provide the Places SDK with your API key.
   [GMSPlacesClient provideAPIKey:kAPIKey];
+  [GMSPlacesClient addInternalUsageAttributionID:@"gmp_git_iosplacesobjcsamples_v1.0.0"];
 
   // Log the required open source licenses! Yes, just NSLog-ing them is not enough but is good for a
   // demo.

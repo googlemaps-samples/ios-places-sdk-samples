@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWindowSceneDelegate {
   ) -> Bool {
 
     GMSPlacesClient.provideAPIKey(apiKey)
-
+    GMSPlacesClient.addInternalUsageAttributionID("gmp_git_iosplacesswiftsamples_v1.0.0")
     // Log the required open source licenses! Yes, just NSLog-ing them is not enough but is good
     // for a demo.
     print("Google Places open source licenses:\n%@", GMSPlacesClient.openSourceLicenseInfo())

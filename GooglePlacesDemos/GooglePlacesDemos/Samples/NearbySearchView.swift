@@ -12,108 +12,117 @@
 // permissions and limitations under the License.
 
 import GooglePlacesSwift
-import GoogleMaps
+import CoreLocation
 import SwiftUI
 
 struct NearbySearchView: View {
-    @State private var selectedMarker: GMSMarker?
-    @State private var markers: [GMSMarker] = []
+    @State private var selectedPlace: Place?
     @State private var hasInitializedSearch = false
-    
+
     @StateObject private var searchManager = NearbySearchManager()
     
     private var selectedPlaceOpenStatus: Bool? {
-        guard let place = selectedMarker?.userData as? Place,
-              let placeId = place.placeID else {
+        guard let placeId = selectedPlace?.placeID else {
             return nil
         }
         return searchManager.placeOpenStatuses[placeId]
     }
-    
-    private let mapOptions: GMSMapViewOptions = {
-        var options = GMSMapViewOptions()
-        options.camera = GMSCameraPosition(
-            latitude: 37.4220,  // Googleplex coordinates
-            longitude: -122.0841,
-            zoom: 14
-        )
-        return options
-    }()
-    
-    private func calculateSearchRadius(zoom: Float) -> Double {
-        let baseRadius = 500.0
-        let zoomScale = pow(2.0, Double(20 - zoom))
-        return min(baseRadius * zoomScale, 50000)
-    }
-    
-    private func updateMarkers(from places: [Place]) {
-        markers = places.map { place in
-            let marker = GMSMarker(position: place.location)
-            marker.title = place.displayName
-            marker.userData = place
-            return marker
-        }
-    }
-    
+
+    // Hardcoded search parameters for demo
+    private let searchLocation = CLLocationCoordinate2D(
+        latitude: 37.7749,  // Central San Francisco
+        longitude: -122.4194
+    )
+    private let searchRadius: Double = 500.0  // 500 meters
+    private let searchType: PlaceType = .cafe
+
     private func performInitialSearch() async {
         guard !hasInitializedSearch else { return }
 
-        if let camera = mapOptions.camera {
-            
-            await searchManager.searchNearby(
-                location: camera.target,
-                includedTypes: [.cafe],
-                radius: calculateSearchRadius(zoom: camera.zoom)
-            )
-            
-            if let places = searchManager.places {
-                updateMarkers(from: places)
-            }
-            
-            hasInitializedSearch = true
-        }
-        
+        await searchManager.searchNearby(
+            location: searchLocation,
+            includedTypes: [searchType],
+            radius: searchRadius
+        )
+
+        hasInitializedSearch = true
     }
-    
+
     var body: some View {
         VStack(spacing: 0) {
-            GoogleMapView(options: mapOptions)
-                .mapMarkers(markers)
-                .onMarkerTapped { marker in
-                    if let mapView = marker.map {
-                        mapView.selectedMarker = marker
-                        selectedMarker = marker
-                        
-                        if let place = marker.userData as? Place,
-                           let placeId = place.placeID {
+            // Search parameters display
+            VStack(spacing: 4) {
+                Text("Nearby Search Demo")
+                    .font(.headline)
+                Text("Searching for cafes within 500m of central San Francisco")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color(.systemGroupedBackground))
+
+            // Results list
+            if let places = searchManager.places, !places.isEmpty {
+                List(places, id: \.placeID) { place in
+                    Button(action: {
+                        selectedPlace = place
+                        if let placeId = place.placeID {
                             Task {
                                 await searchManager.fetchOpenStatus(for: placeId)
                             }
                         }
+                    }) {
+                        HStack {
+                            Text(place.displayName ?? "Unknown Place")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            if selectedPlace?.placeID == place.placeID {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.blue)
+                            }
+                        }
                     }
-                    return true
                 }
-                .ignoresSafeArea(.container, edges: [.bottom, .horizontal])
-                .frame(maxWidth: .infinity, minHeight: 325)
-                .onAppear {
-                    Task {
-                        await performInitialSearch()
+                .listStyle(PlainListStyle())
+            } else if searchManager.error != nil {
+                VStack(spacing: 16) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .font(.largeTitle)
+                        .foregroundColor(.orange)
+                    Text("Failed to load places")
+                        .font(.headline)
+                    Button("Retry") {
+                        hasInitializedSearch = false
+                        Task {
+                            await performInitialSearch()
+                        }
                     }
+                    .buttonStyle(.borderedProminent)
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                ProgressView("Loading cafes...")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
             
-            if let selectedPlace = selectedMarker?.userData as? Place {
+            // Selected place details
+            if let selectedPlace = selectedPlace {
                 PlaceDetailsCard(
                     place: selectedPlace,
                     isOpen: selectedPlaceOpenStatus
                 )
                 .frame(maxWidth: .infinity, alignment: .leading)
             } else {
-                Text("Tap a marker to see place details")
+                Text("Select a place to see details")
                     .foregroundColor(.secondary)
                     .padding()
             }
-            
-            Spacer()
+        }
+        .onAppear {
+            Task {
+                await performInitialSearch()
+            }
         }
     }
 }

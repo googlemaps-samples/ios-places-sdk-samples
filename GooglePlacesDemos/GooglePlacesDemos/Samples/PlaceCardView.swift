@@ -12,51 +12,100 @@
 // permissions and limitations under the License.
 
 import SwiftUI
-import GoogleMaps
+import GooglePlacesSwift
 
 struct PlaceCardView: View {
     let placeId: String
     @StateObject private var placeDetailsManager = PlaceDetailsManager()
-    @State private var cameraPosition: GMSCameraPosition?
-    
-    var body: some View {
-        VStack(spacing: 16) {
-            if let place = placeDetailsManager.place {
-                
-                // Map View in top portion
-                GoogleMapView(options: GMSMapViewOptions())
-                    .camera(cameraPosition)
-                    .ignoresSafeArea(.container, edges: [.bottom, .horizontal])
-                    .frame(maxWidth: .infinity, minHeight: 325)
-                
-                // Place Details Card in bottom portion
-                PlaceDetailsCard(place: place, isOpen: placeDetailsManager.isOpen)
-                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                //provide place summary
-                if let summary = place.editorialSummary {
-                    Text(summary)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal)
-                        .padding(.bottom)
+    var body: some View {
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                if let place = placeDetailsManager.place {
+
+                    // Place photo or location display - 45% of screen
+                    Group {
+                        if !placeDetailsManager.loadedPhotos.isEmpty {
+                            // Show first photo if available
+                            Image(uiImage: placeDetailsManager.loadedPhotos[0])
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: geometry.size.width, height: geometry.size.height * 0.45)
+                                .clipped()
+                        } else if placeDetailsManager.photos != nil && !placeDetailsManager.photos!.isEmpty {
+                            // Loading photo
+                            ProgressView("Loading photo...")
+                                .frame(width: geometry.size.width, height: geometry.size.height * 0.45)
+                                .background(Color(.systemGroupedBackground))
+                        } else {
+                            // No photos available - show location info
+                            VStack(spacing: 12) {
+                                Image(systemName: "photo.on.rectangle.angled")
+                                    .font(.system(size: 60))
+                                    .foregroundColor(.gray.opacity(0.5))
+
+                                Text("No photos available")
+                                    .font(.headline)
+                                    .foregroundColor(.secondary)
+
+                                Text("Lat: \(String(format: "%.4f", place.location.latitude)), Lon: \(String(format: "%.4f", place.location.longitude))")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            .frame(width: geometry.size.width, height: geometry.size.height * 0.45)
+                            .background(Color(.systemGroupedBackground))
+                        }
+                    }
+
+                    // Content below photo
+                    VStack(alignment: .leading, spacing: 12) {
+                        // Place Details Card
+                        PlaceDetailsCard(place: place, isOpen: placeDetailsManager.isOpen)
+                            .padding(.horizontal)
+                            .padding(.top, 16)
+
+                        //provide place summary
+                        if let summary = place.editorialSummary {
+                            Text(summary)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .padding(.horizontal)
+                        }
+
+                        Spacer()
+                    }
+                    .frame(maxHeight: .infinity)
+
+                } else {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-            } else {
-                ProgressView()
             }
         }
+        .ignoresSafeArea(edges: .top)
         .task {
-            await placeDetailsManager.fetchPlaceDetails(placeID: placeId)
-            
-            if let place = placeDetailsManager.place {
-                cameraPosition = GMSCameraPosition(
-                    latitude: place.location.latitude,
-                    longitude: place.location.longitude,
-                    zoom: 15
-                )
-            }
-            
+            // Fetch place details with photos included
+            let propertiesWithPhotos: [PlaceProperty] = [
+                .businessStatus,
+                .displayName,
+                .placeID,
+                .priceLevel,
+                .rating,
+                .numberOfUserRatings,
+                .types,
+                .currentOpeningHours,
+                .supportsDineIn,
+                .supportsTakeout,
+                .supportsDelivery,
+                .supportsCurbsidePickup,
+                .coordinate,
+                .editorialSummary,
+                .photos
+            ]
+            await placeDetailsManager.fetchPlaceDetails(placeID: placeId, properties: propertiesWithPhotos)
             await placeDetailsManager.checkIfOpen(placeID: placeId)
+            // Fetch actual photo images
+            await placeDetailsManager.fetchPhotosForPlace(placeID: placeId, maxPhotos: 1)
         }
     }
 }

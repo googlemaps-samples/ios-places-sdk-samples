@@ -12,14 +12,12 @@
 // permissions and limitations under the License.
 
 import GooglePlacesSwift
-import GoogleMaps
 import SwiftUI
 
 @main
 struct GooglePlacesDemosApp: App {
     init() {
         setupGooglePlaces()
-        setupGoogleMaps()
     }
     
     var body: some Scene {
@@ -46,23 +44,9 @@ struct GooglePlacesDemosApp: App {
         }
         
         let _ = PlacesClient.provideAPIKey(apiKey)
-        GMSServices.addInternalUsageAttributionID("gmp_git_iosplacessamples_v1.0.0")
+        PlacesClient.addInternalUsageAttributionID("gmp_git_iosplacessamples_v1.0.0")
         #if DEBUG
         print("Places SDK Licenses:\n\(PlacesClient.openSourceLicenseInfo)")
         #endif
-    }
-    
-    private func setupGoogleMaps() {
-        // Skip API key requirement in test environments
-        if isTestEnvironment {
-            let _ = GMSServices.provideAPIKey("TEST_DUMMY_KEY")
-            return
-        }
-        
-        guard let mapKey = Bundle.main.infoDictionary?["MAPS_API_KEY"] as? String, !mapKey.isEmpty else {
-            fatalError("Add your MAPS_API_KEY to Info.plist - Get one at https://developers.google.com/maps/documentation/ios-sdk/get-api-key")
-        }
-        
-        let _ = GMSServices.provideAPIKey(mapKey)
     }
 }

@@ -12,7 +12,7 @@
 // permissions and limitations under the License.
 
 import GooglePlacesSwift
-import GoogleMaps
+import CoreLocation
 import SwiftUI
 
 struct TextSearchView: View {

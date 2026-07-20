@@ -17,9 +17,9 @@ name: Build Samples
 
 on:
     push:
-        branches: [ '*' ]
+        branches: [ '**' ]
     pull_request:
-        branches: [ '*' ]
+        branches: [ '**' ]
     repository_dispatch:
         types: [ build ]
     schedule:

@@ -18,21 +18,21 @@ import GooglePlacesSwift
 @main
 struct GooglePlacesUIKitDemosApp: App {
   init() {
-    guard let infoDictionary: [String: Any] = Bundle.main.infoDictionary else {
-      fatalError("Info.plist not found")
-    }
-    guard let apiKey: String = infoDictionary["API_KEY"] as? String else {
-      // To use GooglePlacesDemos, please register an API Key for your application. Your API Key
-      // should be kept private and not be checked in.
-      //
-      // Create an xcconfig file for your API key. By default the file should be named
-      // "GooglePlacesDemos.xcconfig" and be located at the same directory level as the demo
-      // application's "Info.plist" file. The contents of this file should contain at least a line
-      // like `API_KEY = <insert your API key here>`.
-      //
-      // See documentation on getting an API Key for your API Project here:
-      // https://developers.google.com/places/ios-sdk/start#get-key
-      fatalError("API_KEY not set in Info.plist")
+    // To use GooglePlacesUIKitDemos, please register an API Key for your application. Your API Key
+    // should be kept private and not be checked in.
+    //
+    // Create a "Secrets.xcconfig" file next to this app's "Info.plist" and add a line like
+    // `PLACES_API_KEY = <insert your API key here>`. It is git-ignored, so your key stays out of
+    // version control. (The tracked "GooglePlacesUIKitDemos.xcconfig" wrapper includes it.)
+    //
+    // See documentation on getting an API Key for your API Project here:
+    // https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key
+    guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "PLACES_API_KEY") as? String,
+      !apiKey.isEmpty
+    else {
+      fatalError(
+        "Add PLACES_API_KEY to Secrets.xcconfig next to this app's Info.plist. "
+          + "Get a key at https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key")
     }
     let _ = PlacesClient.provideAPIKey(apiKey)
     PlacesClient.addInternalUsageAttributionID("gmp_git_iosplacesuikitsamples_v1.0.0")

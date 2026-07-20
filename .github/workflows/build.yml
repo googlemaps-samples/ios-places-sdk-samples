@@ -39,12 +39,22 @@ jobs:
           with:
             xcode-version: 'latest-stable'
 
+        - name: Verify keyless fresh-clone build (validates include-optional fallback)
+          run: |
+            set -o pipefail
+            # No Secrets.xcconfig exists yet: the tracked GooglePlacesDemos.xcconfig
+            # wrapper's `#include? "Secrets.xcconfig"` must let the build succeed
+            # without a key (the app fails only at launch, not at build time).
+            test ! -f GooglePlacesDemos/GooglePlacesDemos/Secrets.xcconfig
+            xcodebuild build -project GooglePlacesDemos/GooglePlacesDemos.xcodeproj \
+            -scheme GooglePlacesDemos \
+            -destination 'platform=iOS Simulator,OS=26.2,name=iPhone 17' | xcpretty
+
         - name: Build and Test ( iOS 26.2)
           run: |
             set -o pipefail
-            echo "Adding GooglePlacesDemos.xcconfig file with dummy API keys"
-            echo "PLACES_API_KEY = UI_TEST_DUMMY_KEY" > GooglePlacesDemos/GooglePlacesDemos/GooglePlacesDemos.xcconfig
-            echo "MAPS_API_KEY = UI_TEST_DUMMY_KEY" >> GooglePlacesDemos/GooglePlacesDemos/GooglePlacesDemos.xcconfig
+            echo "Adding Secrets.xcconfig with a dummy API key"
+            echo "PLACES_API_KEY = UI_TEST_DUMMY_KEY" > GooglePlacesDemos/GooglePlacesDemos/Secrets.xcconfig
 
             echo "Building and Testing"
             xcodebuild test -project GooglePlacesDemos/GooglePlacesDemos.xcodeproj \

@@ -14,7 +14,6 @@
 		33A7D7CCBF7F6ED9CAF16332 /* AutocompleteWithCustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C12FAF36EF6DF671EE77872 /* AutocompleteWithCustomColors.swift */; };
 		3B9C352B6D5D1EFC26634090 /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1508D3D314E8989F6A8B1386 /* ConfigurationViewController.swift */; };
 		4049499CCDEF9E212D79D732 /* PagingPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C092A8A676304070F968409 /* PagingPhotoView.swift */; };
-		4F5A706C3EA996535B2D1984 /* SDKDemoAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B665D719F951D76696D33BC /* SDKDemoAPIKey.swift */; };
 		5CB1F895DD9C8B1ADC8DE20A /* SampleDatas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F1EF7458BEAB01DE68663 /* SampleDatas.swift */; };
 		682AFB396B2B86F4CE39BCDC /* AutocompleteBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288ED3B967A57B6410B96F8 /* AutocompleteBaseViewController.swift */; };
 		6B674CAF48552E8B4EDEE8A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E58F93255E608F3E70DF9E /* AppDelegate.swift */; };
@@ -52,7 +51,6 @@
 		3C092A8A676304070F968409 /* PagingPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingPhotoView.swift; sourceTree = "<group>"; };
 		3FAA7239884CB4157BC2C5FF /* SampleListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleListViewController.swift; sourceTree = "<group>"; };
 		45B0AA078861D305F4325774 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
-		4B665D719F951D76696D33BC /* SDKDemoAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKDemoAPIKey.swift; sourceTree = "<group>"; };
 		4C8B7C99AD9C286DB7B585B4 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		56E48B9ECE73CA99453E7414 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5C1C6440B4CD894A2407D495 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -77,6 +75,7 @@
 		952DA97814F23494FF58F3DF /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9558BF7AD24E294645E279C5 /* en_GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en_GB; path = en_GB.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9DADFC6AEC2D2E3896A828CA /* es_419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es_419; path = es_419.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AAAAAAAA0000000000000001 /* GooglePlacesSwiftDemos.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GooglePlacesSwiftDemos/GooglePlacesSwiftDemos.xcconfig; sourceTree = SOURCE_ROOT; };
 		ABAE5F734790D532EE25185C /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ABF8E968A1C74354A3486DF3 /* AutocompleteModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteModalViewController.swift; sourceTree = "<group>"; };
 		AFB0AAEF9F27A855E4A33128 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -115,7 +114,6 @@
 				D1E58F93255E608F3E70DF9E /* AppDelegate.swift */,
 				2ADC3E2B685EB704BFB0A427 /* AutocompleteConfiguration.swift */,
 				1508D3D314E8989F6A8B1386 /* ConfigurationViewController.swift */,
-				4B665D719F951D76696D33BC /* SDKDemoAPIKey.swift */,
 				7F0F1EF7458BEAB01DE68663 /* SampleDatas.swift */,
 				3FAA7239884CB4157BC2C5FF /* SampleListViewController.swift */,
 				DDABCB9B8514E5F2A4DE281B /* SceneDelegate.swift */,
@@ -144,6 +142,7 @@
 		A7DC475C5DF48F75B36886C4 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				AAAAAAAA0000000000000001 /* GooglePlacesSwiftDemos.xcconfig */,
 				AB18A9FBD05F364005A9AEC5 /* GooglePlacesSwiftDemos */,
 			);
 			name = Source;
@@ -316,18 +315,13 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GooglePlacesSwiftDemos/Pods-GooglePlacesSwiftDemos-resources.sh",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.xcframework/ios-arm64/GooglePlaces.framework/Resources/GooglePlaces.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.xcframework/ios-arm64_x86_64-simulator/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/GooglePlaces/GooglePlacesResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlacesResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -375,7 +369,6 @@
 				13085C0C4F94BD7B7C4576A5 /* FindPlaceLikelihoodListViewController.swift in Sources */,
 				95AA44B5BAFAF9B505315182 /* SampleListViewController.swift in Sources */,
 				6B674CAF48552E8B4EDEE8A8 /* AppDelegate.swift in Sources */,
-				4F5A706C3EA996535B2D1984 /* SDKDemoAPIKey.swift in Sources */,
 				0CA9CAC7FE832EB51BF73D22 /* SceneDelegate.swift in Sources */,
 				0F65E1F07F5F97B73E790974 /* AutocompleteConfiguration.swift in Sources */,
 			);
@@ -446,6 +439,7 @@
 /* Begin XCBuildConfiguration section */
 		51472F1846DEFAF9F4E64C79 /* Default */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AAAAAAAA0000000000000001 /* GooglePlacesSwiftDemos.xcconfig */;
 			buildSettings = {
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
 				SDKROOT = iphoneos;

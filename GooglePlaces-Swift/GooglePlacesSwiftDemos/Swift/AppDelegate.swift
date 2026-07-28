@@ -22,6 +22,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIWindowSceneDelegate {
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
 
+    // To use GooglePlacesSwiftDemos, please register an API Key for your application. Your API Key
+    // should be kept private and not be checked in.
+    //
+    // Create a "Secrets.xcconfig" file next to this app's "Info.plist" and add a line like
+    // `PLACES_API_KEY = <insert your API key here>`. It is git-ignored, so your key stays out of
+    // version control. (The tracked "GooglePlacesSwiftDemos.xcconfig" wrapper includes it.)
+    //
+    // See documentation on getting an API Key for your API Project here:
+    // https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key
+    guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "PLACES_API_KEY") as? String,
+          !apiKey.isEmpty
+    else {
+      fatalError(
+        "Add PLACES_API_KEY to Secrets.xcconfig next to this app's Info.plist. "
+        + "Get a key at https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key")
+    }
     GMSPlacesClient.provideAPIKey(apiKey)
 
     // Log the required open source licenses! Yes, just NSLog-ing them is not enough but is good

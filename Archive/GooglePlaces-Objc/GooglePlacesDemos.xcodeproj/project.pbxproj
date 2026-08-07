@@ -76,6 +76,7 @@
 		A8162D0DA3B592BBB6E3FA35 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A8233D7A6FCDAD9F3E3FFEFC /* pt_PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_PT; path = pt_PT.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A997870E831544227236DF00 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AAAAAAAA0000000000000003 /* GooglePlacesDemos.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GooglePlacesDemos/GooglePlacesDemos.xcconfig; sourceTree = SOURCE_ROOT; };
 		AADF2995CB717FE4D341C944 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ADB9E4A950DB2EA454486E47 /* AutocompleteWithTextFieldController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutocompleteWithTextFieldController.m; sourceTree = "<group>"; };
 		AF5862DFC2F44C360067E8C5 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -99,7 +100,6 @@
 		E766ACF338BF4D9D9B3C86BA /* en_GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en_GB; path = en_GB.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E8EBD6572BDD22DD2C8C37F0 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F2689EA2B2A4F7DC9912D5DE /* AutocompleteWithTextFieldController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutocompleteWithTextFieldController.h; sourceTree = "<group>"; };
-		F3A846055E79359BAF267E70 /* SDKDemoAPIKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDKDemoAPIKey.h; sourceTree = "<group>"; };
 		F7EFEB4946D6A093B9475CDD /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F8ABF15D04AF351D0A21A5CD /* DemoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoAppDelegate.h; sourceTree = "<group>"; };
 		FA2B20801D4CBBF7439CF693 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 				36C753B6637575A8CD81C699 /* DemoListViewController.m */,
 				091E13BD67559C4F2977A6BA /* DemoSceneDelegate.h */,
 				3F016F9B050CDC347357EB3F /* DemoSceneDelegate.m */,
-				F3A846055E79359BAF267E70 /* SDKDemoAPIKey.h */,
+				AAAAAAAA0000000000000003 /* GooglePlacesDemos.xcconfig */,
 				1D0589812EE1F702A7BBA34D /* main.m */,
 			);
 			path = GooglePlacesDemos;
@@ -363,18 +363,13 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GooglePlacesDemos/Pods-GooglePlacesDemos-resources.sh",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.xcframework/ios-arm64/GooglePlaces.framework/Resources/GooglePlaces.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.xcframework/ios-arm64_x86_64-simulator/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/GooglePlaces/GooglePlacesResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlacesResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -470,6 +465,7 @@
 /* Begin XCBuildConfiguration section */
 		1BA056F14489621B09D65C69 /* Default */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AAAAAAAA0000000000000003 /* GooglePlacesDemos.xcconfig */;
 			buildSettings = {
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
 				SDKROOT = iphoneos;

@@ -21,7 +21,6 @@
 #import <GooglePlaces/GooglePlaces.h>
 #endif
 #import "GooglePlacesXCFrameworkDemos/DemoSceneDelegate.h"
-#import "GooglePlacesXCFrameworkDemos/SDKDemoAPIKey.h"
 
 @implementation DemoAppDelegate
 
@@ -29,20 +28,20 @@
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   NSLog(@"Build version: %s", __VERSION__);
 
-  // Do a quick check to see if you've provided an API key, in a real app you wouldn't need this but
-  // for the demo it means we can provide a better error message.
-  if (!kAPIKey.length) {
-    // Blow up if APIKeys have not yet been set.
-    NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
-    NSString *format = @"Configure APIKeys inside SDKDemoAPIKey.h for your  bundle `%@`, see "
-                       @"README.GooglePlacesDemos for more information";
-    @throw [NSException exceptionWithName:@"DemoAppDelegate"
-                                   reason:[NSString stringWithFormat:format, bundleId]
-                                 userInfo:nil];
+  // Read the API key from the app bundle. Create a Secrets.xcconfig next to this app's
+  // Info.plist (git-ignored) with `PLACES_API_KEY = <your key>`; the tracked
+  // GooglePlacesXCFrameworkDemos.xcconfig wrapper includes it. See the top-level README for setup.
+  NSString *apiKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"PLACES_API_KEY"];
+  if (apiKey.length == 0) {
+    @throw [NSException
+        exceptionWithName:@"DemoAppDelegate"
+                   reason:@"Add PLACES_API_KEY to Secrets.xcconfig next to this app's Info.plist. "
+                          @"Get a key at https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key"
+                 userInfo:nil];
   }
 
   // Provide the Places SDK with your API key.
-  [GMSPlacesClient provideAPIKey:kAPIKey];
+  [GMSPlacesClient provideAPIKey:apiKey];
   [GMSPlacesClient addInternalUsageAttributionID:@"gmp_git_iosplacesobjcsamples_v1.0.0"];
 
   // Log the required open source licenses! Yes, just NSLog-ing them is not enough but is good for a

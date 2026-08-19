@@ -78,7 +78,7 @@
 		748E3C7EBD17A1592993B287 /* Pods-GooglePlacesXCFrameworkDemos.default.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GooglePlacesXCFrameworkDemos.default.xcconfig"; path = "Target Support Files/Pods-GooglePlacesXCFrameworkDemos/Pods-GooglePlacesXCFrameworkDemos.default.xcconfig"; sourceTree = "<group>"; };
 		75A8BC243D0B6C1316FE643A /* AutocompleteModalViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutocompleteModalViewController.m; sourceTree = "<group>"; };
 		763A07DA4B168C2B78086ACC /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
-		777A4017380A3DE1A024AAA3 /* SDKDemoAPIKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDKDemoAPIKey.h; sourceTree = "<group>"; };
+		AAAAAAAA0000000000000004 /* GooglePlacesXCFrameworkDemos.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GooglePlacesXCFrameworkDemos/GooglePlacesXCFrameworkDemos.xcconfig; sourceTree = SOURCE_ROOT; };
 		81C56942F89F182D85272541 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		81E00202C8016C524305D18C /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		865580737B7A2C6070A57F57 /* es_419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es_419; path = es_419.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 				5D2CA734A435425B8FF74875 /* DemoListViewController.m */,
 				B664564D5A858A47F764D2A5 /* DemoSceneDelegate.h */,
 				448F969C8481659679CC8626 /* DemoSceneDelegate.m */,
-				777A4017380A3DE1A024AAA3 /* SDKDemoAPIKey.h */,
+				AAAAAAAA0000000000000004 /* GooglePlacesXCFrameworkDemos.xcconfig */,
 				DD724EB31AC6BCE47EEC1C37 /* main.m */,
 			);
 			path = GooglePlacesXCFrameworkDemos;
@@ -502,6 +502,7 @@
 		};
 		98B33005728EC069258AD4DD /* Default */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AAAAAAAA0000000000000004 /* GooglePlacesXCFrameworkDemos.xcconfig */;
 			buildSettings = {
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
 				SDKROOT = iphoneos;

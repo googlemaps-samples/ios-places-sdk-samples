@@ -18,48 +18,60 @@ The demo app includes several sample implementations:
 
 - Xcode 16.2 or later with iOS SDK 17.0 or later
 - iOS Simulator or device running iOS 17+
-- API keys from Google Cloud with the following APIs enabled:
-  - [Places API (New)](https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key)
-  - [Maps SDK for iOS](https://developers.google.com/maps/documentation/ios-sdk/get-api-key)
+- An API key from Google Cloud with the [Places API (New)](https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key) enabled
 - Swift and SwiftUI knowledge
 
 ## Setup
 
-1. [Set up a Google Cloud project](https://developers.google.com/maps/documentation/places/ios-sdk/cloud-setup) and enable the [Places API (New)](https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key) and [Maps API's](https://developers.google.com/maps/documentation/ios-sdk/get-api-key).
+This repository contains six sample apps. All manage the Places API key the same way — you create a
+git-ignored `Secrets.xcconfig` next to that app's `Info.plist`; only the folder changes. Each app has
+a checked-in `<AppName>.xcconfig` that includes your `Secrets.xcconfig` (`#include? "Secrets.xcconfig"`);
+if the key is missing the app still builds but fails at launch with a message naming the file to create.
+
+| App | Open | Create `Secrets.xcconfig` at |
+| --- | --- | --- |
+| `GooglePlacesDemos` (SwiftUI) | `GooglePlacesDemos/GooglePlacesDemos.xcodeproj` | `GooglePlacesDemos/GooglePlacesDemos/Secrets.xcconfig` |
+| `GooglePlacesUIKitDemos` (SwiftUI) | `GooglePlacesUIKitDemos/GooglePlacesUIKitDemos.xcodeproj` | `GooglePlacesUIKitDemos/GooglePlacesUIKitDemos/Secrets.xcconfig` |
+| `GooglePlacesSwiftDemos` (UIKit, CocoaPods) | `GooglePlaces-Swift/GooglePlaces-Swift.xcworkspace` | `GooglePlaces-Swift/GooglePlacesSwiftDemos/Secrets.xcconfig` |
+| `GooglePlacesSwiftXCFrameworkDemos` (UIKit, CocoaPods) | `GooglePlaces-Swift/GooglePlaces-Swift.xcworkspace` | `GooglePlaces-Swift/GooglePlacesSwiftXCFrameworkDemos/Secrets.xcconfig` |
+| `GooglePlacesDemos` (Objective-C, archived) | `Archive/GooglePlaces-Objc/GooglePlaces-Objc.xcworkspace` | `Archive/GooglePlaces-Objc/GooglePlacesDemos/Secrets.xcconfig` |
+| `GooglePlacesXCFrameworkDemos` (Objective-C, archived) | `Archive/GooglePlaces-Objc/GooglePlaces-Objc.xcworkspace` | `Archive/GooglePlaces-Objc/GooglePlacesXCFrameworkDemos/Secrets.xcconfig` |
+
+The two `Archive/GooglePlaces-Objc` apps are older Objective-C samples kept for reference.
+
+1. [Set up a Google Cloud project](https://developers.google.com/maps/documentation/places/ios-sdk/cloud-setup) and enable the [Places API (New)](https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key).
 
 2. Clone this repository
    ```
    git clone git@github.com:googlemaps-samples/ios-places-sdk-samples.git
    ```
-3. Change into the `GooglePlacesDemos` folder
+
+3. For the CocoaPods samples, install the pods first (this also generates the `.xcworkspace` you open):
    ```
-   cd ios-places-sdk-samples/GooglePlacesDemos
+   cd ios-places-sdk-samples/GooglePlaces-Swift && pod install          # GooglePlacesSwiftDemos, GooglePlacesSwiftXCFrameworkDemos
+   cd ios-places-sdk-samples/Archive/GooglePlaces-Objc && pod install   # the two archived Obj-C apps
    ```
-4. Open GooglePlacesDemos.xcodeproj to open the project in Xcode.
+
+4. Open the app you want to run in Xcode (see the "Open" column above).
+
+5. Create a `Secrets.xcconfig` file next to that app's `Info.plist` (see the last column above). It is
+   git-ignored, so your key is never checked into source control.
+
+6. Add a single line to `Secrets.xcconfig`, substituting your key from Step 1:
    ```
-   open GooglePlacesDemos.xcodeproj/
+   PLACES_API_KEY = YOUR_PLACES_API_KEY
    ```
-5. Create a local configuration file for your API key in the same directory (`GooglePlacesDemos/GooglePlacesDemos`) as the demo application's "Info.plist" file. Name the file "GooglePlacesDemos.xcconfig". This will not be checked into source control since `.xcconfig` is on the `.gitignore` list.
-6. Add two lines to `GooglePlacesDemos.xcconfig` for setting the values of your API keys. Substitute the "YOUR_PLACES_API_KEY" and "YOUR_MAPS_API_KEY" in the snippet below with the API keys from Step 1.
-   ```
-   PLACES_API_KEY = "YOUR_PLACES_API_KEY"
-   MAPS_API_KEY = "YOUR_MAPS_API_KEY"
-   ```
-   This should be enough for the demo app to retrieve your key to use for
-    requests. (See https://help.apple.com/xcode/#/dev745c5c974 for more
-    information about xcconfig files.)
+   (See https://help.apple.com/xcode/#/dev745c5c974 for more information about xcconfig files.)
 
 ## Architecture
 
 - Built with SwiftUI and MVVM design pattern
 - Uses `ObservableObject` view models for state management 
-- Custom SwiftUI wrapper for Google Maps integration
 - Modular components for reusability
 
 ### Key Components
 
 - `PlaceDetailsManager` - Handles place details data fetching and state
-- `GoogleMapView` - SwiftUI wrapper for GMSMapView 
 - `PlaceDetailsCard` - A reusable SwiftUI view component that displays formatted Place information including:
   - Business name and rating
   - Opening hours and current status
@@ -72,7 +84,6 @@ The demo app includes several sample implementations:
 - [Places Swift SDK Overview](https://developers.google.com/maps/documentation/places/ios-sdk/google-places-swift)
 - [Places Swift SDK Reference](https://developers.google.com/maps/documentation/places/ios-sdk/reference/swift/Classes)
 - [Migration Guide](https://developers.google.com/maps/documentation/places/ios-sdk/migrate-places-sdk)
-- [Maps SDK for iOS Documentation](https://developers.google.com/maps/documentation/ios-sdk)
 
 ## Contributing
 

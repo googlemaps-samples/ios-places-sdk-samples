@@ -26,6 +26,10 @@ on:
         - cron: '0 22 * * *'
     workflow_dispatch:
 
+# Least privilege: this workflow only checks out and builds (zizmor excessive-permissions).
+permissions:
+    contents: read
+
 jobs:
     build-GooglePlacesDemos:
         runs-on: macos-latest

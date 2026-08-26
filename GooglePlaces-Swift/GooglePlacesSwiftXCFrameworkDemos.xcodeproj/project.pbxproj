@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0448B3B8914530569C61F248 /* SDKDemoAPIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71537B8830D32387A144D0C8 /* SDKDemoAPIKey.swift */; };
 		051D1B3BE01FF42D3CC4F090 /* PagingPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C643E09802D5CC8D7EAC413 /* PagingPhotoView.swift */; };
 		0D8DB832F522E0225FA23445 /* AutocompleteWithTextFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446EC90243A57C996C88E181 /* AutocompleteWithTextFieldController.swift */; };
 		163CAC038A4C47EFACFD3EED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 860821F808DE00F3F2C41100 /* LaunchScreen.storyboard */; };
@@ -66,7 +65,7 @@
 		62814E3541952ACA4497166C /* Pods-GooglePlacesSwiftXCFrameworkDemos.default.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GooglePlacesSwiftXCFrameworkDemos.default.xcconfig"; path = "Target Support Files/Pods-GooglePlacesSwiftXCFrameworkDemos/Pods-GooglePlacesSwiftXCFrameworkDemos.default.xcconfig"; sourceTree = "<group>"; };
 		68F38CE6D1F785AE471287E5 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6C643E09802D5CC8D7EAC413 /* PagingPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingPhotoView.swift; sourceTree = "<group>"; };
-		71537B8830D32387A144D0C8 /* SDKDemoAPIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKDemoAPIKey.swift; sourceTree = "<group>"; };
+		AAAAAAAA0000000000000002 /* GooglePlacesSwiftXCFrameworkDemos.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GooglePlacesSwiftXCFrameworkDemos/GooglePlacesSwiftXCFrameworkDemos.xcconfig; sourceTree = SOURCE_ROOT; };
 		71C75E0D208CAABF7B6A3230 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8454B896AE929281F988F9B2 /* TextSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSearchViewController.swift; sourceTree = "<group>"; };
 		8744EA3F5765185DB0A59802 /* FindPlaceLikelihoodListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPlaceLikelihoodListViewController.swift; sourceTree = "<group>"; };
@@ -127,6 +126,7 @@
 		3BE356C7B8EA2D335BE62F15 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				AAAAAAAA0000000000000002 /* GooglePlacesSwiftXCFrameworkDemos.xcconfig */,
 				22865F676B9AACA8C6CDB231 /* Resources */,
 				F8CE3BC158A45805F0E5B6FA /* Swift */,
 			);
@@ -211,7 +211,6 @@
 				EA584F7C7438765EB3341653 /* AppDelegate.swift */,
 				9DD13DBA658B60B6DF4A0E97 /* AutocompleteConfiguration.swift */,
 				2228243742AE431CD773B059 /* ConfigurationViewController.swift */,
-				71537B8830D32387A144D0C8 /* SDKDemoAPIKey.swift */,
 				2401DB52F6B5F816091B5674 /* SampleDatas.swift */,
 				FD3C40418C17BF6821C2371A /* SampleListViewController.swift */,
 				F3BBD5FF66CC81C1F16B2B05 /* SceneDelegate.swift */,
@@ -383,7 +382,6 @@
 				3718AE8D709A246C16325C0C /* SearchNearbyViewController.swift in Sources */,
 				AFEDD16691A2651909318377 /* SampleListViewController.swift in Sources */,
 				73E6638027FB612EB4EEC387 /* AppDelegate.swift in Sources */,
-				0448B3B8914530569C61F248 /* SDKDemoAPIKey.swift in Sources */,
 				9B6B100B59BB0F6DD019E50D /* SceneDelegate.swift in Sources */,
 				7EA5ED00B1F99EDF664DE3DC /* AutocompleteConfiguration.swift in Sources */,
 			);
@@ -478,6 +476,7 @@
 		};
 		78AE5B1914C6A828C46F1CE1 /* Default */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AAAAAAAA0000000000000002 /* GooglePlacesSwiftXCFrameworkDemos.xcconfig */;
 			buildSettings = {
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
 				SDKROOT = iphoneos;

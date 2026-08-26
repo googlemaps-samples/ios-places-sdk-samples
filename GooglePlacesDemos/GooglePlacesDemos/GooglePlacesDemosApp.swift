@@ -39,8 +39,15 @@ struct GooglePlacesDemosApp: App {
             return
         }
         
-        guard let apiKey = Bundle.main.infoDictionary?["PLACES_API_KEY"] as? String, !apiKey.isEmpty else {
-            fatalError("Add your PLACES_API_KEY to Info.plist - Get one at https://developers.google.com/places/ios-sdk/start#get-key")
+        // Create Secrets.xcconfig next to this app's Info.plist and add
+        // `PLACES_API_KEY = <your key>`. It is git-ignored, so the key stays out of version
+        // control. See the top-level README for setup instructions.
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "PLACES_API_KEY") as? String,
+              !apiKey.isEmpty
+        else {
+            fatalError(
+                "Add PLACES_API_KEY to Secrets.xcconfig next to this app's Info.plist. "
+                    + "Get a key at https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key")
         }
         
         let _ = PlacesClient.provideAPIKey(apiKey)

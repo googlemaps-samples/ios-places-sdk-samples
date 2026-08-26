@@ -2,6 +2,14 @@ source 'https://cdn.cocoapods.org/'
 
 platform :ios, '15.0'
 
+# Two app projects share this Podfile, so CocoaPods needs an explicit workspace.
+workspace 'GooglePlaces-Objc.xcworkspace'
+
+target 'GooglePlacesDemos' do
+    project 'GooglePlacesDemos'
+    pod 'GooglePlaces', '= 9.2.0'
+end
+
 target 'GooglePlacesXCFrameworkDemos' do
     project 'GooglePlacesXCFrameworkDemos'
     pod 'GooglePlaces', '= 9.2.0'

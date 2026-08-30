@@ -33,40 +33,40 @@ struct AdvancedPlaceDetailsCompactDemo: View {
   }
 
   var body: some View {
-    VStack(spacing: 12) {
-      Image(systemName: "rectangle.compress.vertical")
-        .font(.system(size: 60))
-        .foregroundColor(.blue)
+    ScrollView {
+      VStack(spacing: 12) {
+        Image(systemName: "rectangle.compress.vertical")
+          .font(.system(size: 60))
+          .foregroundColor(.blue)
 
-      Text("Advanced Place Details Compact Demo")
-        .font(.title)
-        .fontWeight(.bold)
+        Text("Advanced Place Details Compact Demo")
+          .font(.title)
+          .fontWeight(.bold)
+          .multilineTextAlignment(.center)
+
+        Text(
+          "A Places UI Kit Pro component. Pick a place, then use the second control to switch "
+            + "between the component's default actions, no actions, and custom actions with a "
+            + "Save favorite toggle."
+        )
+        .font(.subheadline)
+        .foregroundColor(.secondary)
         .multilineTextAlignment(.center)
+        .padding(.horizontal)
 
-      Text(
-        "A Places UI Kit Pro component. Pick a place, then use the second control to switch "
-          + "between the component's default actions, no actions, and custom actions with a "
-          + "Save favorite toggle."
-      )
-      .font(.subheadline)
-      .foregroundColor(.secondary)
-      .multilineTextAlignment(.center)
-      .padding(.horizontal)
+        PlacePickerView(query: $query)
 
-      PlacePickerView(query: $query)
-
-      Picker("Actions", selection: $actionsMode) {
-        ForEach(PlaceActionsDemoMode.allCases) { mode in
-          Text(mode.rawValue).tag(mode)
+        Picker("Actions", selection: $actionsMode) {
+          ForEach(PlaceActionsDemoMode.allCases) { mode in
+            Text(mode.rawValue).tag(mode)
+          }
         }
-      }
-      .pickerStyle(.segmented)
+        .pickerStyle(.segmented)
 
-      ScrollView {
         placeDetailsView
       }
+      .padding()
     }
-    .padding()
   }
 
   @ViewBuilder private var placeDetailsView: some View {

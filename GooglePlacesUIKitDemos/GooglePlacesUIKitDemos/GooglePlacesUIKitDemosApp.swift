@@ -46,17 +46,24 @@ struct GooglePlacesUIKitDemosApp: App {
           Text("Google Places UIKit Demos")
           NavigationView {
             List {
-              NavigationLink(destination: BasicPlaceAutocompleteDemo()) {
-                Text("Basic Place Autocomplete")
+              Section("Places UI Kit") {
+                NavigationLink(destination: BasicPlaceAutocompleteDemo()) {
+                  Text("Basic Place Autocomplete")
+                }
+                NavigationLink(destination: PlaceAutocompleteDemo()) {
+                  Text("Place Autocomplete")
+                }
+                NavigationLink(destination: PlaceDetailsDemo()) {
+                  Text("Place Details")
+                }
+                NavigationLink(destination: PlaceSearchDemo()) {
+                  Text("Place Search")
+                }
               }
-              NavigationLink(destination: PlaceAutocompleteDemo()) {
-                Text("Place Autocomplete")
-              }
-              NavigationLink(destination: PlaceDetailsDemo()) {
-                Text("Place Details")
-              }
-              NavigationLink(destination: PlaceSearchDemo()) {
-                Text("Place Search")
+              Section("Places UI Kit Pro") {
+                NavigationLink(destination: AdvancedPlaceDetailsCompactDemo()) {
+                  Text("Advanced Place Details (Compact)")
+                }
               }
             }
           }

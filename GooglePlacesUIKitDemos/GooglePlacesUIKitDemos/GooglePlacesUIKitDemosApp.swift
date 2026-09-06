@@ -64,6 +64,15 @@ struct GooglePlacesUIKitDemosApp: App {
                 NavigationLink(destination: AdvancedPlaceDetailsCompactDemo()) {
                   Text("Advanced Place Details (Compact)")
                 }
+                NavigationLink(destination: AdvancedPlaceDetailsDemo()) {
+                  Text("Advanced Place Details")
+                }
+                NavigationLink(destination: AdvancedPlaceListDemo()) {
+                  Text("Advanced Place List")
+                }
+                NavigationLink(destination: AdvancedPlaceSearchDemo()) {
+                  Text("Advanced Place Search")
+                }
               }
             }
           }

@@ -13,6 +13,9 @@ The demo app includes several sample implementations:
 - Place Photos integration and management
 - Places Autocomplete with custom SwiftUI interface
 - Interactive map integration using Google Maps SDK
+- Places UI Kit component demos (`GooglePlacesUIKitDemos`), including the Places UI Kit Pro
+  "Advanced" components with custom place actions and media/review search. Pro components are
+  [billed under their own SKU](https://developers.google.com/maps/documentation/places/ios-sdk/advanced-place-details-ui-kit).
 
 ## Requirements
 

@@ -19,11 +19,12 @@ class SampleListViewController: UITableViewController {
 
   static let sampleCellIdentifier = "sampleCellIdentifier"
 
-  var sampleSections = Samples.allSwiftSamples()
+  let sampleSections = Samples.allSamples()
 
   let configuration = AutocompleteConfiguration(
     autocompleteFilter: GMSAutocompleteFilter(),
     placeProperties: GMSPlaceProperty.allProperties)
+
   private lazy var editButton: UIBarButtonItem = {
     UIBarButtonItem(
       title: "Edit", style: .plain, target: self, action: #selector(showConfiguration))
@@ -49,7 +50,6 @@ class SampleListViewController: UITableViewController {
 
     navBar?.standardAppearance = navBarAppearance
     navBar?.scrollEdgeAppearance = navBarAppearance
-
   }
 
   func sample(at indexPath: IndexPath) -> Sample? {

@@ -16,11 +16,11 @@ import GooglePlaces
 /// The configurations for an autocomplete search.
 class AutocompleteConfiguration {
   let autocompleteFilter: GMSAutocompleteFilter
-  var placeFields: GMSPlaceField
+  var placeProperties: [GMSPlaceProperty]
   var location: LocationOption?
 
-  init(autocompleteFilter: GMSAutocompleteFilter, placeFields: GMSPlaceField) {
+  init(autocompleteFilter: GMSAutocompleteFilter, placeProperties: [GMSPlaceProperty]) {
     self.autocompleteFilter = autocompleteFilter
-    self.placeFields = placeFields
+    self.placeProperties = placeProperties
   }
 }

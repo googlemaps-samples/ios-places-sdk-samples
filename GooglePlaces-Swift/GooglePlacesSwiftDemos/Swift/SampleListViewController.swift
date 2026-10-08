@@ -21,16 +21,10 @@ class SampleListViewController: UITableViewController {
 
   let sampleSections = Samples.allSamples()
 
-  let configuration: AutocompleteConfiguration = {
-    var fields: [GMSPlaceField] = [
-      .name, .placeID, .plusCode, .coordinate, .openingHours, .phoneNumber, .formattedAddress,
-      .rating, .userRatingsTotal, .priceLevel, .types, .website, .viewport, .addressComponents,
-      .photos, .utcOffsetMinutes, .businessStatus, .iconImageURL, .iconBackgroundColor,
-    ]
-    return AutocompleteConfiguration(
-      autocompleteFilter: GMSAutocompleteFilter(),
-      placeFields: GMSPlaceField(rawValue: fields.reduce(0) { $0 | $1.rawValue }))
-  }()
+  let configuration = AutocompleteConfiguration(
+    autocompleteFilter: GMSAutocompleteFilter(),
+    placeProperties: GMSPlaceProperty.allProperties)
+
   private lazy var editButton: UIBarButtonItem = {
     UIBarButtonItem(
       title: "Edit", style: .plain, target: self, action: #selector(showConfiguration))
@@ -85,6 +79,7 @@ class SampleListViewController: UITableViewController {
       withIdentifier: SampleListViewController.sampleCellIdentifier, for: indexPath)
     if let sample = sample(at: indexPath) {
       cell.textLabel?.text = sample.title
+      cell.accessibilityTraits = .button
     }
     return cell
   }

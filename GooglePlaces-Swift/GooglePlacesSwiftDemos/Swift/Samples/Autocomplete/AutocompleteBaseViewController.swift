@@ -14,8 +14,8 @@
 import GooglePlaces
 import UIKit
 
-/// All other autocomplete demo classes inherit from this class. This class optionally adds a button
-/// to present the autocomplete widget, and displays the results when these are selected.
+/// All other autocomplete demo classes inherit from this class. This class fetches the full place
+/// for a selected autocomplete suggestion, and displays the details of the fetched place.
 class AutocompleteBaseViewController: UIViewController {
   private lazy var textView: UITextView = {
     let textView = UITextView()
@@ -32,10 +32,12 @@ class AutocompleteBaseViewController: UIViewController {
   private lazy var pagingPhotoView: PagingPhotoView = {
     let photoView = PagingPhotoView()
     photoView.isHidden = true
+    photoView.accessibilityIdentifier = String(describing: PagingPhotoView.self)
     return photoView
   }()
 
   var autocompleteConfiguration: AutocompleteConfiguration?
+  let placesClient = GMSPlacesClient.shared()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -67,19 +69,56 @@ class AutocompleteBaseViewController: UIViewController {
     textView.isHidden = true
   }
 
-  func autocompleteDidSelectPlace(_ place: GMSPlace) {
-    let text = NSMutableAttributedString(string: place.description)
-    text.append(NSAttributedString(string: "\nPlace status: "))
-    text.append(NSAttributedString(string: place.isOpen().description))
-    if let attributions = place.attributions {
-      text.append(NSAttributedString(string: "\n\n"))
-      text.append(attributions)
+  /// Fetches the full place details for an autocomplete suggestion and displays them.
+  ///
+  /// Passing the session token from the autocomplete request that produced the suggestion
+  /// completes that autocomplete billing session.
+  func fetchAndDisplayPlace(
+    for suggestion: GMSAutocompletePlaceSuggestion,
+    sessionToken: GMSAutocompleteSessionToken?
+  ) {
+    let placeProperties =
+      autocompleteConfiguration?.placeProperties ?? GMSPlaceProperty.allProperties
+    let request = GMSFetchPlaceRequest(
+      placeID: suggestion.placeID,
+      placeProperties: placeProperties.map { $0.rawValue },
+      sessionToken: sessionToken)
+    placesClient.fetchPlace(with: request) { [weak self] place, error in
+      guard let self else { return }
+      if let error {
+        self.autocompleteDidFail(error)
+        return
+      }
+      guard let place else { return }
+      self.autocompleteDidSelectPlace(place)
     }
+  }
 
-    text.addAttribute(.foregroundColor, value: UIColor.label, range: NSMakeRange(0, text.length))
+  func autocompleteDidSelectPlace(_ place: GMSPlace) {
+    let isOpenRequest = GMSPlaceIsOpenRequest(place: place, date: nil)
+    placesClient.isOpen(with: isOpenRequest) { [weak self] response, error in
+      guard let self else { return }
+      let text = NSMutableAttributedString(string: place.description)
+      text.append(NSAttributedString(string: "\nPlace status: "))
+      text.append(NSAttributedString(string: response.status.description))
+      if let error {
+        let errorDescription = String(
+          format: NSLocalizedString(
+            "Demo.Content.Autocomplete.FailedErrorMessage",
+            comment: "Format string for 'autocomplete failed with error' message"), error as NSError
+        )
+        text.append(NSAttributedString(string: errorDescription))
+      }
+      if let attributions = place.attributions {
+        text.append(NSAttributedString(string: "\n\n"))
+        text.append(attributions)
+      }
 
-    textView.attributedText = text
-    textView.isHidden = false
+      text.addAttribute(.foregroundColor, value: UIColor.label, range: NSMakeRange(0, text.length))
+
+      self.textView.attributedText = text
+      self.textView.isHidden = false
+    }
     pagingPhotoView.isHidden = true
     if let photos = place.photos, photos.count > 0 {
       preloadPhotoList(photos: photos)
@@ -111,13 +150,14 @@ extension AutocompleteBaseViewController {
   // Preload the photos to be displayed.
   func preloadPhotoList(photos: [GMSPlacePhotoMetadata]) {
     var attributedPhotos: [AttributedPhoto] = []
-    let placeClient = GMSPlacesClient.shared()
     DispatchQueue.global().async {
       let downloadGroup = DispatchGroup()
       photos.forEach { photo in
         downloadGroup.enter()
-        placeClient.loadPlacePhoto(photo) { imageData, error in
-          if let image = imageData, let attributions = photo.attributions {
+        let fetchPhotoRequest = GMSFetchPhotoRequest(
+          photoMetadata: photo, maxSize: CGSize(width: 4800, height: 4800))
+        self.placesClient.fetchPhoto(with: fetchPhotoRequest) { image, error in
+          if let image, let attributions = photo.attributions {
             attributedPhotos.append(AttributedPhoto(image: image, attributions: attributions))
           }
           downloadGroup.leave()

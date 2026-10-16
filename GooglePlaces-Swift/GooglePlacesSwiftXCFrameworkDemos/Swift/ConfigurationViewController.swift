@@ -63,30 +63,23 @@ class ConfigurationViewController: UIViewController {
   private let cellIdentifier = "cellIdentifier"
   private let filterTagBase = 1000
 
+  /// The selectable type collections for `GMSAutocompleteFilter.types`.
+  static let filterTypeOptions: [(name: String, types: [String])] = [
+    ("Geocode", ["geocode"]),
+    ("Address", ["address"]),
+    ("Establishment", ["establishment"]),
+    ("Region", ["(regions)"]),
+    ("City", ["(cities)"]),
+  ]
+
   private lazy var configurationSections: [ConfigSection] = {
     var sections: [ConfigSection] = []
 
     let autocompleteFiltersSelector = #selector(autocompleteFiltersSwitch)
-    let geocode = ConfigData(
-      name: "Geocode", tag: filterTagBase + GMSPlacesAutocompleteTypeFilter.geocode.rawValue,
-      action: autocompleteFiltersSelector)
-    let address = ConfigData(
-      name: "Address", tag: filterTagBase + GMSPlacesAutocompleteTypeFilter.address.rawValue,
-      action: autocompleteFiltersSelector)
-    let establishment = ConfigData(
-      name: "Establishment",
-      tag: filterTagBase + GMSPlacesAutocompleteTypeFilter.establishment.rawValue,
-      action: autocompleteFiltersSelector)
-    let region = ConfigData(
-      name: "Region", tag: filterTagBase + GMSPlacesAutocompleteTypeFilter.region.rawValue,
-      action: autocompleteFiltersSelector)
-    let city = ConfigData(
-      name: "City", tag: filterTagBase + GMSPlacesAutocompleteTypeFilter.city.rawValue,
-      action: autocompleteFiltersSelector)
-
-    sections.append(
-      ConfigSection(
-        name: "Autocomplete filters", samples: [geocode, address, establishment, region, city]))
+    let filterSamples = Self.filterTypeOptions.enumerated().map { (index, option) in
+      ConfigData(name: option.name, tag: filterTagBase + index, action: autocompleteFiltersSelector)
+    }
+    sections.append(ConfigSection(name: "Autocomplete filters", samples: filterSamples))
 
     let canada = ConfigData(
       name: "Canada", tag: LocationOption.canada.rawValue, action: #selector(canadaSwitch))
@@ -123,7 +116,6 @@ class ConfigurationViewController: UIViewController {
     button.setTitleColor(.white, for: .normal)
     button.translatesAutoresizingMaskIntoConstraints = false
     button.addTarget(self, action: #selector(tapCloseButton(_:)), for: .touchUpInside)
-    button.contentVerticalAlignment = .top
     return button
   }()
 
@@ -149,10 +141,9 @@ class ConfigurationViewController: UIViewController {
       tableView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
     ])
     NSLayoutConstraint.activate([
-      closeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      closeButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
       closeButton.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
       closeButton.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
-      closeButton.heightAnchor.constraint(equalToConstant: view.safeAreaInsets.bottom + 60.0),
     ])
   }
 
@@ -165,12 +156,7 @@ class ConfigurationViewController: UIViewController {
     let southWest = location.southWest
     // Update configuration
     switch location {
-    case .canada:
-      configuration.autocompleteFilter.origin = CLLocation(
-        latitude: northEast.latitude, longitude: northEast.longitude)
-      configuration.autocompleteFilter.locationRestriction =
-        GMSPlaceRectangularLocationOption(northEast, southWest)
-    case .kansas:
+    case .canada, .kansas:
       configuration.autocompleteFilter.origin = CLLocation(
         latitude: northEast.latitude, longitude: northEast.longitude)
       configuration.autocompleteFilter.locationRestriction =
@@ -188,40 +174,10 @@ class ConfigurationViewController: UIViewController {
         switchView.setOn(false, animated: true)
       }
     }
-    // The value of the type is tag - filterTagBase and the switch is being set to on,
-    // otherwise set filter types to nil
-    guard let type = GMSPlacesAutocompleteTypeFilter(rawValue: sender.tag - filterTagBase),
-      sender.isOn
-    else {
-      configuration.autocompleteFilter.types = nil
-      return
-    }
-    configuration.autocompleteFilter.type = type
-    // Set the types property according to roughly what the old type values correspond to. See the
-    // comments for https://source.corp.google.com/search?q=symbol:GMSPlacesAutocompleteTypeFilter%20file:iPhone%2FMaps%2FSDK
-    switch type {
-    case .geocode:
-      configuration.autocompleteFilter.types = [kGMSPlaceTypeGeocode]
-    case .address:
-      configuration.autocompleteFilter.types = [kGMSPlaceTypeStreetAddress]
-    case .establishment:
-      configuration.autocompleteFilter.types = [kGMSPlaceTypeEstablishment]
-    case .region:
-      configuration.autocompleteFilter.types = [
-        kGMSPlaceTypeLocality,
-        kGMSPlaceTypeSublocality,
-        kGMSPlaceTypePostalCode,
-        kGMSPlaceTypeCountry,
-        kGMSPlaceTypeAdministrativeAreaLevel1,
-      ]
-    case .city:
-      configuration.autocompleteFilter.types = [
-        kGMSPlaceTypeLocality,
-        kGMSPlaceTypeAdministrativeAreaLevel3,
-      ]
-    default:
-      configuration.autocompleteFilter.types = nil
-    }
+    // The index of the option is tag - filterTagBase
+    let index = sender.tag - filterTagBase
+    guard index >= 0 && index < Self.filterTypeOptions.count else { return }
+    configuration.autocompleteFilter.types = sender.isOn ? Self.filterTypeOptions[index].types : nil
   }
 
   @objc private func canadaSwitch(_ sender: UISwitch) {
@@ -249,6 +205,7 @@ class ConfigurationViewController: UIViewController {
       configuration.location = .unspecified
     }
   }
+
   @objc private func placesPropertiesSwitch(_ sender: UISwitch) {
     let property = GMSPlaceProperty.allProperties[sender.tag]
 
@@ -259,7 +216,6 @@ class ConfigurationViewController: UIViewController {
       configuration.placeProperties = properties
     }
   }
-
 }
 
 extension ConfigurationViewController: UITableViewDataSource {
@@ -285,7 +241,8 @@ extension ConfigurationViewController: UITableViewDataSource {
     switchView.tag = Int(sample.tag)
     switch indexPath.section {
     case 0:
-      if sample.tag - filterTagBase == configuration.autocompleteFilter.type.rawValue {
+      let option = Self.filterTypeOptions[indexPath.row]
+      if configuration.autocompleteFilter.types == option.types {
         switchView.setOn(true, animated: false)
       }
     case 1:
@@ -296,7 +253,6 @@ extension ConfigurationViewController: UITableViewDataSource {
       if configuration.placeProperties.contains(property) {
         switchView.setOn(true, animated: false)
       }
-
     default:
       break
     }
@@ -323,61 +279,49 @@ extension ConfigurationViewController: UITableViewDelegate {
     let cell = tableView.cellForRow(at: indexPath)
     guard let switchView = cell?.accessoryView as? UISwitch else { return }
     switchView.setOn(!switchView.isOn, animated: true)
-    let property = GMSPlaceProperty.allProperties[indexPath.row]
-
-    if switchView.isOn {
-      if !configuration.placeProperties.contains(property) {
-        configuration.placeProperties.append(property)
-      }
-    } else {
-      configuration.placeProperties = configuration.placeProperties.filter { $0 != property }
-    }
+    perform(sample.action, with: switchView)
   }
 }
 
 extension GMSPlaceProperty: CustomStringConvertible {
   /// All place properties.
-  public static var allProperties: [GMSPlaceProperty] = {
-    var all: [GMSPlaceProperty] = [
-      .name,
-      .placeID,
-      .plusCode,
-      .coordinate,
-      .openingHours,
-      .phoneNumber,
-      .formattedAddress,
-      .rating,
-      .priceLevel,
-      .types,
-      .website,
-      .viewport,
-      .addressComponents,
-      .photos,
-      .userRatingsTotal,
-      .utcOffsetMinutes,
-      .businessStatus,
-      .iconImageURL,
-      .iconBackgroundColor,
-      .takeout,
-      .delivery,
-      .dineIn,
-      .curbsidePickup,
-      .reservable,
-      .servesBreakfast,
-      .servesLunch,
-      .servesDinner,
-      .servesBeer,
-      .servesWine,
-      .servesBrunch,
-      .servesVegetarianFood,
-      .wheelchairAccessibleEntrance,
-      .editorialSummary,
-      .currentOpeningHours,
-      .secondaryOpeningHours,
-    ]
-    all += [.reviews]
-    return all
-  }()
+  public static var allProperties: [GMSPlaceProperty] = [
+    .name,
+    .placeID,
+    .plusCode,
+    .coordinate,
+    .openingHours,
+    .phoneNumber,
+    .formattedAddress,
+    .rating,
+    .priceLevel,
+    .types,
+    .website,
+    .viewport,
+    .addressComponents,
+    .photos,
+    .userRatingsTotal,
+    .utcOffsetMinutes,
+    .businessStatus,
+    .iconImageURL,
+    .iconBackgroundColor,
+    .takeout,
+    .delivery,
+    .dineIn,
+    .curbsidePickup,
+    .reservable,
+    .servesBreakfast,
+    .servesLunch,
+    .servesDinner,
+    .servesBeer,
+    .servesWine,
+    .servesBrunch,
+    .servesVegetarianFood,
+    .wheelchairAccessibleEntrance,
+    .editorialSummary,
+    .currentOpeningHours,
+    .secondaryOpeningHours,
+  ]
 
   public var description: String {
     switch self {
@@ -416,8 +360,6 @@ extension GMSPlaceProperty: CustomStringConvertible {
     case .currentOpeningHours: return "Current Opening Hours"
     case .secondaryOpeningHours: return "Secondary Opening Hours"
     case .editorialSummary: return "Editorial Summary"
-    // Reviews field does not exist in GMSPlaceFieldMask, appending 1 to last field for demo app
-    case .reviews: return "Reviews"
     default: return "Unknown Case"
     }
   }

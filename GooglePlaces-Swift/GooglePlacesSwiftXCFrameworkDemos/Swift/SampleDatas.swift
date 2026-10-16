@@ -15,7 +15,6 @@ import UIKit
 
 struct Sample {
   let viewControllerClass: UIViewController.Type
-
   let title: String
 }
 
@@ -25,52 +24,31 @@ struct Section {
 }
 
 enum Samples {
-
-  static func allSwiftSamples() -> [Section] {
+  static func allSamples() -> [Section] {
     let autoCompleteSample: [Sample] = [
-      Sample(
-        viewControllerClass: AutocompletePushViewController.self,
-        title: NSLocalizedString(
-          "Demo.Title.Autocomplete.Push",
-          comment: "Title of the pushed autocomplete demo for display in a list or nav header")),
-      Sample(
-        viewControllerClass: AutocompleteModalViewController.self,
-        title: NSLocalizedString(
-          "Demo.Title.Autocomplete.FullScreen",
-          comment:
-            "Title of the full-screen autocomplete demo for display in a list or nav header")
-      ),
-      Sample(
-        viewControllerClass: AutocompleteWithCustomColors.self,
-        title: NSLocalizedString(
-          "Demo.Title.Autocomplete.Styling",
-          comment: "Title of the Styling autocomplete demo for display in a list or nav header")
-      ),
       Sample(
         viewControllerClass: AutocompleteWithSearchViewController.self,
         title: NSLocalizedString(
           "Demo.Title.Autocomplete.UISearchController",
           comment:
-            "Title of the UISearchController autocomplete demo for display in a list or nav header"
-        )
+            "Title of the UISearchController autocomplete demo for display in a list or nav header")
       ),
       Sample(
         viewControllerClass: AutocompleteWithTextFieldController.self,
         title: NSLocalizedString(
           "Demo.Title.Autocomplete.UITextField",
-          comment:
-            "Title of the UITextField autocomplete demo for display in a list or nav header")
+          comment: "Title of the UITextField autocomplete demo for display in a list or nav header")
       ),
     ]
-    let likelihoodsSample: [Sample] = [
+    let currentPlaceSample: [Sample] = [
       Sample(
-        viewControllerClass: FindPlaceLikelihoodListViewController.self,
-        title: "Find Place Likelihoods")
+        viewControllerClass: CurrentPlaceViewController.self,
+        title: "Search Nearby (Current Location)")
     ]
 
     var sections = [
       Section(name: "Autocomplete", samples: autoCompleteSample),
-      Section(name: "Likelihoods", samples: likelihoodsSample),
+      Section(name: "Current Place", samples: currentPlaceSample),
     ]
     let textSearchSample: [Sample] = [
       Sample(

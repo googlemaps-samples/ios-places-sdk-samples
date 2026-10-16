@@ -14,17 +14,14 @@
 import GooglePlaces
 import UIKit
 
-/// Demo showing how to manually present a UITableViewController and supply it with autocomplete
-/// text from an arbitrary source, in this case a UITextField. Please refer to:
-/// https://developers.google.com/places/ios-sdk/autocomplete
+/// Demo showing how to present autocomplete suggestions for query text from an arbitrary source,
+/// in this case a UITextField, using `GMSPlacesClient.fetchAutocompleteSuggestions(from:)`.
+/// Please refer to: https://developers.google.com/places/ios-sdk/autocomplete
 class AutocompleteWithTextFieldController: AutocompleteBaseViewController {
   private let padding: CGFloat = 20
   private let topPadding: CGFloat = 8
   private lazy var searchField: UITextField = {
     let searchField = UITextField(frame: .zero)
-    let isRTL = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
-    searchField.textAlignment = isRTL ? .right : .left
-    searchField.textAlignment = .natural
     searchField.translatesAutoresizingMaskIntoConstraints = false
     searchField.borderStyle = .none
     searchField.textColor = .label
@@ -42,19 +39,11 @@ class AutocompleteWithTextFieldController: AutocompleteBaseViewController {
     return searchField
   }()
 
-  private lazy var resultsController: UITableViewController = {
-    return UITableViewController(style: .plain)
-  }()
-
-  private lazy var tableDataSource: GMSAutocompleteTableDataSource = {
-    let tableDataSource = GMSAutocompleteTableDataSource()
-    tableDataSource.tableCellBackgroundColor = .systemBackground
-    tableDataSource.delegate = self
-    if let config = autocompleteConfiguration {
-      tableDataSource.autocompleteFilter = config.autocompleteFilter
-      tableDataSource.placeProperties = config.placeProperties.map { $0.rawValue }
-    }
-    return tableDataSource
+  private lazy var resultsController: AutocompleteResultsViewController = {
+    let controller = AutocompleteResultsViewController()
+    controller.autocompleteFilter = autocompleteConfiguration?.autocompleteFilter
+    controller.delegate = self
+    return controller
   }()
 
   override func viewDidLoad() {
@@ -72,10 +61,6 @@ class AutocompleteWithTextFieldController: AutocompleteBaseViewController {
         equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
     ])
 
-    tableDataSource.delegate = self
-    resultsController.tableView.delegate = tableDataSource
-    resultsController.tableView.dataSource = tableDataSource
-
     // Add the results controller
     guard let resultView = resultsController.view else { return }
     resultView.translatesAutoresizingMaskIntoConstraints = false
@@ -91,7 +76,7 @@ class AutocompleteWithTextFieldController: AutocompleteBaseViewController {
 
   @objc func textFieldChanged(sender: UIControl) {
     guard let textField = sender as? UITextField else { return }
-    tableDataSource.sourceTextHasChanged(textField.text)
+    resultsController.update(query: textField.text ?? "")
   }
 
   func dismissResultView() {
@@ -100,11 +85,11 @@ class AutocompleteWithTextFieldController: AutocompleteBaseViewController {
       withDuration: 0.5,
       animations: {
         self.resultsController.view.alpha = 0
-      },
-      completion: { (_) in
-        self.resultsController.view.removeFromSuperview()
-        self.resultsController.removeFromParent()
-      })
+      }
+    ) { (_) in
+      self.resultsController.view.removeFromSuperview()
+      self.resultsController.removeFromParent()
+    }
   }
 }
 
@@ -116,10 +101,10 @@ extension AutocompleteWithTextFieldController: UITextFieldDelegate {
       withDuration: 0.5,
       animations: {
         self.resultsController.view.alpha = 1
-      },
-      completion: { (_) in
-        self.resultsController.didMove(toParent: self)
-      })
+      }
+    ) { (_) in
+      self.resultsController.didMove(toParent: self)
+    }
   }
 
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -131,35 +116,29 @@ extension AutocompleteWithTextFieldController: UITextFieldDelegate {
     dismissResultView()
     textField.resignFirstResponder()
     textField.text = ""
-    tableDataSource.clearResults()
+    resultsController.clearResults()
     return false
   }
 }
 
-extension AutocompleteWithTextFieldController: GMSAutocompleteTableDataSourceDelegate {
-  func tableDataSource(
-    _ tableDataSource: GMSAutocompleteTableDataSource, didAutocompleteWith place: GMSPlace
+extension AutocompleteWithTextFieldController: AutocompleteResultsViewControllerDelegate {
+  func resultsController(
+    _ resultsController: AutocompleteResultsViewController,
+    didSelect suggestion: GMSAutocompletePlaceSuggestion
   ) {
     dismissResultView()
     searchField.resignFirstResponder()
     searchField.isHidden = true
-    autocompleteDidSelectPlace(place)
+    fetchAndDisplayPlace(for: suggestion, sessionToken: resultsController.sessionToken)
+    resultsController.startNewSession()
   }
 
-  func tableDataSource(
-    _ tableDataSource: GMSAutocompleteTableDataSource, didFailAutocompleteWithError error: Error
+  func resultsController(
+    _ resultsController: AutocompleteResultsViewController, didFailWith error: Error
   ) {
     dismissResultView()
     searchField.resignFirstResponder()
     searchField.isHidden = true
     autocompleteDidFail(error)
-  }
-
-  func didRequestAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
-    resultsController.tableView.reloadData()
-
-  }
-  func didUpdateAutocompletePredictions(for tableDataSource: GMSAutocompleteTableDataSource) {
-    resultsController.tableView.reloadData()
   }
 }

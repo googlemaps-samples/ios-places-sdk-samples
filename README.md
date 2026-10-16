@@ -35,12 +35,14 @@ if the key is missing the app still builds but fails at launch with a message na
 | --- | --- | --- |
 | `GooglePlacesDemos` (SwiftUI) | `GooglePlacesDemos/GooglePlacesDemos.xcodeproj` | `GooglePlacesDemos/GooglePlacesDemos/Secrets.xcconfig` |
 | `GooglePlacesUIKitDemos` (SwiftUI) | `GooglePlacesUIKitDemos/GooglePlacesUIKitDemos.xcodeproj` | `GooglePlacesUIKitDemos/GooglePlacesUIKitDemos/Secrets.xcconfig` |
-| `GooglePlacesSwiftDemos` (UIKit, CocoaPods) | `GooglePlaces-Swift/GooglePlaces-Swift.xcworkspace` | `GooglePlaces-Swift/GooglePlacesSwiftDemos/Secrets.xcconfig` |
-| `GooglePlacesSwiftXCFrameworkDemos` (UIKit, CocoaPods) | `GooglePlaces-Swift/GooglePlaces-Swift.xcworkspace` | `GooglePlaces-Swift/GooglePlacesSwiftXCFrameworkDemos/Secrets.xcconfig` |
+| `GooglePlacesSwiftDemos` (UIKit) | `GooglePlaces-Swift/GooglePlacesSwiftDemos.xcodeproj` | `GooglePlaces-Swift/GooglePlacesSwiftDemos/Secrets.xcconfig` |
+| `GooglePlacesSwiftXCFrameworkDemos` (UIKit) | `GooglePlaces-Swift/GooglePlacesSwiftXCFrameworkDemos.xcodeproj` | `GooglePlaces-Swift/GooglePlacesSwiftXCFrameworkDemos/Secrets.xcconfig` |
 | `GooglePlacesDemos` (Objective-C, archived) | `Archive/GooglePlaces-Objc/GooglePlaces-Objc.xcworkspace` | `Archive/GooglePlaces-Objc/GooglePlacesDemos/Secrets.xcconfig` |
 | `GooglePlacesXCFrameworkDemos` (Objective-C, archived) | `Archive/GooglePlaces-Objc/GooglePlaces-Objc.xcworkspace` | `Archive/GooglePlaces-Objc/GooglePlacesXCFrameworkDemos/Secrets.xcconfig` |
 
-The two `Archive/GooglePlaces-Objc` apps are older Objective-C samples kept for reference.
+All four active apps install the Places SDK for iOS (11.x) via Swift Package Manager — Xcode resolves
+the `ios-places-sdk` package automatically when you open a project. The two `Archive/GooglePlaces-Objc`
+apps are older Objective-C samples kept for reference and still use CocoaPods with an older SDK.
 
 1. [Set up a Google Cloud project](https://developers.google.com/maps/documentation/places/ios-sdk/cloud-setup) and enable the [Places API (New)](https://developers.google.com/maps/documentation/places/ios-sdk/get-api-key).
 
@@ -49,9 +51,9 @@ The two `Archive/GooglePlaces-Objc` apps are older Objective-C samples kept for 
    git clone git@github.com:googlemaps-samples/ios-places-sdk-samples.git
    ```
 
-3. For the CocoaPods samples, install the pods first (this also generates the `.xcworkspace` you open):
+3. For the archived CocoaPods samples only, install the pods first (this also generates the
+   `.xcworkspace` you open):
    ```
-   cd ios-places-sdk-samples/GooglePlaces-Swift && pod install          # GooglePlacesSwiftDemos, GooglePlacesSwiftXCFrameworkDemos
    cd ios-places-sdk-samples/Archive/GooglePlaces-Objc && pod install   # the two archived Obj-C apps
    ```
 
